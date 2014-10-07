@@ -12,16 +12,21 @@ Ruby: https://github.com/bbatsov/ruby-style-guide
 Rails: https://github.com/bbatsov/rails-style-guide
 
 
+## RESTful
+* [Advanced REST client](https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo?utm_source=gmail)
+* [ch.unifr.ase.REST (Rails + REST example)](https://github.com/aruppen/ch.unifr.ase.REST)
+
+
 ## Versions
 Ruby v1.9.3  
 Rails v4.1.6
 
-## Scrum
 
+## Scrum
 * [Scrum file on Google Docs](https://docs.google.com/spreadsheets/d/1fUCD3_R0JQMdiDByQR-dAFa5DUAPoTSOcI2_9BJnZ14/edit#gid=0)
 
-## Git rules
 
+## Git rules
 * Always pull before you push  
 * [Avoiding Git Disasters](http://randyfay.com/content/avoiding-git-disasters-gory-story)
 
