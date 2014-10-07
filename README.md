@@ -16,8 +16,14 @@ Rails: https://github.com/bbatsov/rails-style-guide
 Ruby v1.9.3  
 Rails v4.1.6
 
+## Scrum
+
+* [Scrum file on Google Docs](https://docs.google.com/spreadsheets/d/1fUCD3_R0JQMdiDByQR-dAFa5DUAPoTSOcI2_9BJnZ14/edit#gid=0)
 
 ## Git rules
+
+* Always pull before you push  
+* [Avoiding Git Disasters](http://randyfay.com/content/avoiding-git-disasters-gory-story)
 
 ### Branches
 | Branch name | Description | stable? |
