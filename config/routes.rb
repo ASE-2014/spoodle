@@ -10,9 +10,9 @@ Rails.application.routes.draw do
     end
 
     unauthenticated :user do
-      root :to => 'devise/registrations#new', as: :unauthenticated_root
+      root :to => 'devise/sessions#new', as: :unauthenticated_root
     end
-    
+
   end
 
   # The priority is based upon order of creation: first created -> highest priority.
