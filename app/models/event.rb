@@ -4,6 +4,5 @@ class Event < ActiveRecord::Base
   has_many :users, through: :invitations
   belongs_to :definitive_date, foreign_key: 'definitive_date_id', class_name: 'SpoodleDate'
   belongs_to :deadline, foreign_key: 'deadline_id', class_name: 'SpoodleDate'
-  has_and_belongs_to_many :spoodle_dates
 
 end
