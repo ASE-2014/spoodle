@@ -20,3 +20,13 @@ arun = User.create(email: 'a@s.ch',
                    username: 'Arun',
                    password: '12345678',
                    password_confirmation: '12345678')
+
+
+event1 = Event.create(owner: arun)
+
+invitation_urs_event1 = event1.invitations.create(user: urs)
+invitation_oli_event1 = event1.invitations.create(user: oliver)
+
+event1_date1 = event1.spoodle_dates.create(datetime: DateTime.new(2014,10, 30))
+event1_date2 = event1.spoodle_dates.create(datetime: DateTime.new(2014,11, 20),
+                                           users: [oliver, urs, arun])

@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  datetime: 2014-10-13 13:56:48
+  event_id: 
+
+two:
+  datetime: 2014-10-13 13:56:48
+  event_id: 
