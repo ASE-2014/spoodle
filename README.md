@@ -41,3 +41,8 @@ Rails v4.1.6
 
 #### Example
 ![branching rules](http://www.rittmanmead.com/wp-content/uploads/2013/07/git-branch1.png)
+
+#### Commands
+|Command | Description |
+| ------ | :---------- |
+| git merge feature/xyz --no-ff | This ensures that you create a merge commit instead of fast-forwarding. |
