@@ -9,7 +9,8 @@ Doodle meets sports
 
 ## Coding guidelines
 Ruby: https://github.com/bbatsov/ruby-style-guide  
-Rails: https://github.com/bbatsov/rails-style-guide
+Rails: https://github.com/bbatsov/rails-style-guide  
+Markdown(for issues on GitHub and so on): https://help.github.com/categories/writing-on-github/
 
 
 ## RESTful
