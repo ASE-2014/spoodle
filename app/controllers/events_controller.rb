@@ -2,9 +2,7 @@ class EventsController < ApplicationController
 
   def new
     @event = Event.new
-    @event.spoodle_dates.build # Create one empty date to begin with
-    @event.spoodle_dates.build
-    @event.spoodle_dates.build
+    @event.spoodle_dates.build # (DEV) Create one empty date to begin with
   end
 
   def create
@@ -25,8 +23,11 @@ class EventsController < ApplicationController
 
   def destroy
     @event = Event.find(params[:id])
-    @event.destroy
-    flash[:success] = "Event deleted"
+    if @event.destroy
+      flash[:success] = "Event deleted"
+    else
+      flash[:success] = "Event could not be deleted!"
+    end
     redirect_to events_url
   end
 

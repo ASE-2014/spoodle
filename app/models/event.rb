@@ -7,5 +7,5 @@ class Event < ActiveRecord::Base
   has_many :spoodle_dates
   accepts_nested_attributes_for :spoodle_dates, allow_destroy: true
 
-  validate :title, presence: true
+  validates :title, presence: true
 end
