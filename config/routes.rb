@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :event
+
   devise_for :users,
              :controllers => { registrations: 'registrations' }
 
