@@ -5,5 +5,7 @@ class Event < ActiveRecord::Base
   belongs_to :definitive_date, foreign_key: 'definitive_date_id', class_name: 'SpoodleDate'
   belongs_to :deadline, foreign_key: 'deadline_id', class_name: 'SpoodleDate'
   has_many :spoodle_dates
+  accepts_nested_attributes_for :spoodle_dates, allow_destroy: true
 
+  validate :title, presence: true
 end

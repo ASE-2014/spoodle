@@ -56,3 +56,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin]
 
 # Use Devise for user authentication
 gem 'devise'
+
+# Use for forms that allow additional dynamic fields
+gem 'nested_form_fields'
