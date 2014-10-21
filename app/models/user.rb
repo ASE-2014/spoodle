@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   validates :username,
             :uniqueness => { :case_sensitive => false }
 
-
+  #TODO add cybercoach integration
   # OVERWRITE to use username and email for login
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
