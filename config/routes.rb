@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  resources :events do
+    resources :spoodle_dates
+  end
+
   devise_for :users,
              :controllers => { registrations: 'registrations' }
 
