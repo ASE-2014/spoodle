@@ -11,8 +11,12 @@
     <%= @event.description %>
 </p>
 
+<%= @event.sport_id %>
+
+
 <h2>Dates</h2>
 <%= render @event.spoodle_dates %>
+
 
 <%= link_to 'Edit Event', edit_event_path(@event) %> |
 <%= link_to 'Back to Events', events_path %>

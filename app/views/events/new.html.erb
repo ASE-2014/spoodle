@@ -7,8 +7,7 @@
 
     <%= f.label :description %>
     <%= f.text_area :description, size: '60x12' %>
-
-    <%= select("Sport", "id", @sports.collect {|sport| [ sport['name'], sport['id'] ] }) %>
+    <%= f.collection_select(:sport_id, @sports, :last, :first ) %>
 
     <%= f.nested_fields_for :spoodle_dates do |ff| %>
         <%= ff.remove_nested_fields_link 'Remove date' %>

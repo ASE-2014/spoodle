@@ -52,12 +52,12 @@ class EventsController < ApplicationController
   private
 
   def event_params
-    params.require(:event).permit(:title, :description, spoodle_dates_attributes: [:id, :datetime, :_destroy])
+    params.require(:event).permit(:title, :description, :sport_id, spoodle_dates_attributes: [:id, :datetime, :_destroy])
   end
 
   def get_sports
     response = HTTParty.get("http://diufvm31.unifr.ch:8090/CyberCoachServer/resources/sports/",:headers => {'Accept' => 'application/json'})
-    response["sports"]
+    response["sports"].collect {|sport| [ sport['name'], sport['id'] ] }
   end
 
 end
