@@ -1,0 +1,18 @@
+<h1>Event#show</h1>
+<p>Look at that damn nice event!</p>
+
+<p>
+    <strong>Title:</strong>
+    <%= @event.title %>
+</p>
+
+<p>
+    <strong>Description:</strong>
+    <%= @event.description %>
+</p>
+
+<h2>Dates</h2>
+<%= render @event.spoodle_dates %>
+
+<%= link_to 'Edit Event', edit_event_path(@event) %> |
+<%= link_to 'Back to Events', events_path %>
