@@ -41,6 +41,7 @@ class EventsController < ApplicationController
 
   def index
     @events = Event.all
+    @sports = get_sports
   end
 
   def show
@@ -51,6 +52,11 @@ class EventsController < ApplicationController
 
   def event_params
     params.require(:event).permit(:title, :description, spoodle_dates_attributes: [:id, :datetime, :_destroy])
+  end
+
+  def get_sports
+    response = HTTParty.get("http://diufvm31.unifr.ch:8090/CyberCoachServer/resources/sports/",:headers => {'Accept' => 'application/json'})
+    response["sports"]
   end
 
 end
