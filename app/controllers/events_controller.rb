@@ -3,6 +3,8 @@ class EventsController < ApplicationController
   def new
     @event = Event.new
     @event.spoodle_dates.build # (DEV) Create one empty date to begin with
+    @sports = get_sports
+
   end
 
   def create
@@ -41,7 +43,6 @@ class EventsController < ApplicationController
 
   def index
     @events = Event.all
-    @sports = get_sports
   end
 
   def show
