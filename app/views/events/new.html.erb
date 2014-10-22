@@ -17,8 +17,10 @@
 
     <%= f.nested_fields_for :invitations do |fff| %>
         <%= fff.remove_nested_fields_link 'Remove invitation' %>
-        <% # fff.collection_select :invitation, :user, User.all, :email, :email %>
+        <%= fff.collection_select :user, User.all, :email, :email %>
     <% end %>
+    <br/>
     <%= f.add_nested_fields_link :invitations, 'Add more invitations' %>
+    <br/>
     <%= f.submit 'Create' %>
 <% end %>
