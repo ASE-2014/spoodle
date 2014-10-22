@@ -37,7 +37,7 @@ class EventsController < ApplicationController
     else
       flash[:error] = "Event could not be deleted!"
     end
-    redirect_to events_url
+    redirect_to events_path
   end
 
   def index
