@@ -6,6 +6,8 @@ Doodle meets sports
 
 # For devs
 
+## **Help, Rails is fu**ing magic! I don't get it!**
+**-->** [**Check out the rails guide, read every page and you will understand the magic**](http://guides.rubyonrails.org/index.html) **<--**
 
 ## Coding guidelines
 Ruby: https://github.com/bbatsov/ruby-style-guide  
