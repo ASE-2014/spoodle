@@ -10,6 +10,7 @@ class Event < ActiveRecord::Base
   has_many :invitations
   accepts_nested_attributes_for :invitations, allow_destroy: true
 
+  #TODO :users are not unique! Solution searched! Please help!
   has_many :users, through: :invitations
 
   validates :title, presence: true

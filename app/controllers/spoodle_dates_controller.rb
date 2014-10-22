@@ -8,7 +8,7 @@ class SpoodleDatesController < ApplicationController
     else
       flash[:error] = "Date could not be deleted!"
     end
-    redirect_to event_path(@event)
+    redirect_to @event
   end
 
 end

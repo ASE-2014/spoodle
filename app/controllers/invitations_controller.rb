@@ -5,7 +5,7 @@ class InvitationsController < ApplicationController
     @users = User.select { |u| @event.users.exclude? u  }
     if @users.empty?
       flash[:error] = "Everybody is already invited. Srsly?!"
-      redirect_to event_path(@event)
+      redirect_to @event
     else
       @invitation = Invitation.new
       render :new
@@ -17,12 +17,14 @@ class InvitationsController < ApplicationController
     @invitation = @event.invitations.new(invitation_params)
     if @invitation.save
       flash[:success] = "User #{@invitation.user.username} invited"
-      redirect_to event_path(@event)
+      redirect_to @event
     else
       flash[:error] = "Invitation was not possible"
       redirect_to new_event_invitation_path
     end
   end
+
+  private
 
   def invitation_params
     params.require(:invitation).permit(:user_id)

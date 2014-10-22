@@ -2,11 +2,24 @@
 <p>Create a new event.</p>
 
 <%= form_for @event do |f| %>
-    <%= f.label :title %>
-    <%= f.text_field :title %>
 
-    <%= f.label :description %>
-    <%= f.text_area :description, size: '60x12' %>
+    <% if @event.errors.any? %>
+        <ul>
+            <% @event.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+        </ul>
+    <% end %>
+
+    <p>
+        <%= f.label :title %><br/>
+        <%= f.text_field :title %>
+    </p>
+
+    <p>
+        <%= f.label :description %><br/>
+        <%= f.text_area :description, size: '60x12' %>
+    </p>
 
 
     <%= f.nested_fields_for :spoodle_dates do |ff| %>

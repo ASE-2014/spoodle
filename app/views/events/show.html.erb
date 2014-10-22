@@ -10,12 +10,12 @@
 </p>
 
 <p>
-    <strong>Title:</strong>
+    <strong>Title:</strong><br/>
     <%= @event.title %>
 </p>
 
 <p>
-    <strong>Description:</strong>
+    <strong>Description:</strong><br/>
     <%= @event.description %>
 </p>
 
@@ -25,5 +25,6 @@
 <h2>Invitations</h2>
 <%= render @event.invitations %>
 
+<%= link_to 'Destroy Event', event_path(@event), method: :delete, data: { confirm: 'Are you sure?' } %> |
 <%= link_to 'Edit Event', edit_event_path(@event) %> |
 <%= link_to 'Back to Events', events_path %>

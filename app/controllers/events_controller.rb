@@ -9,16 +9,16 @@ class EventsController < ApplicationController
   def create
     @event = Event.new(event_params)
     if @event.save
-      flash[:success] = "#{@event.title} created"
+      flash[:success] = "Event '#{@event.title}' was created"
+      redirect_to events_path
     else
-      flash[:error] = "Event could not be created!"
+      @users = User.all # Since render will not call events#new
+      render :new
     end
-    redirect_to events_path
   end
 
   def update
     @event = Event.find(params[:id])
-
     if @event.update(event_update_params)
       redirect_to @event
     else
