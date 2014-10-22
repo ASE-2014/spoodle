@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   resources :events do
     resources :spoodle_dates
+    resources :invitations
   end
 
   devise_for :users,

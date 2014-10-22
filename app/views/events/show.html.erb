@@ -1,6 +1,14 @@
 <h1>Event#show</h1>
 <p>Look at that damn nice event!</p>
 
+<% flash.each do |name, msg| -%>
+    <%= content_tag :div, msg, class: name %>
+<% end -%>
+
+<p>
+    <%= link_to 'Invite a new user', new_event_invitation_path(@event) %>
+</p>
+
 <p>
     <strong>Title:</strong>
     <%= @event.title %>

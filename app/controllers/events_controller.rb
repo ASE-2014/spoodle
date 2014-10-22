@@ -11,7 +11,7 @@ class EventsController < ApplicationController
     if @event.save
       flash[:success] = "#{@event.title} created"
     else
-      flash[:success] = "Event could not be created!"
+      flash[:error] = "Event could not be created!"
     end
     redirect_to events_path
   end
@@ -19,10 +19,10 @@ class EventsController < ApplicationController
   def update
     @event = Event.find(params[:id])
 
-    if @event.update(event_params)
+    if @event.update(event_update_params)
       redirect_to @event
     else
-      render 'edit'
+      render :edit
     end
   end
 
@@ -35,7 +35,7 @@ class EventsController < ApplicationController
     if @event.destroy
       flash[:success] = "Event deleted"
     else
-      flash[:success] = "Event could not be deleted!"
+      flash[:error] = "Event could not be deleted!"
     end
     redirect_to events_url
   end
@@ -52,6 +52,12 @@ class EventsController < ApplicationController
 
   def event_params
     params.require(:event).permit(:title, :description, spoodle_dates_attributes: [:id, :datetime, :_destroy], invitations_attributes: [:id, :user_id, :_destroy])
+  end
+
+  # Don't allow invitations_attributes, since the invitations can't be deleted.
+  # Invitations are added through the invitations controller.
+  def event_update_params
+    params.require(:event).permit(:title, :description, spoodle_dates_attributes: [:id, :datetime, :_destroy])
   end
 
 end
