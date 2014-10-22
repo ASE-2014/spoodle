@@ -3,6 +3,7 @@ class EventsController < ApplicationController
   def new
     @event = Event.new
     @event.spoodle_dates.build # (DEV) Create one empty date to begin with
+    @users = User.all
   end
 
   def create
@@ -50,7 +51,7 @@ class EventsController < ApplicationController
   private
 
   def event_params
-    params.require(:event).permit(:title, :description, spoodle_dates_attributes: [:id, :datetime, :_destroy])
+    params.require(:event).permit(:title, :description, spoodle_dates_attributes: [:id, :datetime, :_destroy], invitations_attributes: [:id, :user, :_destroy])
   end
 
 end
