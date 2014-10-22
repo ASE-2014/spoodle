@@ -15,5 +15,10 @@
     <% end %>
     <%= f.add_nested_fields_link :spoodle_dates, 'Add more dates' %>
 
+    <%= f.nested_fields_for :invitations do |fff| %>
+        <%= fff.remove_nested_fields_link 'Remove invitation' %>
+        <% # fff.collection_select :invitation, :user, User.all, :email, :email %>
+    <% end %>
+    <%= f.add_nested_fields_link :invitations, 'Add more invitations' %>
     <%= f.submit 'Create' %>
 <% end %>
