@@ -15,4 +15,13 @@ class Event < ActiveRecord::Base
 
   validates :title, presence: true
 
+  def is_invited?(user)
+    self.invitations.each do |invitation|
+      p invitation.user
+      p user
+      return true if invitation.user.eql? user
+    end
+    return false
+  end
+
 end

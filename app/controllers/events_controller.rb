@@ -1,5 +1,7 @@
 class EventsController < ApplicationController
 
+  before_filter :authenticate_user!
+
   def new
     @event = Event.new
     @event.spoodle_dates.build # (DEV) Create one empty date to begin with
@@ -8,6 +10,7 @@ class EventsController < ApplicationController
 
   def create
     @event = Event.new(event_params)
+    @event.owner = current_user
     if @event.save
       flash[:success] = "Event '#{@event.title}' was created"
       redirect_to events_path
@@ -41,7 +44,8 @@ class EventsController < ApplicationController
   end
 
   def index
-    @events = Event.all
+    p current_user.username
+    @events = Event.select{ |event| (event.is_invited? current_user or event.owner.eql? current_user) }
   end
 
   def show
