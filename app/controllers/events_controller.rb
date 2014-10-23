@@ -1,18 +1,23 @@
 class EventsController < ApplicationController
 
+  before_filter :authenticate_user!
+  before_filter :owns_event!, only: [:update, :edit, :destroy]
+  before_filter :invited_or_owner_of_event!, only: [:show]
+
   def new
     @event = Event.new
     @event.spoodle_dates.build # (DEV) Create one empty date to begin with
-    @users = User.all
+    @users = User.all_except current_user
   end
 
   def create
     @event = Event.new(event_params)
+    @event.owner = current_user
     if @event.save
       flash[:success] = "Event '#{@event.title}' was created"
       redirect_to events_path
     else
-      @users = User.all # Since render will not call events#new
+      @users = User.all_except current_user # Since render will not call events#new
       render :new
     end
   end
@@ -41,7 +46,7 @@ class EventsController < ApplicationController
   end
 
   def index
-    @events = Event.all
+    @events = Event.select{ |event| (event.is_invited? current_user or event.owner.eql? current_user) }
   end
 
   def show

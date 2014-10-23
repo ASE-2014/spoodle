@@ -1,8 +1,11 @@
 class InvitationsController < ApplicationController
 
+  before_filter :authenticate_user!
+  before_filter :owns_event!, only: [:new, :create]
+
   def new
     @event = Event.find(params[:event_id])
-    @users = User.select { |u| @event.users.exclude? u  }
+    @users = User.select{ |user| @event.users.exclude? user and not @event.owner.eql? user }
     if @users.empty?
       flash[:error] = "Everybody is already invited. Srsly?!"
       redirect_to @event
