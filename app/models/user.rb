@@ -15,6 +15,9 @@ class User < ActiveRecord::Base
   validates :username,
             :uniqueness => { :case_sensitive => false }
 
+  def self.all_except(user)
+    where.not(id: user)
+  end
 
   # OVERWRITE to use username and email for login
   def self.find_for_database_authentication(warden_conditions)

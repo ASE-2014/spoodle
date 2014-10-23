@@ -15,6 +15,10 @@ class Event < ActiveRecord::Base
 
   validates :title, presence: true
 
+  #TODO Create a validation that the owner of the event can not be invited!
+  #TODO Create a validation that the deadline of the event can not be before a spoodle date!
+  #TODO Create a validation that the definitive date is after the deadline!
+
   def owns_event?(user)
     self.owner == user
   end
