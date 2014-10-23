@@ -11,6 +11,8 @@
     <tr>
         <th>Title</th>
         <th>Description</th>
+        <th>Dates</th>
+        <th>Invitations</th>
         <th colspan="3"></th>
     </tr>
 
@@ -18,6 +20,8 @@
         <tr>
             <td><%= event.title %></td>
             <td><%= event.description %></td>
+            <td><%= event.spoodle_dates.map{ |spoodle_date| spoodle_date.datetime }.join(',<br/>').html_safe %></td>
+            <td><%= event.invitations.map{ |invitation| invitation.user.username }.join(',<br/>').html_safe %></td>
             <td><%= link_to 'Show', event_path(event) %></td>
             <td><%= link_to 'Edit', edit_event_path(event) %></td>
             <td><%= link_to 'Destroy', event_path(event), method: :delete, data: { confirm: 'Are you sure?' } %></td>
