@@ -4,5 +4,20 @@
 </p>
 
 <p>
+    <strong>Users:</strong>
+    <% spoodle_date.users.each do |user| %>
+        <%= user.username %><br/>
+    <% end %>
+</p>
+
+<p>
+    <% unless already_assigned? spoodle_date %>
+        <%= link_to 'Assign to SpoodleDate', assign_event_spoodle_date_path(@event, spoodle_date), method: :put %>
+    <% else %>
+        <%= link_to 'Cancel SpoodleDate', cancel_event_spoodle_date_path(@event, spoodle_date), method: :put %>
+    <% end %>
+</p>
+
+<p>
     <%= link_to 'Destroy SpoodleDate', event_spoodle_date_path(@event, spoodle_date), method: :delete, data: { confirm: 'Are you sure?' } %>
 </p>

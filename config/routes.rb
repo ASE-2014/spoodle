@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
 
   resources :events do
-    resources :spoodle_dates
+    resources :spoodle_dates do
+      put :assign, on: :member
+      put :cancel, on: :member
+    end
     resources :invitations
   end
 

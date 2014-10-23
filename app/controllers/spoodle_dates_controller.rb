@@ -3,6 +3,28 @@ class SpoodleDatesController < ApplicationController
   before_filter :authenticate_user!
   before_filter :owns_event!, only: [:destroy]
 
+  def assign
+    @event = Event.find(params[:event_id])
+    @spoodle_date = SpoodleDate.find(params[:id])
+    if @spoodle_date.users << current_user
+      flash[:success] = "You are now assigned at #{@spoodle_date.datetime}"
+    else
+      flash[:error] = "You could not be assigned to the date!"
+    end
+    redirect_to @event
+  end
+
+  def cancel
+    @event = Event.find(params[:event_id])
+    @spoodle_date = SpoodleDate.find(params[:id])
+    if @spoodle_date.users.delete(current_user)
+      flash[:success] = "You canceled at #{@spoodle_date.datetime}"
+    else
+      flash[:error] = "You could not cancel the date!"
+    end
+    redirect_to @event
+  end
+
   def destroy
     @event = Event.find(params[:event_id])
     @spoodle_date = SpoodleDate.find(params[:id])
