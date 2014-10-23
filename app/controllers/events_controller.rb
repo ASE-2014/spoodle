@@ -1,6 +1,8 @@
 class EventsController < ApplicationController
 
   before_filter :authenticate_user!
+  before_filter :owns_event!, only: [:update, :edit, :destroy]
+  before_filter :invited_or_owner_of_event!, only: [:show]
 
   def new
     @event = Event.new

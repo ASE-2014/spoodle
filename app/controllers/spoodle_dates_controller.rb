@@ -1,5 +1,8 @@
 class SpoodleDatesController < ApplicationController
 
+  before_filter :authenticate_user!
+  before_filter :owns_event!, only: [:destroy]
+
   def destroy
     @event = Event.find(params[:event_id])
     @spoodle_date = SpoodleDate.find(params[:id])

@@ -30,3 +30,7 @@
         </tr>
     <% end %>
 </table>
+
+<p>Logged in as: <%= current_user.username %></p>
+
+<%= link_to 'Sign out', destroy_user_session_path, :method => :delete %>

@@ -1,5 +1,8 @@
 class InvitationsController < ApplicationController
 
+  before_filter :authenticate_user!
+  before_filter :owns_event!, only: [:new, :create]
+
   def new
     @event = Event.find(params[:event_id])
     @users = User.select { |u| @event.users.exclude? u  }
