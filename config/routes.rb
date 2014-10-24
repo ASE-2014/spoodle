@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   end
 
   devise_for :users,
-             :controllers => { registrations: 'registrations' }
+             :controllers => {registrations: 'registrations', sessions: 'sessions'}
 
   devise_scope :user do
 

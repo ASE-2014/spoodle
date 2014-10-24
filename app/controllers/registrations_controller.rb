@@ -4,7 +4,6 @@ class RegistrationsController < Devise::RegistrationsController
   def new
     #Remote
     @rest_user = RestUser.new
-
     #Local
     build_resource({})
     @validatable = devise_mapping.validatable?
@@ -18,7 +17,7 @@ class RegistrationsController < Devise::RegistrationsController
   def create
     #Remote
     begin
-      @rest_user = RestUser.new({:username => sign_up_params[:username], :email => sign_up_params[:email], :password => sign_up_params[:password], :publicvisible => 2, :realname => sign_up_params[:username]},true)
+      @rest_user = RestUser.new({:username => sign_up_params[:username], :email => sign_up_params[:email], :password => sign_up_params[:password], :publicvisible => 2, :realname => sign_up_params[:username]}, true)
       status = @rest_user.save!
 
     rescue

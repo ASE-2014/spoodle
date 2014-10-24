@@ -25,12 +25,12 @@ class RestUser < Api::Base
 
   # Authentication for username / password combination. This will actually create a request.
   def self.rest_authenticate(username, password)
-    begin
+
+  begin
       user = find(username)
     rescue
       return nil
     end
-
     headers = {
         "Authorization" => 'Basic ' + Base64.encode64(username + ":" + password),
         "Accept" => "text/html"

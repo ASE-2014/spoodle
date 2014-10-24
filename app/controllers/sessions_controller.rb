@@ -1,22 +1,26 @@
 class SessionsController < Devise::SessionsController
 
-  # POST /resource/sign_in
+# GET /resource/sign_in
+  def new
+    self.resource = resource_class.new(sign_in_params)
+    clean_up_passwords(resource)
+    respond_with(resource, serialize_options(resource))
+  end
+
+# POST /resource/sign_in
   def create
-    rest_user = RestUser.rest_authenticate(params[:username], params[:password])
+
+    rest_user=RestUser.rest_authenticate(resource_params[:login], resource_params[:password])
 
     if rest_user
-      # REMOTE Session
-      Api::Base.user = session[:username]
-      Api::Base.password = params[:password]
-
-      # LOCAL Session
-      self.resource = warden.authenticate!(auth_options)
-      set_flash_message(:notice, :signed_in) if is_flashing_format?
-      sign_in(resource_name, resource)
-      yield resource if block_given?
-      respond_with resource, location: after_sign_in_path_for(resource)
+      #TODO test if the user is already in the local database, sign in, else create it
     end
 
+    self.resource = warden.authenticate!(auth_options)
+    set_flash_message(:notice, :signed_in) if is_flashing_format?
+    sign_in(resource_name, resource)
+    yield resource if block_given?
+    respond_with resource, location: after_sign_in_path_for(resource)
   end
 
 
@@ -33,5 +37,4 @@ class SessionsController < Devise::SessionsController
     yield if block_given?
     respond_to_on_destroy
   end
-
 end
