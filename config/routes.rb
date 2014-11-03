@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
 
   resources :events do
-    resources :spoodle_dates
+    resources :spoodle_dates do
+      put :assign, on: :member
+      put :cancel, on: :member
+    end
+    resources :invitations
   end
 
   devise_for :users,
@@ -10,7 +14,7 @@ Rails.application.routes.draw do
   devise_scope :user do
 
     authenticated :user do
-      root :to => "home#index", :as => "authenticated_root"
+      root :to => "events#index", :as => "authenticated_root"
     end
 
     unauthenticated :user do

@@ -2,18 +2,39 @@
 <p>Create a new event.</p>
 
 <%= form_for @event do |f| %>
-    <%= f.label :title %>
-    <%= f.text_field :title %>
 
-    <%= f.label :description %>
-    <%= f.text_area :description, size: '60x12' %>
-    <%= f.collection_select(:sport_id, @sports, :last, :first ) %>
+    <% if @event.errors.any? %>
+        <ul>
+            <% @event.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+        </ul>
+    <% end %>
+
+    <p>
+        <%= f.label :title %><br/>
+        <%= f.text_field :title %>
+    </p>
+
+    <p>
+        <%= f.label :description %><br/>
+        <%= f.text_area :description, size: '60x12' %>
+    </p>
+    <p>
+        <%= f.collection_select(:sport_id, @sports, :last, :first ) %>
+    </p>
 
     <%= f.nested_fields_for :spoodle_dates do |ff| %>
         <%= ff.remove_nested_fields_link 'Remove date' %>
         <%= ff.datetime_select :datetime %>
     <% end %>
     <%= f.add_nested_fields_link :spoodle_dates, 'Add more dates' %>
+
+    <%= f.nested_fields_for :invitations do |fff| %>
+        <%= fff.remove_nested_fields_link 'Remove invitation' %>
+        <%= fff.collection_select :user_id, @users, :id, :username %>
+    <% end %>
+    <%= f.add_nested_fields_link :invitations, 'Add more invitations' %>
 
     <%= f.submit 'Create' %>
 <% end %>
