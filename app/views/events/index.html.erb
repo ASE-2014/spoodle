@@ -35,3 +35,4 @@
 <p>Logged in as: <%= current_user.username %></p>
 
 <%= link_to 'Sign out', destroy_user_session_path, :method => :delete %>
+<%= link_to 'Delete user', edit_user_registration_path, :method => :destroy %>

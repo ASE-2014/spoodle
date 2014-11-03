@@ -36,6 +36,7 @@ class User < ActiveRecord::Base
   def create_user_on_cyber_coach
     self.cyber_coach_username = self.username + Time.now.strftime('%Y%m%d%H%M%S%L')
     self.cyber_coach_password = Random.rand(99999).to_s
+    self.save
 
     uri = "http://diufvm31.unifr.ch:8090/CyberCoachServer/resources/users/#{self.cyber_coach_username}"
     headers = {'Accept' => 'application/json','Content-Type' => 'application/xml'}
@@ -51,10 +52,18 @@ class User < ActiveRecord::Base
 
   def destroy_user_on_cyber_coach
     #TODO destroy user on cyber coach
+    headers = { "Authorization" => 'Basic ' + Base64.encode64(self.cyber_coach_username + ":" + self.cyber_coach_password),
+                "Accept" => "text/html" }
+    uri = "http://diufvm31.unifr.ch:8090/CyberCoachServer/resources/users/#{self.cyber_coach_username}"
+    response = HTTParty.delete(uri, headers: headers)
+
     p 'Destroy'
   end
 
   def login_on_cyber_coach
+    p "********************************************33333"
+    p self
+    p self.cyber_coach_username
     headers = { "Authorization" => 'Basic ' + Base64.encode64(self.cyber_coach_username + ":" + self.cyber_coach_password),
                 "Accept" => "text/html" }
     uri = "http://diufvm31.unifr.ch:8090/CyberCoachServer/resources/authenticateduser"

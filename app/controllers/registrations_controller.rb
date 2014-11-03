@@ -1,5 +1,7 @@
 class RegistrationsController < Devise::RegistrationsController
 
+  before_filter :destroy_user_on_cyber_coach, only: :destroy
+
   private
 
   def sign_up_params
