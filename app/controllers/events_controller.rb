@@ -51,6 +51,7 @@ class EventsController < ApplicationController
   def index
     @events = Event.select{ |event| (event.is_invited? current_user or event.owner.eql? current_user) }
     @sports = get_sports_by_id
+    @blub = CybercoachResourceSport.get(1)
   end
 
   def show
