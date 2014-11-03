@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
 
   after_create :create_user_on_cyber_coach, only: :create
-  before_destroy :destroy_user_on_cyber_coach, only: :destroy
+  before_destroy :destroy_user_on_cyber_coach, only: :delete
 
   has_many :events
   has_many :invitations
