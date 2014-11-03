@@ -11,6 +11,7 @@
     <tr>
         <th>Title</th>
         <th>Description</th>
+        <th>Sport</th>
         <th>Owner</th>
         <th>Dates</th>
         <th>Invitations</th>
@@ -21,6 +22,7 @@
         <tr>
             <td><%= event.title %></td>
             <td><%= event.description %></td>
+            <td><%= @sports[event.sport_id]['name'] %></td>
             <td><%= event.owner.username %></td>
             <td><%= event.spoodle_dates.map{ |spoodle_date| spoodle_date.datetime }.join(',<br/>').html_safe %></td>
             <td><%= event.invitations.map{ |invitation| invitation.user.username }.join(',<br/>').html_safe %></td>
