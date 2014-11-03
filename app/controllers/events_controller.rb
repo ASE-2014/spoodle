@@ -3,7 +3,7 @@ class EventsController < ApplicationController
   def new
     @event = Event.new
     @event.spoodle_dates.build # (DEV) Create one empty date to begin with
-    @sports = get_sports
+    @sports = get_sports.collect {|sport| [ sport['name'], sport['id'] ] }
 
   end
 
@@ -43,10 +43,14 @@ class EventsController < ApplicationController
 
   def index
     @events = Event.all
+    @sports = get_sports_by_id
+
   end
 
   def show
     @event = Event.find(params[:id])
+    @sport = get_sports_by_id[@event.sport_id]['name']
+
   end
 
   private
@@ -55,9 +59,16 @@ class EventsController < ApplicationController
     params.require(:event).permit(:title, :description, :sport_id, spoodle_dates_attributes: [:id, :datetime, :_destroy])
   end
 
+  #AS: TODO: Factor out
+  def get_sports_by_id
+    by_id = {}
+    get_sports.each{ |sport| by_id[sport['id']] = sport.tap{ |sport| sport.delete('id') } }
+    by_id
+  end
+
   def get_sports
     response = HTTParty.get("http://diufvm31.unifr.ch:8090/CyberCoachServer/resources/sports/",:headers => {'Accept' => 'application/json'})
-    response["sports"].collect {|sport| [ sport['name'], sport['id'] ] }
+    response["sports"]
   end
 
 end

@@ -24,7 +24,9 @@ arun = User.create(email: 'a@s.ch',
 
 event1 = Event.create(title: 'Best event ever',
                       description: 'This is a description',
-                      owner: arun)
+                      owner: arun,
+                      sport_id: 1
+                      )
 
 invitation_urs_event1 = event1.invitations.create(user: urs)
 invitation_oli_event1 = event1.invitations.create(user: oliver)

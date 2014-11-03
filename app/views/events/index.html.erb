@@ -18,6 +18,7 @@
         <tr>
             <td><%= event.title %></td>
             <td><%= event.description %></td>
+            <td><%= @sports[event.sport_id]['name'] %></td>
             <td><%= link_to 'Show', event_path(event) %></td>
             <td><%= link_to 'Edit', edit_event_path(event) %></td>
             <td><%= link_to 'Destroy', event_path(event), method: :delete, data: { confirm: 'Are you sure?' } %></td>
