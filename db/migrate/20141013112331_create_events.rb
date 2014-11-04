@@ -5,7 +5,7 @@ class CreateEvents < ActiveRecord::Migration
       t.text :description
       t.integer :owner_id
       t.integer :definitive_date_id
-      t.integer :deadline_id
+      t.datetime :deadline
       t.timestamps
     end
   end

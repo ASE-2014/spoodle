@@ -8,7 +8,6 @@ class EventsController < ApplicationController
     @event = Event.new
     @event.spoodle_dates.build # (DEV) Create one empty date to begin with
     @sports = get_sports.collect {|sport| [ sport['name'], sport['id'] ] }
-
     @users = User.all_except current_user
   end
 
@@ -19,7 +18,9 @@ class EventsController < ApplicationController
       flash[:success] = "Event '#{@event.title}' was created"
       redirect_to events_path
     else
-      @users = User.all_except current_user # Since render will not call events#new
+      # Since render will not call events#new
+      @sports = get_sports.collect {|sport| [ sport['name'], sport['id'] ] }
+      @users = User.all_except current_user
       render :new
     end
   end
@@ -29,6 +30,7 @@ class EventsController < ApplicationController
     if @event.update(event_update_params)
       redirect_to @event
     else
+      @sport = get_sports_by_id[@event.sport_id]['name']
       render :edit
     end
   end
@@ -61,7 +63,7 @@ class EventsController < ApplicationController
   private
 
   def event_params
-    params.require(:event).permit(:title, :description, spoodle_dates_attributes: [:id, :datetime, :_destroy], invitations_attributes: [:id, :user_id, :_destroy])
+    params.require(:event).permit(:title, :description, :deadline, :sport_id, spoodle_dates_attributes: [:id, :datetime, :_destroy], invitations_attributes: [:id, :user_id, :_destroy])
   end
 
   # Don't allow invitations_attributes, since the invitations can't be deleted.

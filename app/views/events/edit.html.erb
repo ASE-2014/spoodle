@@ -1,6 +1,15 @@
 <h1>Event#edit</h1>
 
 <%= form_for @event do |f| %>
+
+    <% if @event.errors.any? %>
+        <ul>
+            <% @event.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+        </ul>
+    <% end %>
+
     <%= f.label :title %>
     <%= f.text_field :title %>
 

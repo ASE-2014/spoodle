@@ -17,6 +17,11 @@
     </p>
 
     <p>
+        <%= f.label :deadline %><br/>
+        <%= f.datetime_select :deadline, default: 3.days.from_now %>
+    </p>
+
+    <p>
         <%= f.label :description %><br/>
         <%= f.text_area :description, size: '60x12' %>
     </p>
