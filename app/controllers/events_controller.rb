@@ -51,7 +51,7 @@ class EventsController < ApplicationController
   end
 
   def index
-    @events = Event.select{ |event| (event.is_invited? current_user or event.owner.eql? current_user) }
+    @events = Event.select{ |event| (event.is_invited? current_user or event.belongs_to? current_user) }
     @sports = get_sports_by_id
   end
 

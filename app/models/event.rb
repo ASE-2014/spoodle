@@ -36,4 +36,12 @@ class Event < ActiveRecord::Base
     return false
   end
 
+  def belongs_to?(user)
+    user.eql? self.owner
+  end
+
+  def is_upcoming?
+    deadline < DateTime.now
+  end
+
 end
