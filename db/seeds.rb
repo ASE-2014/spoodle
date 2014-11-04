@@ -24,7 +24,9 @@ arun = User.create(email: 'a@s.ch',
 
 event1 = Event.create(title: 'Best event ever',
                       description: 'This is a description',
-                      owner: arun)
+                      owner: arun,
+                      sport_id: 1
+                      )
 
 invitation_urs_event1 = event1.invitations.create(user: urs)
 invitation_oli_event1 = event1.invitations.create(user: oliver)
@@ -32,3 +34,15 @@ invitation_oli_event1 = event1.invitations.create(user: oliver)
 event1_date1 = event1.spoodle_dates.create(datetime: DateTime.new(2014,10, 30))
 event1_date2 = event1.spoodle_dates.create(datetime: DateTime.new(2014,11, 20),
                                            users: [oliver, urs, arun])
+
+
+event2 = Event.create(title: 'Second event ever',
+                      description: 'This is also a description',
+                      owner: oliver,
+                      sport_id: 2
+                      )
+
+invitation_oli_event2 = event2.invitations.create(user: arun)
+
+event2_date1 = event2.spoodle_dates.create(datetime: DateTime.new(2014,12, 24))
+event2_date2 = event2.spoodle_dates.create(datetime: DateTime.new(2014,12, 25))
