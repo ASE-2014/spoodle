@@ -18,11 +18,11 @@ class Event < ActiveRecord::Base
   validate :spoodle_dates_after_deadline
 
   def minimal_one_spoodle_date
-    errors.add(:spoodle_dates, "At least one date must be set!") if spoodle_dates.size <= 0
+    errors.add(:spoodle_dates, 'At least one date must be set!') if self.spoodle_dates.size <= 0
   end
 
   def spoodle_dates_after_deadline
-    errors.add(:spoodle_dates, "must take place after the deadline!") if spoodle_dates.any?{ |spoodle_date| spoodle_date.from < self.deadline }
+    errors.add(:spoodle_dates, 'must take place after the deadline!') if self.spoodle_dates.any?{ |spoodle_date| spoodle_date.from < self.deadline }
   end
 
   def owns_event?(user)
