@@ -1,0 +1,20 @@
+using httparty:
+
+response = HTTParty.<REST OPERATION>("address", :headers => {}, :basic_auth => {}, :body => {})
+
+:basic_auth is needed only for operations that require authentication (like edit a user)
+
+
+example: create new user
+
+payload = "<user>  <email>user.email</email>  <password>user.password</password>  <publicvisible>2</publicvisible>  <realname>user.realname</realname></user>"
+
+response = HTTParty.put("http://diufvm31.unifr.ch:8090/CyberCoachServer/resources/users/#{user.username}"
+,:headers => {'Accept' => 'application/json','Content-Type' => 'application/xml'}
+,:body => payload)
+
+
+The authentification is needed for some operations. use example: 
+:basic_auth => {:username => current_user.username, :password => current_user.password}
+(parameter of the HTTParty function)
+

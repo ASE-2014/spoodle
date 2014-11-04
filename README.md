@@ -6,10 +6,13 @@ Doodle meets sports
 
 # For devs
 
+## **Help, Rails is fu**ing magic! I don't get it!**
+**-->** [**Check out the rails guide, read every page and you will understand the magic**](http://guides.rubyonrails.org/index.html) **<--**
 
 ## Coding guidelines
 Ruby: https://github.com/bbatsov/ruby-style-guide  
-Rails: https://github.com/bbatsov/rails-style-guide
+Rails: https://github.com/bbatsov/rails-style-guide  
+Markdown(for issues on GitHub and so on): https://help.github.com/categories/writing-on-github/
 
 
 ## RESTful
@@ -41,3 +44,8 @@ Rails v4.1.6
 
 #### Example
 ![branching rules](http://www.rittmanmead.com/wp-content/uploads/2013/07/git-branch1.png)
+
+#### Commands
+|Command | Description |
+| ------ | :---------- |
+| git merge feature/xyz --no-ff | This ensures that you create a merge commit instead of fast-forwarding. |
