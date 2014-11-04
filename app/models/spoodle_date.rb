@@ -5,6 +5,7 @@ class SpoodleDate < ActiveRecord::Base
 
   validates :from, presence: true
   validates :to, presence: true
+  validates :weight, :numericality => {:greater_than => 0, :less_than_or_equal_to => 1}
   validate :from_before_to
 
   def from_before_to
@@ -13,6 +14,10 @@ class SpoodleDate < ActiveRecord::Base
 
   def is_assigned?(user)
     self.users.include? user
+  end
+
+  def votes
+    self.users.count * self.weight
   end
 
 end

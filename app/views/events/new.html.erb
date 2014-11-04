@@ -18,7 +18,7 @@
 
     <p>
         <%= f.label :deadline %><br/>
-        <%= f.datetime_select :deadline, default: 3.days.from_now %>
+        <%= f.datetime_select :deadline %>
     </p>
 
     <p>
@@ -31,7 +31,9 @@
 
     <%= f.nested_fields_for :spoodle_dates do |ff| %>
         <%= ff.remove_nested_fields_link 'Remove date' %>
+        <%= ff.label :from %>
         <%= ff.datetime_select :from %>
+        <%= ff.label :to %>
         <%= ff.datetime_select :to %>
     <% end %>
     <%= f.add_nested_fields_link :spoodle_dates, 'Add more dates' %>

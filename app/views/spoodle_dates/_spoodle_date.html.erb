@@ -1,14 +1,13 @@
 <p>
     <strong>From:</strong>
     <%= spoodle_date.from %>
-</p>
-
-<p>
+    <br/>
     <strong>To:</strong>
     <%= spoodle_date.to %>
-</p>
-
-<p>
+    <br/>
+    <strong>Vote:</strong>
+    <%= spoodle_date.votes %>
+    <br/>
     <strong>Users:</strong>
     <% spoodle_date.users.each do |user| %>
         <%= user.username %><br/>

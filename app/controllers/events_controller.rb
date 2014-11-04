@@ -6,7 +6,6 @@ class EventsController < ApplicationController
 
   def new
     @event = Event.new
-    @event.spoodle_dates.build # (DEV) Create one empty date to begin with
     @sports = get_sports.collect {|sport| [ sport['name'], sport['id'] ] }
     @users = User.all_except current_user
   end
