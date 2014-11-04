@@ -8,7 +8,7 @@ class SpoodleDatesController < ApplicationController
     @event = Event.find(params[:event_id])
     @spoodle_date = SpoodleDate.find(params[:id])
     if @spoodle_date.users << current_user
-      flash[:success] = "You are now assigned at #{@spoodle_date.datetime}"
+      flash[:success] = "You are now assigned at #{@spoodle_date.from}"
     else
       flash[:error] = "You could not be assigned to the date!"
     end
@@ -19,7 +19,7 @@ class SpoodleDatesController < ApplicationController
     @event = Event.find(params[:event_id])
     @spoodle_date = SpoodleDate.find(params[:id])
     if @spoodle_date.users.delete(current_user)
-      flash[:success] = "You canceled at #{@spoodle_date.datetime}"
+      flash[:success] = "You canceled at #{@spoodle_date.from}"
     else
       flash[:error] = "You could not cancel the date!"
     end
@@ -30,7 +30,7 @@ class SpoodleDatesController < ApplicationController
     @event = Event.find(params[:event_id])
     @spoodle_date = SpoodleDate.find(params[:id])
     if @spoodle_date.destroy
-      flash[:success] = "Date at #{@spoodle_date.datetime} deleted"
+      flash[:success] = "Date at #{@spoodle_date.from} deleted"
     else
       flash[:error] = "Date could not be deleted!"
     end

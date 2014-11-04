@@ -31,7 +31,8 @@
 
     <%= f.nested_fields_for :spoodle_dates do |ff| %>
         <%= ff.remove_nested_fields_link 'Remove date' %>
-        <%= ff.datetime_select :datetime %>
+        <%= ff.datetime_select :from %>
+        <%= ff.datetime_select :to %>
     <% end %>
     <%= f.add_nested_fields_link :spoodle_dates, 'Add more dates' %>
 

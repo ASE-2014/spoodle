@@ -22,7 +22,7 @@ class Event < ActiveRecord::Base
   end
 
   def spoodle_dates_after_deadline
-    errors.add(:spoodle_dates, "must take place after the deadline!") if spoodle_dates.any?{ |spoodle_date| spoodle_date.datetime < self.deadline }
+    errors.add(:spoodle_dates, "must take place after the deadline!") if spoodle_dates.any?{ |spoodle_date| spoodle_date.from < self.deadline }
   end
 
   def owns_event?(user)
