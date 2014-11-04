@@ -46,35 +46,30 @@ class User < ActiveRecord::Base
         "<realname>#{self.username}</realname></user>"
 
     response = HTTParty.put(uri, headers: headers, body: payload )
-    p 'Create'
+
     raise 'RegisterError' unless response.success?
   end
 
   def destroy_user_on_cyber_coach
-    #TODO destroy user on cyber coach
     headers = { "Authorization" => 'Basic ' + Base64.encode64(self.cyber_coach_username + ":" + self.cyber_coach_password),
                 "Accept" => "text/html" }
     uri = "http://diufvm31.unifr.ch:8090/CyberCoachServer/resources/users/#{self.cyber_coach_username}"
     response = HTTParty.delete(uri, headers: headers)
 
-    p 'Destroy'
+    raise 'DestroyError' unless response.success?
   end
 
   def login_on_cyber_coach
-    p "********************************************33333"
-    p self
-    p self.cyber_coach_username
     headers = { "Authorization" => 'Basic ' + Base64.encode64(self.cyber_coach_username + ":" + self.cyber_coach_password),
                 "Accept" => "text/html" }
     uri = "http://diufvm31.unifr.ch:8090/CyberCoachServer/resources/authenticateduser"
     response = HTTParty.head(uri, headers: headers)
-    p 'Login'
+
     raise 'LoginError' unless response.success?
   end
 
   def logout_on_cyber_coach
-    #TODO logout user on cyber coach
-    p 'Logout'
+    # Nothing to do here
   end
 
 end
