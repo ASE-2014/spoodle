@@ -1,11 +1,11 @@
 class SpoodleDate < ActiveRecord::Base
 
   belongs_to :event
-  has_and_belongs_to_many :users
+  has_many :availabilities
+  has_many :users, through: :availabilities
 
   validates :from, presence: true
   validates :to, presence: true
-  validates :weight, :numericality => {:greater_than => 0, :less_than_or_equal_to => 1}
   validate :from_before_to
 
   def from_before_to
@@ -16,8 +16,13 @@ class SpoodleDate < ActiveRecord::Base
     self.users.include? user
   end
 
+  # Sums up all availability, each one counts as 1 but is weighted by its creator
   def votes
-    self.users.count * self.weight
+    votes = 0
+    self.availabilities.each do |availability|
+      votes += 1 * availability.weight
+    end
+    votes
   end
 
 end
