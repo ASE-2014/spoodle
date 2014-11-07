@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   def owns_event!
     event = Event.find(params[:event_id].nil? ? params[:id] : params[:event_id])
-    unless event.owns_event? current_user
+    unless event.belongs_to? current_user
       flash[:error] = 'You are not the owner of the event!'
       redirect_to events_path
     end
@@ -15,8 +15,16 @@ class ApplicationController < ActionController::Base
 
   def invited_or_owner_of_event!
     event = Event.find(params[:event_id].nil? ? params[:id] : params[:event_id])
-    unless event.owns_event? current_user or event.is_invited?(current_user)
+    unless event.belongs_to? current_user or event.is_invited?(current_user)
       flash[:error] = 'You are not invited!'
+      redirect_to events_path
+    end
+  end
+
+  def deadline_not_over!
+    event = Event.find(params[:event_id].nil? ? params[:id] : params[:event_id])
+    if event.is_deadline_over?
+      flash[:error] = 'The deadline is already over!'
       redirect_to events_path
     end
   end

@@ -22,8 +22,8 @@ arun = User.create!(email: 'a@s.ch',
                    password_confirmation: '12345678')
 
 
-event1 = Event.new(title: 'Best event ever',
-                      description: 'This is a description',
+event1 = Event.new(title: '10km run',
+                      description: 'Who wants to run 10km with me? Love me!!!!',
                       owner: arun,
                       sport_id: 1,
                       deadline: 2.days.from_now )
@@ -37,12 +37,12 @@ event1.invitations.new(user: oliver)
 event1.save!
 
 
-event2 = Event.new(title: 'Second event ever',
-                      description: 'This is also a description',
+event2 = Event.new(title: '20km with Sir Stapleton',
+                      description: 'Join me now!',
                       owner: oliver,
-                      sport_id: 2,
-                      deadline: 15.minutes.from_now )
-event2.spoodle_dates.new(from: 7.days.from_now, to: 7.days.from_now + 1.hour)
-event2.spoodle_dates.new(from: 5.days.from_now, to: 5.days.from_now + 30.minutes)
+                      sport_id: 1,
+                      deadline: 2.minutes.from_now )
+event2.spoodle_dates.new(from: 5.minutes.from_now, to: 10.minutes.from_now)
+event2.spoodle_dates.new(from: 10.minutes.from_now, to: 15.minutes.from_now)
 event2.invitations.new(user: arun)
 event2.save!

@@ -2,6 +2,7 @@ class InvitationsController < ApplicationController
 
   before_filter :authenticate_user!
   before_filter :owns_event!, only: [:new, :create]
+  before_filter :deadline_not_over!
 
   def new
     @event = Event.find(params[:event_id])
