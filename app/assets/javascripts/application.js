@@ -15,3 +15,8 @@
 //= require turbolinks
 //= require nested_form_fields
 //= require_tree .
+//= require bootstrap.min
+//= require metisMenu.min
+//= require sb-admin-2
+
+
