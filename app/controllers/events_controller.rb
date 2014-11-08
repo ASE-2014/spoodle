@@ -20,6 +20,7 @@ class EventsController < ApplicationController
       redirect_to events_path
     else
       @users = User.all_except current_user # Since render will not call events#new
+      @sports = get_sports.collect {|sport| [ sport['name'], sport['id'] ] }
       render :new
     end
   end
