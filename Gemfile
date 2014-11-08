@@ -62,3 +62,6 @@ gem 'nested_form_fields'
 
 # REST
 gem 'httparty'
+
+# FontAwesome
+gem "font-awesome-rails"
