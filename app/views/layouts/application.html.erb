@@ -28,7 +28,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand" href="#"><%= fa_icon "trophy" %> <b>SPOODLE</b></a>
+    <a class="navbar-brand" href="/"><%= fa_icon "trophy" %> <b>SPOODLE</b></a>
 </div>
 <!-- /.navbar-header -->
 
@@ -230,10 +230,16 @@
     <ul class="dropdown-menu dropdown-user">
         <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
         </li>
-        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+        <li><%= link_to edit_user_registration_path do %>
+                <%= fa_icon 'gear' %>
+                Settings
+            <% end %>
         </li>
         <li class="divider"></li>
-        <li><a href="#"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+        <li><%= link_to destroy_user_session_path, :method => :delete do %>
+            <%= fa_icon 'sign-out' %>
+            Logout
+            <% end %>
         </li>
     </ul>
     <!-- /.dropdown-user -->
@@ -257,23 +263,28 @@
                 <!-- /input-group -->
             </li>
             <li>
-                <a class="active" href="#"><i class="fa fa-home fa-fw"></i> Dashboard</a>
+                <a class="active" href="/"><i class="fa fa-home fa-fw"></i> Dashboard</a>
             </li>
             <li>
                 <a href="#"><i class="fa fa-calendar fa-fw"></i> Events<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="#">Upcoming <span class="badge">12</span></a>
+                        <%= link_to events_path do %>
+                            Upcoming <span class="badge">12</span>
+                        <% end %>
                     </li>
                     <li>
-                        <a href="#">Pending <span class="badge">5</span></a>
-                    </li>
+                        <%= link_to events_path do %>
+                            Pending <span class="badge">12</span>
+                        <% end %>                    </li>
                     <li>
-                        <a href="#">Invitations <span class="badge">124</span></a>
-                    </li>
+                        <%= link_to events_path do %>
+                            Invitations <span class="badge">12</span>
+                        <% end %>                    </li>
                     <li>
-                        <a class="active" href="#"> Passed Events <span class="badge">13</span></a>
-                    </li>
+                        <%= link_to events_path do %>
+                            Passed <span class="badge">12</span>
+                        <% end %>                    </li>
                 </ul>
                 <!-- /.nav-second-level -->
             </li>
@@ -330,12 +341,10 @@
 </nav>
 
 <div id="page-wrapper">
-    <div class="row">
-
-
+    <div class="col-lg-12">
     <%= yield %>
-
     </div>
+
 </div>
 </body>
 </html>

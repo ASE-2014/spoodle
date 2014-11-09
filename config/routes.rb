@@ -8,6 +8,8 @@ Rails.application.routes.draw do
     resources :invitations
   end
 
+  resources :sessions
+
   devise_for :users,
              :controllers => { registrations: 'registrations',
                                sessions: 'sessions' }
@@ -15,7 +17,7 @@ Rails.application.routes.draw do
   devise_scope :user do
 
     authenticated :user do
-      root :to => "events#index", :as => "authenticated_root"
+      root :to => "home#index", :as => "authenticated_root"
     end
 
     unauthenticated :user do
