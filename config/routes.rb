@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
 
-  # You can have the root of your site routed with "root"
-  root 'welcome#index'
-
   resources :events do
     resources :spoodle_dates do
       put :assign, on: :member
@@ -22,7 +19,7 @@ Rails.application.routes.draw do
     end
 
     unauthenticated :user do
-      root :to => 'devise/sessions#new', as: :unauthenticated_root
+      root :to => 'welcome#index', as: :unauthenticated_root
     end
 
   end
