@@ -8,8 +8,6 @@ Rails.application.routes.draw do
     resources :invitations
   end
 
-  resources :sessions
-
   devise_for :users,
              :controllers => { registrations: 'registrations',
                                sessions: 'sessions' }
