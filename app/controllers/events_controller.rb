@@ -20,6 +20,7 @@ class EventsController < ApplicationController
       redirect_to events_path
     else
       @users = User.all_except current_user # Since render will not call events#new
+      @sport_id =  params[:event][:sport_id]
       @sports = get_sports.collect {|sport| [ sport['name'], sport['id'] ] }
       render :new
     end
@@ -63,7 +64,7 @@ class EventsController < ApplicationController
   private
 
   def event_params
-    params.require(:event).permit(:title, :description, spoodle_dates_attributes: [:id, :datetime, :_destroy], invitations_attributes: [:id, :user_id, :_destroy])
+    params.require(:event).permit(:title, :description, :sport_id, spoodle_dates_attributes: [:id, :datetime, :_destroy], invitations_attributes: [:id, :user_id, :_destroy])
   end
 
   # Don't allow invitations_attributes, since the invitations can't be deleted.
