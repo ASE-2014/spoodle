@@ -17,7 +17,8 @@ class EventsController < ApplicationController
       flash[:success] = "Event '#{@event.title}' was created"
       redirect_to events_path
     else
-      # Since render will not call events#new
+      @users = User.all_except current_user # Since render will not call events#new
+      @sport_id =  params[:event][:sport_id]
       @sports = get_sports.collect {|sport| [ sport['name'], sport['id'] ] }
       @users = User.all_except current_user
       render :new
