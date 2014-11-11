@@ -72,4 +72,12 @@ class User < ActiveRecord::Base
     # Nothing to do here
   end
 
+  #Returns a list of the searched users
+  def self.search_user_on_cyber_coach(user_name)
+    uri = "http://diufvm31.unifr.ch:8090/CyberCoachServer/resources/users?searchcriteria=#{user_name}"
+    response = HTTParty.get(uri)
+    raise 'SearchError' unless response.success?
+    response["list"]["users"]["user"]
+  end
+
 end
