@@ -2,28 +2,34 @@
 <% flash.each do |name, msg| -%>
     <%= content_tag :div, msg, class: name %>
 <% end -%>
-
-<p>Index of all events</p>
-
 <%= link_to 'New event', new_event_path %>
-<table>
-    <tr>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Sport</th>
-        <th>Owner</th>
-        <th>Dates</th>
-        <th>Invitations</th>
-        <th colspan="3"></th>
-    </tr>
-
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Sport</th>
+            <th>Owner</th>
+            <th>Dates</th>
+            <th>Invitations</th>
+            <th colspan="4">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
     <% @events.each do |event| %>
         <tr>
             <td><%= event.title %></td>
             <td><%= event.description %></td>
             <td><%= @sports[event.sport_id]['name'] %></td>
             <td><%= event.owner.username %></td>
-            <td><%= event.spoodle_dates.map{ |spoodle_date| spoodle_date.datetime }.join(',<br/>').html_safe %></td>
+            <td>
+                <% event.spoodle_dates.each do |date| %>
+                    <%= fa_icon 'calendar'%>
+                    <%= date.datetime.strftime("%a, %d.%m.%Y: %R").html_safe %>
+                    <br>
+                <% end %>
+            </td>
             <td><%= event.invitations.map{ |invitation| invitation.user.username }.join(',<br/>').html_safe %></td>
             <td><%= link_to 'Show', event_path(event) %></td>
             <td><%= link_to 'Edit', edit_event_path(event) %></td>
@@ -31,9 +37,6 @@
             <td><%= link_to 'Invite a new user', new_event_invitation_path(event) %></td>
         </tr>
     <% end %>
+        </tbody>
 </table>
-
-<p>Logged in as: <%= current_user.username %></p>
-
-<%= link_to 'Sign out', destroy_user_session_path, :method => :delete %>
-<%= link_to 'Delete user', user_registration_path, :method => :delete %>
+</div>
