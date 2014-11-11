@@ -1,7 +1,8 @@
 class Event < ActiveRecord::Base
 
   belongs_to :owner, foreign_key: 'owner_id', class_name: 'User'
-  belongs_to :definitive_date, foreign_key: 'definitive_date_id', class_name: 'SpoodleDate'
+
+  has_one :definitive_date, foreign_key: 'definitive_date_id', class_name: 'SpoodleDate'
 
   has_many :spoodle_dates
   accepts_nested_attributes_for :spoodle_dates, allow_destroy: true
@@ -47,17 +48,25 @@ class Event < ActiveRecord::Base
   # Checks if the event is definitive and not passed yet
   def is_upcoming?
     if is_deadline_over?
-      update_definitive_date if self.definitive_date.nil?
       return self.definitive_date.from > DateTime.now
     end
     return false
   end
 
-  # Updates the definitive date if the deadline is over and it hasn't been selected yet
-  def update_definitive_date
+  def is_passed?
     if is_deadline_over?
-      select_definitive_date if self.definitive_date.nil?
+      return self.definitive_date.from < DateTime.now
     end
+    return false
+  end
+
+  # Overwrites getter
+  # Updates the definitive date if the deadline is over and it hasn't been selected yet
+  def definitive_date
+    if is_deadline_over?
+      select_definitive_date if @definitive_date.nil?
+    end
+    @definitive_date
   end
 
   private
@@ -65,9 +74,11 @@ class Event < ActiveRecord::Base
   # Selects the spoodle_date with the most and strongest votes
   # Sets definitive_date to nil if nobody assigned to any date
   def select_definitive_date
+    p "this is #{self.title}"
+    p "definite date is #{@definitive_date}"
     self.spoodle_dates.each do |spoodle_date|
-      if self.definitive_date.nil? or spoodle_date.votes > self.definitive_date.votes
-        self.definitive_date = spoodle_date
+      if @definitive_date.nil? or spoodle_date.votes > @definitive_date.votes
+        @definitive_date = spoodle_date
       end
     end
   end

@@ -5,7 +5,6 @@
 <% end -%>
 
 <h2>Index of events you own or are invited to:</h2>
-
 <%= link_to 'New event', new_event_path %>
 <table>
     <tr>
@@ -35,7 +34,6 @@
 </table>
 
 <h2>Index of all definite events you own or are invited to:</h2>
-
 <table>
     <tr>
         <th>Title</th>
@@ -48,6 +46,34 @@
     </tr>
 
     <% @upcoming_events.each do |event| %>
+        <tr>
+            <td><%= event.title %></td>
+            <td><%= event.description %></td>
+            <td>Implement</td>
+            <td><%= event.owner.username %></td>
+            <td><%= event.definitive_date.from %></td>
+            <td><%= event.definitive_date.availabilities.map{ |availability| availability.user.username }.join(',<br/>').html_safe %></td>
+            <td><%= link_to 'Show', event_path(event) %></td>
+            <td><%= link_to 'Edit', edit_event_path(event) %></td>
+            <td><%= link_to 'Destroy', event_path(event), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td><%= link_to 'Invite a new user', new_event_invitation_path(event) %></td>
+        </tr>
+    <% end %>
+</table>
+
+<h2>Index of all passed events you own or are invited to:</h2>
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Sport</th>
+        <th>Owner</th>
+        <th>Date</th>
+        <th>Contributor</th>
+        <th colspan="3"></th>
+    </tr>
+
+    <% @passed_events.each do |event| %>
         <tr>
             <td><%= event.title %></td>
             <td><%= event.description %></td>
