@@ -1,32 +1,45 @@
-<p>
-    <strong>From:</strong>
-    <%= spoodle_date.from.strftime("%a, %d.%m.%y: %R") %>
-    <br/>
-    <strong>To:</strong>
-    <%= spoodle_date.to.strftime("%a, %d.%m.%y: %R") %>
-    <br/>
-    <strong>Votes:</strong>
-    <%= spoodle_date.votes %>
-    <br/>
-    <strong>Users:</strong>
-    <% spoodle_date.availabilities.each do |availability| %>
-        <%= availability.user.username %>
-        <%= availability.weight %><br/>
-    <% end %>
-</p>
+<div class="col-lg-4 col-md-6">
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <%= fa_icon 'calendar' %> <%= spoodle_date.from.strftime("%A, %d. %B %Y") %>
+    </div>
+    <div class="panel-body">
+        <p class="lead">
+            <%= fa_icon 'clock-o' %> <%= spoodle_date.from.strftime("%R") %> <span class="small"> to </span>
+            <%= spoodle_date.to.strftime("%R") %>
+        </p>
 
-<p>
-    <% unless already_assigned? spoodle_date %>
-        <%= form_tag assign_event_spoodle_date_path(@event, spoodle_date), method: :put do %>
-            <%= label_tag :weight %>
-            <%= number_field_tag :weight, nil, :in => 0.1..1, :step => 0.1 %>
-            <%= submit_tag 'Assign to SpoodleDate' %>
+        <p>
+            <strong>Current Total:</strong>
+            <%= spoodle_date.votes %>
+            <br/>
+            <strong>Users:</strong>
+            <% spoodle_date.availabilities.each do |availability| %>
+                <%= availability.user.username %>(<%= availability.weight %>)
+            <% end %>
+        </p>
+        <p>
+            <% unless already_assigned? spoodle_date %>
+                <%= form_tag assign_event_spoodle_date_path(@event, spoodle_date), method: :put do %>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <%= number_field_tag :weight, nil, :placeholder => "weight", :in => 0.1..1, :step => 0.1, class: "form-control input-sm" %>
+                            <span class="input-group-btn">
+                                <%= submit_tag 'Assign', :name => nil, class: "btn btn-sm btn-default" %>
+
+                        </div>
+                    </div>
+                <% end %>
+
+            <% else %>
+                <%= button_to 'Cancel assignment', cancel_event_spoodle_date_path(@event, spoodle_date), method: :put, class: "btn btn-warning btn-sm" %></p>
+            <% end %>
+        </p>
+        <% if @event.belongs_to?(current_user) %>
+            <%= button_to "Delete Date", event_spoodle_date_path(@event, spoodle_date), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary btn-xs" %></p>
         <% end %>
-    <% else %>
-        <%= link_to 'Cancel SpoodleDate', cancel_event_spoodle_date_path(@event, spoodle_date), method: :put %>
-    <% end %>
-</p>
+    </div>
+</div>
+</div>
 
-<p>
-    <%= link_to 'Destroy SpoodleDate', event_spoodle_date_path(@event, spoodle_date), method: :delete, data: { confirm: 'Are you sure?' } %>
-</p>
+
