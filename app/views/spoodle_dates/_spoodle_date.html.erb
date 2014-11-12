@@ -1,12 +1,9 @@
 <p>
-    <strong>Datetime:</strong>
-    <%= spoodle_date.datetime %>
-</p>
-
-<p>
+    <strong>Date:</strong>
+    <%= spoodle_date.datetime.strftime("%a, %d.%m.%y: %R") %>
     <strong>Users:</strong>
     <% spoodle_date.users.each do |user| %>
-        <%= user.username %><br/>
+        <%= user.username %>
     <% end %>
 </p>
 

@@ -1,31 +1,27 @@
-<h1>Event#show</h1>
-<p>Look at that damn nice event!</p>
-
+<h1 class="page-header"><%= @event.title %></h1>
+<% flash.each do |name, msg| %>
+    <div class="alert alert-dismissable alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <%= msg %>
+    </div>
+<% end %>
+<h3>Details</h3>
 <p>
-    <%= link_to 'Invite a new user', new_event_invitation_path(@event) %>
+    <strong>Description: </strong><%= @event.description %>
 </p>
-
 <p>
-    <strong>Title:</strong><br/>
-    <%= @event.title %>
+    <strong>Sport: </strong><%= @sport %>
 </p>
-
+<hr>
+<h3>Invited</h3>
+<%= render @event.invitations %>
 <p>
-    <strong>Description:</strong><br/>
-    <%= @event.description %>
+    <%= link_to 'Invite someone', new_event_invitation_path(@event) %>
 </p>
-
-<p>
-    <strong>Sport:</strong>
-    <%= @sport %>
-</p>
-
-
-<h2>Dates</h2>
+<hr>
+<h3>Dates</h3>
 <%= render @event.spoodle_dates %>
 
-<h2>Invitations</h2>
-<%= render @event.invitations %>
 
 <%= link_to 'Destroy Event', event_path(@event), method: :delete, data: { confirm: 'Are you sure?' } %> |
 <%= link_to 'Edit Event', edit_event_path(@event) %> |
