@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   get 'followers/new'
+  get 'followers/search'
 
 
 
