@@ -6,9 +6,7 @@ class EventsController < ApplicationController
 
   def new
     @event = Event.new
-    @event.spoodle_dates.build # (DEV) Create one empty date to begin with
     @sports = get_sports.collect {|sport| [ sport['name'], sport['id'] ] }
-
     @users = User.all_except current_user
   end
 
@@ -20,6 +18,9 @@ class EventsController < ApplicationController
       redirect_to events_path
     else
       @users = User.all_except current_user # Since render will not call events#new
+      @sport_id =  params[:event][:sport_id]
+      @sports = get_sports.collect {|sport| [ sport['name'], sport['id'] ] }
+      @users = User.all_except current_user
       render :new
     end
   end
@@ -29,6 +30,7 @@ class EventsController < ApplicationController
     if @event.update(event_update_params)
       redirect_to @event
     else
+      @sport = get_sports_by_id[@event.sport_id]['name']
       render :edit
     end
   end
@@ -49,7 +51,9 @@ class EventsController < ApplicationController
   end
 
   def index
-    @events = Event.select{ |event| (event.is_invited? current_user or event.owner.eql? current_user) }
+    @current_events = Event.select{ |event| (!event.is_deadline_over? and (event.is_invited? current_user or event.belongs_to? current_user)) }
+    @upcoming_events = Event.select{ |event| (event.is_upcoming? and (event.is_invited? current_user or event.belongs_to? current_user)) }
+    @passed_events = Event.select{ |event| (event.is_passed? and (event.is_invited? current_user or event.belongs_to? current_user)) }
     @sports = get_sports_by_id
   end
 
@@ -61,13 +65,13 @@ class EventsController < ApplicationController
   private
 
   def event_params
-    params.require(:event).permit(:title, :description, spoodle_dates_attributes: [:id, :datetime, :_destroy], invitations_attributes: [:id, :user_id, :_destroy])
+    params.require(:event).permit(:title, :description, :deadline, :sport_id, spoodle_dates_attributes: [:id, :from, :to, :_destroy], invitations_attributes: [:id, :user_id, :_destroy])
   end
 
   # Don't allow invitations_attributes, since the invitations can't be deleted.
   # Invitations are added through the invitations controller.
   def event_update_params
-    params.require(:event).permit(:title, :description, spoodle_dates_attributes: [:id, :datetime, :_destroy])
+    params.require(:event).permit(:title, :description, spoodle_dates_attributes: [:id, :from, :to, :_destroy])
   end
 
   #AS: TODO: Factor out

@@ -37,7 +37,7 @@
                     <td>
                         <% event.spoodle_dates.each do |date| %>
                             <%= fa_icon 'calendar'%>
-                            <%= date.datetime.strftime("%a, %d.%m.%y: %R") %>
+                            <%= date.from.strftime("%a, %d.%m.%y: %R") %>
                             <br>
                         <% end %>
                     </td>

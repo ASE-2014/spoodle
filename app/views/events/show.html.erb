@@ -10,6 +10,9 @@
     <strong>Description: </strong><%= @event.description %>
 </p>
 <p>
+    <strong>Deadline: </strong><%= @event.is_deadline_over? ? 'Over' : @event.deadline %>
+</p>
+<p>
     <strong>Sport: </strong><%= @sport %>
 </p>
 <hr>

@@ -17,16 +17,24 @@
     </p>
 
     <p>
+        <%= f.label :deadline %><br/>
+        <%= f.datetime_select :deadline %>
+    </p>
+
+    <p>
         <%= f.label :description %><br/>
         <%= f.text_area :description, size: '60x12' %>
     </p>
     <p>
-        <%= f.collection_select(:sport_id, @sports, :last, :first ) %>
+        <%= f.collection_select(:sport_id, @sports, :last, :first, {selected: @sport_id} ) %>
     </p>
 
     <%= f.nested_fields_for :spoodle_dates do |ff| %>
         <%= ff.remove_nested_fields_link 'Remove date' %>
-        <%= ff.datetime_select :datetime %>
+        <%= ff.label :from %>
+        <%= ff.datetime_select :from %>
+        <%= ff.label :to %>
+        <%= ff.datetime_select :to %>
     <% end %>
     <%= f.add_nested_fields_link :spoodle_dates, 'Add more dates' %>
 

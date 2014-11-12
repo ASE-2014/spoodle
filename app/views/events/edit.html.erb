@@ -1,6 +1,15 @@
 <h1>Event#edit</h1>
 
 <%= form_for @event do |f| %>
+
+    <% if @event.errors.any? %>
+        <ul>
+            <% @event.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+        </ul>
+    <% end %>
+
     <%= f.label :title %>
     <%= f.text_field :title %>
 
@@ -13,7 +22,10 @@
 
     <%= f.nested_fields_for :spoodle_dates do |ff| %>
         <%= ff.remove_nested_fields_link 'Remove date' %>
-        <%= ff.datetime_select :datetime %>
+        <%= ff.label :from %>
+        <%= ff.datetime_select :from %>
+        <%= ff.label :to %>
+        <%= ff.datetime_select :to %>
     <% end %>
     <%= f.add_nested_fields_link :spoodle_dates, 'Add more dates' %>
 

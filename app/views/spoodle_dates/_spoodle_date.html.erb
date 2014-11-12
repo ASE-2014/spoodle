@@ -1,14 +1,32 @@
 <p>
-    <strong>Date:</strong>
-    <%= spoodle_date.datetime.strftime("%a, %d.%m.%y: %R") %> |
+    <strong>From:</strong>
+    <%= spoodle_date.from.strftime("%a, %d.%m.%y: %R") %>
+    <br/>
+    <strong>To:</strong>
+    <%= spoodle_date.to.strftime("%a, %d.%m.%y: %R") %>
+    <br/>
+    <strong>Votes:</strong>
+    <%= spoodle_date.votes %>
+    <br/>
     <strong>Users:</strong>
-    <% spoodle_date.users.each do |user| %>
-        <%= user.username %>
-    <% end %> | 
+    <% spoodle_date.availabilities.each do |availability| %>
+        <%= availability.user.username %>
+        <%= availability.weight %><br/>
+    <% end %>
+</p>
+
+<p>
     <% unless already_assigned? spoodle_date %>
-        <%= link_to 'Assign to SpoodleDate', assign_event_spoodle_date_path(@event, spoodle_date), method: :put %>
+        <%= form_tag assign_event_spoodle_date_path(@event, spoodle_date), method: :put do %>
+            <%= label_tag :weight %>
+            <%= number_field_tag :weight, nil, :in => 0.1..1, :step => 0.1 %>
+            <%= submit_tag 'Assign to SpoodleDate' %>
+        <% end %>
     <% else %>
         <%= link_to 'Cancel SpoodleDate', cancel_event_spoodle_date_path(@event, spoodle_date), method: :put %>
     <% end %>
+</p>
+
+<p>
     <%= link_to 'Destroy SpoodleDate', event_spoodle_date_path(@event, spoodle_date), method: :delete, data: { confirm: 'Are you sure?' } %>
 </p>
