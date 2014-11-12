@@ -1,6 +1,6 @@
 class FollowersController < ApplicationController
   def search
-      @searched_users = User.search(params[:search]).order("created_at DESC")
+      @searched_users = User.search(params[:search])
       render 'followers/new'
   end
 end
