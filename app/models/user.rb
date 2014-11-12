@@ -80,4 +80,8 @@ class User < ActiveRecord::Base
     response["list"]["users"]["user"]
   end
 
+  def self.search(user_name)
+    where("username like ?", "%#{user_name}%")
+  end
+
 end

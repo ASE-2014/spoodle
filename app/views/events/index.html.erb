@@ -1,5 +1,14 @@
 <h1>Event#index</h1>
 
+<% if @searched_users.nil?%>
+    no result
+<%else%>
+    <% @searched_users.each do |user| %>
+        <%= user.username%>
+        <%= user.email%>
+    <% end %>
+<%end%>
+
 <% flash.each do |name, msg| -%>
     <%= content_tag :div, msg, class: name %>
 <% end -%>

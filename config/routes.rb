@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  get 'followers/new'
+
+
+
   resources :events do
     resources :spoodle_dates do
       put :assign, on: :member
@@ -23,6 +27,8 @@ Rails.application.routes.draw do
     end
 
   end
+
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
