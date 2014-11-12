@@ -1,20 +1,14 @@
 <p>
     <strong>Date:</strong>
-    <%= spoodle_date.datetime.strftime("%a, %d.%m.%y: %R") %>
+    <%= spoodle_date.datetime.strftime("%a, %d.%m.%y: %R") %> |
     <strong>Users:</strong>
     <% spoodle_date.users.each do |user| %>
         <%= user.username %>
-    <% end %>
-</p>
-
-<p>
+    <% end %> | 
     <% unless already_assigned? spoodle_date %>
         <%= link_to 'Assign to SpoodleDate', assign_event_spoodle_date_path(@event, spoodle_date), method: :put %>
     <% else %>
         <%= link_to 'Cancel SpoodleDate', cancel_event_spoodle_date_path(@event, spoodle_date), method: :put %>
     <% end %>
-</p>
-
-<p>
     <%= link_to 'Destroy SpoodleDate', event_spoodle_date_path(@event, spoodle_date), method: :delete, data: { confirm: 'Are you sure?' } %>
 </p>
