@@ -29,7 +29,7 @@
             </tr>
         </thead>
         <tbody>
-            <% @events.each do |event| %>
+            <% @invited_events.each do |event| %>
                 <tr>
                     <td><%= link_to event.title, event_path(event) %></td>
                     <td><%= @sports[event.sport_id]['name'] %></td>

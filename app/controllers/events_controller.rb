@@ -51,9 +51,25 @@ class EventsController < ApplicationController
   end
 
   def index
-    @current_events = Event.select{ |event| (!event.is_deadline_over? and (event.is_invited? current_user or event.belongs_to? current_user)) }
+  end
+
+  def upcoming
     @upcoming_events = Event.select{ |event| (event.is_upcoming? and (event.is_invited? current_user or event.belongs_to? current_user)) }
+    @sports = get_sports_by_id
+  end
+
+  def passed
     @passed_events = Event.select{ |event| (event.is_passed? and (event.is_invited? current_user or event.belongs_to? current_user)) }
+    @sports = get_sports_by_id
+  end
+
+  def pending
+    @pending_events = Event.select{ |event| (!event.is_deadline_over? and (event.is_invited? current_user or event.belongs_to? current_user)) }
+    @sports = get_sports_by_id
+  end
+
+  def invited
+    @invitations = Event.select{ |event| (!event.is_deadline_over? and (event.is_invited? current_user or event.belongs_to? current_user)) }
     @sports = get_sports_by_id
   end
 

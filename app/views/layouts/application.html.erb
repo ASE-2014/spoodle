@@ -67,20 +67,20 @@
                 <a class="active" href="/"><i class="fa fa-home fa-fw"></i> Dashboard</a>
             </li>
             <li>
-                <%= link_to events_path do %>
+                <%= link_to upcoming_events_path do %>
                     <i class="fa fa-calendar fa-fw"></i> Upcoming Events <span class="badge">12</span>
                 <% end %>
             </li>
             <li>
-                <%= link_to events_path do %>
+                <%= link_to pending_events_path do %>
                     <i class="fa fa-spinner fa-fw"></i> Pending Events <span class="badge">7</span>
                 <% end %>                    </li>
             <li>
-                <%= link_to events_path do %>
+                <%= link_to invited_events_path do %>
                     <i class="fa fa-flash fa-fw"></i> Invitations <span class="badge">3</span>
                 <% end %>                    </li>
             <li>
-                <%= link_to events_path do %>
+                <%= link_to passed_events_path do %>
                     <i class="fa fa-folder fa-fw"></i> Passed Events <span class="badge">54</span>
                 <% end %>
             </li>
