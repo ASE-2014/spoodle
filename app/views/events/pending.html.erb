@@ -1,10 +1,11 @@
-<h1 class="page-header">Events</h1>
+<h1 class="page-header">Pending Events</h1>
 <% flash.each do |name, msg| %>
     <div class="alert alert-dismissable alert-info">
         <button type="button" class="close" data-dismiss="alert">×</button>
         <%= msg %>
     </div>
 <% end %>
+<% if @pending_events %>
 <%= form_tag events_path, method: :get do %>
 <div class="form-group">
     <div class="input-group">
@@ -47,4 +48,4 @@
         </tbody>
     </table>
 </div>
-<%= button_to "New Event", new_event_path, :method => "get", class: "btn btn-success" %>
+<% end %>

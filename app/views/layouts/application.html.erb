@@ -68,20 +68,20 @@
             </li>
             <li>
                 <%= link_to upcoming_events_path do %>
-                    <i class="fa fa-calendar fa-fw"></i> Upcoming Events <span class="badge">12</span>
+                    <i class="fa fa-calendar fa-fw"></i> Upcoming Events <span class="badge"><%= amount_upcoming %></span>
                 <% end %>
             </li>
             <li>
                 <%= link_to pending_events_path do %>
-                    <i class="fa fa-spinner fa-fw"></i> Pending Events <span class="badge">7</span>
+                    <i class="fa fa-spinner fa-fw"></i> Pending Events <span class="badge"><%= amount_pending %></span>
                 <% end %>                    </li>
             <li>
                 <%= link_to invited_events_path do %>
-                    <i class="fa fa-flash fa-fw"></i> Invitations <span class="badge">3</span>
+                    <i class="fa fa-flash fa-fw"></i> Invitations <span class="badge"><%= amount_invited %></span>
                 <% end %>                    </li>
             <li>
                 <%= link_to passed_events_path do %>
-                    <i class="fa fa-folder fa-fw"></i> Passed Events <span class="badge">54</span>
+                    <i class="fa fa-folder fa-fw"></i> Passed Events <span class="badge"><%= amount_passed %></span>
                 <% end %>
             </li>
 

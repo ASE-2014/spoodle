@@ -25,10 +25,10 @@ Rails.application.routes.draw do
   end
 
   # Event routes
-  get     'upcoming_events'         => 'events#upcoming'
-  get     'pending_events'          => 'events#pending'
-  get     'invited_events'          => 'events#invited'
-  get     'passed_events'           => 'events#passed'
+  get     'upcoming'         => 'events#upcoming', as: 'upcoming_events'
+  get     'pending'          => 'events#pending',  as: 'pending_events'
+  get     'invitations'      => 'events#invited',  as: 'invited_events'
+  get     'passed'           => 'events#passed',   as: 'passed_events'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
