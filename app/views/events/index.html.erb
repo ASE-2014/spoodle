@@ -1,42 +1,45 @@
 <h1 class="page-header">Events</h1>
 <% flash.each do |name, msg| -%>
-    <%= content_tag :div, msg, class: name %>
+    <div class="alert alert-dismissable alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <%= msg %>
+    </div>
 <% end -%>
-<%= link_to 'New event', new_event_path %>
 <div class="table-responsive">
     <table class="table table-bordered">
         <thead>
-        <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Sport</th>
-            <th>Owner</th>
-            <th>Dates</th>
-            <th>Invitations</th>
-            <th colspan="4">Actions</th>
-        </tr>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Sport</th>
+                <th>Owner</th>
+                <th>Dates</th>
+                <th>Invitations</th>
+                <th colspan="4">Actions</th>
+            </tr>
         </thead>
         <tbody>
-    <% @events.each do |event| %>
-        <tr>
-            <td><%= event.title %></td>
-            <td><%= event.description %></td>
-            <td><%= @sports[event.sport_id]['name'] %></td>
-            <td><%= event.owner.username %></td>
-            <td>
-                <% event.spoodle_dates.each do |date| %>
-                    <%= fa_icon 'calendar'%>
-                    <%= date.datetime.strftime("%a, %d.%m.%Y: %R").html_safe %>
-                    <br>
-                <% end %>
-            </td>
-            <td><%= event.invitations.map{ |invitation| invitation.user.username }.join(',<br/>').html_safe %></td>
-            <td><%= link_to 'Show', event_path(event) %></td>
-            <td><%= link_to 'Edit', edit_event_path(event) %></td>
-            <td><%= link_to 'Destroy', event_path(event), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-            <td><%= link_to 'Invite a new user', new_event_invitation_path(event) %></td>
-        </tr>
-    <% end %>
+            <% @events.each do |event| %>
+                <tr>
+                    <td><%= event.title %></td>
+                    <td><%= event.description %></td>
+                    <td><%= @sports[event.sport_id]['name'] %></td>
+                    <td><%= event.owner.username %></td>
+                    <td>
+                        <% event.spoodle_dates.each do |date| %>
+                            <%= fa_icon 'calendar'%>
+                            <%= date.datetime.strftime("%a, %d.%m.%Y: %R").html_safe %>
+                            <br>
+                        <% end %>
+                    </td>
+                    <td><%= event.invitations.map{ |invitation| invitation.user.username }.join(',<br/>').html_safe %></td>
+                    <td><%= link_to 'Show', event_path(event) %></td>
+                    <td><%= link_to 'Edit', edit_event_path(event) %></td>
+                    <td><%= link_to 'Destroy', event_path(event), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                    <td><%= link_to 'Invite a new user', new_event_invitation_path(event) %></td>
+                </tr>
+            <% end %>
         </tbody>
-</table>
+    </table>
 </div>
+<%= button_to "New auction", new_event_path, :method => "get", class: "btn btn-success" %>

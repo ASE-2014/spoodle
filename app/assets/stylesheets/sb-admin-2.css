@@ -348,3 +348,6 @@ table.dataTable thead .sorting:after {
 .panel-yellow a:hover {
     color: #df8a13;
 }
+.navbar-right {
+    padding-right: 50px;
+}
