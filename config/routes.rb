@@ -12,6 +12,8 @@ Rails.application.routes.draw do
              :controllers => { registrations: 'registrations',
                                sessions: 'sessions' }
 
+  resources :users do
+  end
   devise_scope :user do
 
     authenticated :user do

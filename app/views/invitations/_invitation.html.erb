@@ -1,4 +1,3 @@
-<p>
-    <strong>User:</strong>
-    <%= invitation.user.username %>
-</p>
+<%= link_to user_path(invitation.user) do %>
+    <%= image_tag("profile.png") %>
+<% end %>

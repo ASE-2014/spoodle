@@ -17,10 +17,12 @@
 </p>
 <hr>
 <h3>Invited</h3>
-<%= render @event.invitations %>
-<p>
-    <%= link_to 'Invite someone', new_event_invitation_path(@event) %>
-</p>
+
+    <%= render @event.invitations %>
+
+    <%= link_to new_event_invitation_path(@event) do %>
+        <%= image_tag("plus.png") %>
+    <% end %>
 <hr>
 <h3>Dates</h3>
 <%= render @event.spoodle_dates %>
