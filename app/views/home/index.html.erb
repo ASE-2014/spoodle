@@ -55,15 +55,15 @@
         <div class="panel-heading">
             <div class="row">
                 <div class="col-xs-3">
-                    <i class="fa fa-flash fa-5x"></i>
+                    <i class="fa fa-user fa-5x"></i>
                 </div>
                 <div class="col-xs-9 text-right">
-                    <div class="huge"><%= amount_invited %></div>
-                    <div>Invitations</div>
+                    <div class="huge"><%= amount_own %></div>
+                    <div>My Events</div>
                 </div>
             </div>
         </div>
-        <%= link_to invited_events_path do %>
+        <%= link_to events_path do %>
             <div class="panel-footer">
                 <span class="pull-left">View Details</span>
                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>

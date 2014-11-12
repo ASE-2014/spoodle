@@ -1,11 +1,11 @@
-<h1 class="page-header">Invitations</h1>
+<h1 class="page-header">My Events</h1>
 <% flash.each do |name, msg| %>
     <div class="alert alert-dismissable alert-info">
         <button type="button" class="close" data-dismiss="alert">×</button>
         <%= msg %>
     </div>
 <% end %>
-<% if @invited_events %>
+<% if @my_events %>
 <%= form_tag events_path, method: :get do %>
 <div class="form-group">
     <div class="input-group">
@@ -30,7 +30,7 @@
             </tr>
         </thead>
         <tbody>
-            <% @invited_events.each do |event| %>
+            <% @my_events.each do |event| %>
                 <tr>
                     <td><%= link_to event.title, event_path(event) %></td>
                     <td><%= @sports[event.sport_id]['name'] %></td>
@@ -49,3 +49,4 @@
     </table>
 </div>
 <% end %>
+<%= button_to "New Event", new_event_path, :method => "get", class: "btn btn-success" %>

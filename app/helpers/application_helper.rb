@@ -11,7 +11,7 @@ module ApplicationHelper
     Event.get_pending(current_user).count
   end
 
-  def amount_invited
-    Event.get_invited(current_user).count
+  def amount_own
+    Event.get_own(current_user).count
   end
 end

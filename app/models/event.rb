@@ -93,15 +93,13 @@ class Event < ActiveRecord::Base
     Event.select{ |event| (event.is_passed? and (event.is_invited? user or event.belongs_to? user)) }
   end
 
-  # Returns an array of all events where the user has been invited to
-  def self.get_invited(user)
-    #TODO correct get query!!! (events where deadline not yet reached, current_user is invited but doesnt have a spoodledate yet)
-    Event.select{ |event| (!event.is_deadline_over? and (event.is_invited? user or event.belongs_to? user)) }
+  # Returns an array of all events that were created by the user
+  def self.get_own(user)
+    Event.select{ |event| (event.belongs_to? user) }
   end
 
   # Returns an array of all events where the user has set his availability but the deadline has not yet passed
   def self.get_pending(user)
-    #TODO correct get query!!! (events where deadline not yet reached, current_user is invited and has at least one spoodledate)
     Event.select{ |event| (!event.is_deadline_over? and (event.is_invited? user or event.belongs_to? user)) }
   end
 

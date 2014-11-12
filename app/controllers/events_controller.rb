@@ -68,8 +68,8 @@ class EventsController < ApplicationController
     @sports = get_sports_by_id
   end
 
-  def invited
-    @invited_events = Event.get_invited(current_user)
+  def index
+    @my_events = Event.get_own(current_user)
     @sports = get_sports_by_id
   end
 

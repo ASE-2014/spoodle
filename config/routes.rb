@@ -27,7 +27,6 @@ Rails.application.routes.draw do
   # Event routes
   get     'upcoming'         => 'events#upcoming', as: 'upcoming_events'
   get     'pending'          => 'events#pending',  as: 'pending_events'
-  get     'invitations'      => 'events#invited',  as: 'invited_events'
   get     'passed'           => 'events#passed',   as: 'passed_events'
 
   # The priority is based upon order of creation: first created -> highest priority.
