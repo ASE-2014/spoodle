@@ -1,9 +1,14 @@
-<h1>Invitation#new</h1>
-<p>Invite a new user to the event.</p>
-
-<%= form_for [@event, @invitation] do |f| %>
-    <%= f.collection_select :user_id, @users, :id, :username %>
-
-    <%= link_to 'Cancel', @event %>
-    <%= f.submit 'Create' %>
+<h1 class="page-header"><%= fa_icon 'send' %> Invite someone</h1>
+<%= form_for([@event, @invitation], class: "form-group") do |f| %>
+    <p>
+    <div>
+        <%=f.collection_select :user_id, @users, :id, :username, {selected: @users.first}, class: "form-control" %>
+    </div>
+    </p>
+    <div style="float: left; width: auto;">
+        <div><%= f.submit "Invite", class: "btn btn-success" %></div>
+    </div>
 <% end %>
+<div style="float: right; width: auto;">
+    <%= button_to 'Discard', @event, method: :get, class: "btn btn-warning" %>
+</div>

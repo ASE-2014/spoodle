@@ -6,6 +6,9 @@
     <div class="panel-body">
         <p class="lead">
             <%= fa_icon 'clock-o' %> <%= spoodle_date.from.strftime("%R") %> <span class="small"> to </span>
+            <% unless spoodle_date.from.to_date === spoodle_date.to.to_date %>
+              <%= spoodle_date.to.strftime("%d. %b %y") %>
+            <% end %>
             <%= spoodle_date.to.strftime("%R") %>
         </p>
 
@@ -26,7 +29,6 @@
                             <%= number_field_tag :weight, nil, :placeholder => "weight", :in => 0.1..1, :step => 0.1, class: "form-control input-sm" %>
                             <span class="input-group-btn">
                                 <%= submit_tag 'Assign', :name => nil, class: "btn btn-sm btn-default" %>
-
                         </div>
                     </div>
                 <% end %>
