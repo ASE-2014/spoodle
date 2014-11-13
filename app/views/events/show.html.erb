@@ -13,30 +13,22 @@
         <p>
             <%= @sport %> event by <%= link_to @event.owner.username, @event.owner %>.
             <%= @event.is_deadline_over? ? 'The deadline has passed.' : "You can assign to the proposed dates until "+@event.deadline.strftime("%A, %d. %B %Y at %R.") %>
-
         </p>
-
-<strong>Description: </strong><%= @event.description %>
-</p>
-<p>
-</p>
-<p>
-</p>
+        <strong>Description: </strong><%= @event.description %>
     </div>
 </div>
-
 <hr>
 <h3>Invited Users</h3>
 
-    <%= render @event.invitations %>
+<%= render @event.invitations %>
 
-    <%= link_to new_event_invitation_path(@event) do %>
-        <%= image_tag("plus.png") %>
-    <% end %>
+<%= link_to new_event_invitation_path(@event) do %>
+    <%= image_tag("plus.png") %>
+<% end %>
 <hr>
 <h3>Proposed Dates</h3>
 <div class="row">
-<%= render @event.spoodle_dates %>
+    <%= render @event.spoodle_dates %>
 </div>
 <hr>
 <% if @event.belongs_to?(current_user) %>
