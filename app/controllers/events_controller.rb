@@ -50,26 +50,36 @@ class EventsController < ApplicationController
     redirect_to events_path
   end
 
-  def index
-  end
-
   def upcoming
     @upcoming_events = Event.get_upcoming(current_user)
+    if params[:search]
+      @upcoming_events = search(@upcoming_events, params[:search])
+    end
     @sports = get_sports_by_id
   end
 
   def passed
     @passed_events = Event.get_passed(current_user)
+    if params[:search]
+      @passed_events = search(@passed_events, params[:search])
+    end
     @sports = get_sports_by_id
   end
 
   def pending
     @pending_events = Event.get_pending(current_user)
+    if params[:search]
+      @pending_events = search(@pending_events, params[:search])
+    end
     @sports = get_sports_by_id
   end
 
   def index
     @my_events = Event.get_own(current_user)
+    if params[:search]
+      @my_events = search(@my_events, params[:search])
+      (params[:search])
+    end
     @sports = get_sports_by_id
   end
 
@@ -102,5 +112,14 @@ class EventsController < ApplicationController
     response["sports"]
   end
 
+  # Performs a search query on each event of an array, returns an array of all events matching the query
+  # Currently searches in title, description, sport, owner (username)
+  #OS: TODO: Is slow because fetches list of sports from cybercoach. Update this method once the sports retrieval has been refactored
+  def search(event_array, query)
+    query = query.downcase
+    sports_by_id = get_sports_by_id
+    event_array.select{ |event| (event.title.downcase.include? query or event.description.downcase.include? query or
+        sports_by_id[event.sport_id]['name'].downcase.include? query or event.owner.username.downcase.include? query) }
+  end
 
 end

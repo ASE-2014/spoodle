@@ -1,6 +1,7 @@
 <h1>Login</h1>
 <hr>
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <%= devise_error_messages! %>
     <div class="form-group">
         <%= f.text_field :login, autofocus: true, class: "form-control" %>
     </div>
