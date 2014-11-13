@@ -22,8 +22,10 @@
 
 <%= render @event.invitations %>
 
-<%= link_to new_event_invitation_path(@event) do %>
-    <%= image_tag("plus.png") %>
+<% unless @event.is_deadline_over? %>
+    <%= link_to new_event_invitation_path(@event) do %>
+        <%= image_tag("plus.png") %>
+    <% end %>
 <% end %>
 <hr>
 <h3>Proposed Dates</h3>

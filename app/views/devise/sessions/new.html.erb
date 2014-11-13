@@ -1,11 +1,12 @@
-<h1>Login</h1>
-<hr>
+<h1 class="page-header">Login</h1>
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
     <%= devise_error_messages! %>
-    <div class="form-group">
+    <p>
+    <div><%= f.label 'Email or username' %><br />
         <%= f.text_field :login, autofocus: true, class: "form-control" %>
     </div>
-    <div class="form-group">
+    </p>
+    <div><%= f.label :password %><br />
         <%= f.password_field :password, class: "form-control" %>
     </div>
     <div class="checkbox">

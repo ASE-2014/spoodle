@@ -8,7 +8,7 @@ class InvitationsController < ApplicationController
     @event = Event.find(params[:event_id])
     @users = User.select{ |user| @event.users.exclude? user and not @event.owner.eql? user }
     if @users.empty?
-      flash[:error] = "Everybody is already invited. Srsly?!"
+      flash[:error] = "All Spoodle Users are already invited to this event!"
       redirect_to @event
     else
       @invitation = Invitation.new
@@ -20,10 +20,10 @@ class InvitationsController < ApplicationController
     @event = Event.find(params[:event_id])
     @invitation = @event.invitations.new(invitation_params)
     if @invitation.save
-      flash[:success] = "User #{@invitation.user.username} invited"
+      flash[:success] = "Successfully invited #{@invitation.user.username}."
       redirect_to @event
     else
-      flash[:error] = "Invitation was not possible"
+      flash[:error] = "#{@invitation.user.username} could not be invited!"
       redirect_to new_event_invitation_path
     end
   end

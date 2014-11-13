@@ -14,7 +14,7 @@ class EventsController < ApplicationController
     @event = Event.new(event_params)
     @event.owner = current_user
     if @event.save
-      flash[:success] = "Event '#{@event.title}' was created"
+      flash[:success] = "Successfully created Event '#{@event.title}'."
       redirect_to events_path
     else
       @users = User.all_except current_user # Since render will not call events#new
@@ -43,7 +43,7 @@ class EventsController < ApplicationController
   def destroy
     @event = Event.find(params[:id])
     if @event.destroy
-      flash[:success] = "Event deleted"
+      flash[:success] = "Successfully deleted Event."
     else
       flash[:error] = "Event could not be deleted!"
     end
@@ -112,9 +112,9 @@ class EventsController < ApplicationController
     response["sports"]
   end
 
-  # Performs a search query on each event of an array, returns an array of all events matching the query
-  # Currently searches in title, description, sport, owner (username)
-  #OS: TODO: Is slow because fetches list of sports from cybercoach. Update this method once the sports retrieval has been refactored
+  # Performs a search query on each event of an array, returns an array of all events matching the query (ignore case)
+  # Searches in title, description, sport, owner (username)
+  #OS: TODO: Search is slow because it fetches list of sports from cybercoach. Update this method once the sports retrieval has been refactored
   def search(event_array, query)
     query = query.downcase
     sports_by_id = get_sports_by_id

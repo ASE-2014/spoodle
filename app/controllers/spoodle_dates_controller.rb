@@ -11,9 +11,9 @@ class SpoodleDatesController < ApplicationController
     @availability = @spoodle_date.availabilities.new(availability_params);
     @availability.user = current_user
     if @availability.save
-      flash[:success] = "You are now assigned at #{@spoodle_date.from}"
+      flash[:success] = "Successfully assigned weight #{@availability.weight} to #{@spoodle_date.from.strftime("%a, %d.%m.%y: %R")}"
     else
-      flash[:error] = "You could not be assigned to the date!"
+      flash[:error] = "The Date at #{@spoodle_date.from.strftime("%a, %d.%m.%y: %R")} could not be assigned!"
     end
     redirect_to @event
   end
@@ -24,9 +24,9 @@ class SpoodleDatesController < ApplicationController
     @spoodle_date = SpoodleDate.find(params[:id])
     @availability = @spoodle_date.availabilities.find_by(user: current_user)
     if @availability.destroy
-      flash[:success] = "You canceled at #{@spoodle_date.from}"
+      flash[:success] = "Successfully canceled assignment at #{@spoodle_date.from.strftime("%a, %d.%m.%y: %R")}."
     else
-      flash[:error] = "You could not cancel the date!"
+      flash[:error] = "The Date at #{@spoodle_date.from.strftime("%a, %d.%m.%y: %R")} could not be canceled!"
     end
     redirect_to @event
   end
@@ -35,9 +35,9 @@ class SpoodleDatesController < ApplicationController
     @event = Event.find(params[:event_id])
     @spoodle_date = SpoodleDate.find(params[:id])
     if @spoodle_date.destroy
-      flash[:success] = "Date at #{@spoodle_date.from} deleted"
+      flash[:success] = "Successfully deleted Date at #{@spoodle_date.from.strftime("%a, %d.%m.%y: %R")}."
     else
-      flash[:error] = "Date could not be deleted!"
+      flash[:error] = "The Date at #{@spoodle_date.from.strftime("%a, %d.%m.%y: %R")} could not be deleted!"
     end
     redirect_to @event
   end
