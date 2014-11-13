@@ -19,7 +19,6 @@ class User < ActiveRecord::Base
   validates :username,
             :uniqueness => { :case_sensitive => false }
 
-
   def self.all_except(user)
     where.not(id: user)
   end
@@ -72,14 +71,5 @@ class User < ActiveRecord::Base
   def logout_on_cyber_coach
     # Nothing to do here
   end
-
-  #Returns a list of the searched users
-  def self.search_user_on_cyber_coach(user_name)
-    uri = "http://diufvm31.unifr.ch:8090/CyberCoachServer/resources/users?searchcriteria=#{user_name}"
-    response = HTTParty.get(uri)
-    raise 'SearchError' unless response.success?
-    response["list"]["users"]["user"]
-  end
-
 
 end
