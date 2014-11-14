@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
     self.cyber_coach_password = Random.rand(99999).to_s
     self.save
 
-    response = CybercoachUser.create(self.cyber_coach_username, self.email, self.cyber_coach_password)
+    response = CybercoachUser.create(self.cyber_coach_username, {email: self.email, password: self.cyber_coach_password, publicvisible: '2', realname: self.cyber_coach_username})
     raise 'RegisterError' unless response.success?
   end
 
