@@ -21,7 +21,7 @@
         <%= f.text_area :description, size: '60x12' %>
     </p>
     <p>
-        <%= f.collection_select(:sport_id, @sports, :last, :first, {selected: @sport_id} ) %>
+        <%= f.collection_select(:sport_id, @sports, :id, :name) %>
     </p>
 
     <%= f.nested_fields_for :spoodle_dates do |ff| %>

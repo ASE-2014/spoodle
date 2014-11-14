@@ -26,11 +26,6 @@ module CybercoachResource
       all_instances.select { |elem| elem.send(key) == val}
     end
 
-    def get_rest_response
-      response = HTTParty.get("#{@resources_base}/#{@resource_name.pluralize}/",:headers => {'Accept' => 'application/json'})
-      response[@resource_name.pluralize]
-    end
-
     def create(id, hash)
       uri = "#{@resources_base}/#{@resource_name.pluralize}/#{id}"
       headers = {'Accept' => 'application/json','Content-Type' => 'application/xml'}
@@ -45,6 +40,13 @@ module CybercoachResource
       uri = "#{@resources_base}/#{@resource_name.pluralize}/#{id}"
       response = HTTParty.delete(uri, headers: headers)
     end
+
+    private
+    def get_rest_response
+      response = HTTParty.get("#{@resources_base}/#{@resource_name.pluralize}/",:headers => {'Accept' => 'application/json'})
+      response[@resource_name.pluralize]
+    end
+
   end
 
   def self.login(username, password)
@@ -54,6 +56,7 @@ module CybercoachResource
     response = HTTParty.head(uri, headers: headers)
   end
 
+  private
   def self.generate_payload(root, hash)
     xmlstring = "<#{root}>"
     hash.each { |key, val| xmlstring << "<#{key}>#{val}</#{key}>"}

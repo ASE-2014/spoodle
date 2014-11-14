@@ -7,8 +7,8 @@ class EventsController < ApplicationController
   def new
     @event = Event.new
     @event.spoodle_dates.build # (DEV) Create one empty date to begin with
-    @sports = get_sports.collect {|sport| [ sport['name'], sport['id'] ] }
-
+    #@sports = get_sports.collect {|sport| [ sport['name'], sport['id'] ] }
+    @sports = CybercoachSport.get_all
     @users = User.all_except current_user
   end
 
@@ -20,8 +20,7 @@ class EventsController < ApplicationController
       redirect_to events_path
     else
       @users = User.all_except current_user # Since render will not call events#new
-      @sport_id =  params[:event][:sport_id]
-      @sports = get_sports.collect {|sport| [ sport['name'], sport['id'] ] }
+      @sports = CybercoachSport.get_all
       render :new
     end
   end
