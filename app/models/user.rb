@@ -49,7 +49,7 @@ class User < ActiveRecord::Base
   end
 
   def login_on_cyber_coach
-    response = CybercoachResource.login(self.cyber_coach_password, self.cyber_coach_password)
+    response = CybercoachResource.login(self.cyber_coach_username, self.cyber_coach_password)
     raise 'LoginError' unless response.success?
   end
 

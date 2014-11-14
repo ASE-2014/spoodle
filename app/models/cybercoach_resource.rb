@@ -31,14 +31,14 @@ module CybercoachResource
       headers = {'Accept' => 'application/json','Content-Type' => 'application/xml'}
       payload = CybercoachResource.generate_payload(@resource_name, hash)
 
-      response = HTTParty.put(uri, headers: headers, body: payload )
+      HTTParty.put(uri, headers: headers, body: payload )
     end
 
     def destroy(id, username, password)
       headers = { "Authorization" => 'Basic ' + Base64.encode64(username + ":" + password),
                   "Accept" => "text/html" }
       uri = "#{@resources_base}/#{@resource_name.pluralize}/#{id}"
-      response = HTTParty.delete(uri, headers: headers)
+      HTTParty.delete(uri, headers: headers)
     end
 
     private
@@ -52,8 +52,8 @@ module CybercoachResource
   def self.login(username, password)
     headers = { "Authorization" => 'Basic ' + Base64.encode64(username + ":" + password),
                 "Accept" => "text/html" }
-    uri = "#{@resources_base}/authenticateduser"
-    response = HTTParty.head(uri, headers: headers)
+    uri = "http://diufvm31.unifr.ch:8090/CyberCoachServer/resources/authenticateduser"
+    HTTParty.head(uri, headers: headers)
   end
 
   private
