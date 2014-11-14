@@ -38,24 +38,12 @@ class User < ActiveRecord::Base
     self.cyber_coach_password = Random.rand(99999).to_s
     self.save
 
-    uri = "http://diufvm31.unifr.ch:8090/CyberCoachServer/resources/users/#{self.cyber_coach_username}"
-    headers = {'Accept' => 'application/json','Content-Type' => 'application/xml'}
-    payload = "<user><email>#{self.email}</email>" +
-        "<password>#{self.cyber_coach_password}</password>" +
-        "<publicvisible>2</publicvisible>" +
-        "<realname>#{self.username}</realname></user>"
-
-    response = HTTParty.put(uri, headers: headers, body: payload )
-
+    response = CybercoachUser.create(self.cyber_coach_username, self.email, self.cyber_coach_password)
     raise 'RegisterError' unless response.success?
   end
 
   def destroy_user_on_cyber_coach
-    headers = { "Authorization" => 'Basic ' + Base64.encode64(self.cyber_coach_username + ":" + self.cyber_coach_password),
-                "Accept" => "text/html" }
-    uri = "http://diufvm31.unifr.ch:8090/CyberCoachServer/resources/users/#{self.cyber_coach_username}"
-    response = HTTParty.delete(uri, headers: headers)
-
+    response = CybercoachUser.destroy(self.cyber_coach_username, self.cyber_coach_username, self.cyber_coach_password)
     raise 'DestroyError' unless response.success?
   end
 

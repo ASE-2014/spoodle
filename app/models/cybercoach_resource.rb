@@ -25,11 +25,17 @@ module CybercoachResource
       all_instances = get_all
       all_instances.select { |elem| elem.send(key) == val}
     end
-
     def get_rest_response
       response = HTTParty.get("#{@resources_base}/#{@resource_name.pluralize}/",:headers => {'Accept' => 'application/json'})
       response[@resource_name.pluralize]
     end
+    def destroy(id, username, password)
+      headers = { "Authorization" => 'Basic ' + Base64.encode64(username + ":" + password),
+                  "Accept" => "text/html" }
+      uri = "http://diufvm31.unifr.ch:8090/CyberCoachServer/resources/#{@resource_name.pluralize}/#{id}"
+      response = HTTParty.delete(uri, headers: headers)
+    end
   end
+
 
 end
