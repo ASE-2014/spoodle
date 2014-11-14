@@ -48,11 +48,7 @@ class User < ActiveRecord::Base
   end
 
   def login_on_cyber_coach
-    headers = { "Authorization" => 'Basic ' + Base64.encode64(self.cyber_coach_username + ":" + self.cyber_coach_password),
-                "Accept" => "text/html" }
-    uri = "http://diufvm31.unifr.ch:8090/CyberCoachServer/resources/authenticateduser"
-    response = HTTParty.head(uri, headers: headers)
-
+    response = CybercoachResource.login(self.cyber_coach_password, self.cyber_coach_password)
     raise 'LoginError' unless response.success?
   end
 

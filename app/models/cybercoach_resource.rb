@@ -47,6 +47,13 @@ module CybercoachResource
     end
   end
 
+  def self.login(username, password)
+    headers = { "Authorization" => 'Basic ' + Base64.encode64(username + ":" + password),
+                "Accept" => "text/html" }
+    uri = "#{@resources_base}/authenticateduser"
+    response = HTTParty.head(uri, headers: headers)
+  end
+
   def self.generate_payload(root, hash)
     xmlstring = "<#{root}>"
     hash.each { |key, val| xmlstring << "<#{key}>#{val}</#{key}>"}
