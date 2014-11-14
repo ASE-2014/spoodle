@@ -22,7 +22,7 @@
         <tr>
             <td><%= event.title %></td>
             <td><%= event.description %></td>
-            <td><%= @sports[event.sport_id]['name'] %></td>
+            <td><%= event.sport.name %></td>
             <td><%= event.owner.username %></td>
             <td><%= event.spoodle_dates.map{ |spoodle_date| spoodle_date.datetime }.join(',<br/>').html_safe %></td>
             <td><%= event.invitations.map{ |invitation| invitation.user.username }.join(',<br/>').html_safe %></td>
@@ -35,7 +35,6 @@
 </table>
 
 <p>Logged in as: <%= current_user.username %></p>
-<%= @blub %>
 
 <%= link_to 'Sign out', destroy_user_session_path, :method => :delete %>
 <%= link_to 'Delete user', user_registration_path, :method => :delete %>

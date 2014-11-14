@@ -30,4 +30,8 @@ class Event < ActiveRecord::Base
     return false
   end
 
+  def sport
+    CybercoachSport.find_by(:id, self.sport_id)[0]
+  end
+
 end

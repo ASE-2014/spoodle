@@ -8,7 +8,7 @@
     <%= f.text_area :description, size: '60x12' %>
     <p>
         <strong>Sport:</strong>
-        <%= @sport %>
+        <%= @event.sport.name %>
     </p>
 
     <%= f.nested_fields_for :spoodle_dates do |ff| %>
