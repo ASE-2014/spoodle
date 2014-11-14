@@ -1,4 +1,2 @@
-class CybercoachUser
-  include CybercoachResource
-  @resource_name = 'user'
+class CybercoachUser < CybercoachResource
 end

@@ -1,9 +1,11 @@
-module CybercoachResource
+class CybercoachResource
 
-  def self.included(base)
+  def self.inherited(base)
     base.send(:include, InstanceMethods)
     base.extend(ClassMethods)
     base.instance_variable_set(:@resources_base, 'http://diufvm31.unifr.ch:8090/CyberCoachServer/resources')
+    resource_name = base.name.split(/(?=[A-Z])/)[1].downcase
+    base.instance_variable_set(:@resource_name, resource_name)
   end
 
   module InstanceMethods

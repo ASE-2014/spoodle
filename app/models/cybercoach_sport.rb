@@ -1,4 +1,2 @@
-class CybercoachSport
-  include CybercoachResource
-  @resource_name = 'sport'
+class CybercoachSport < CybercoachResource
 end
