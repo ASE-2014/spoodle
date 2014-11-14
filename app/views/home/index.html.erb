@@ -1,6 +1,98 @@
-<h1>Home</h1>
-
-<p>Logged in as: <%= current_user.username %></p>
-
-<%= link_to 'Sign out', destroy_user_session_path, :method => :delete %>
-<%= link_to 'Delete user', edit_user_registration_path, :method => :delete %>
+    <h1 class="page-header"><%= fa_icon 'home' %> Dashboard</h1>
+    <% flash.each do |name, msg| %>
+        <div class="alert alert-dismissable alert-info">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <%= msg %>
+        </div>
+    <% end %>
+</div>
+<div class="col-lg-3 col-md-6">
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-xs-3">
+                    <i class="fa fa-calendar fa-5x"></i>
+                </div>
+                <div class="col-xs-9 text-right">
+                    <div class="huge"><%= amount_upcoming %></div>
+                    <div>Upcoming Events</div>
+                </div>
+            </div>
+        </div>
+        <%= link_to upcoming_events_path do %>
+            <div class="panel-footer">
+                <span class="pull-left">View Details</span>
+                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                <div class="clearfix"></div>
+            </div>
+        <% end %>
+    </div>
+</div>
+<div class="col-lg-3 col-md-6">
+    <div class="panel panel-warning">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-xs-3">
+                    <i class="fa fa-spinner fa-5x"></i>
+                </div>
+                <div class="col-xs-9 text-right">
+                    <div class="huge"><%= amount_pending %></div>
+                    <div>Pending Events</div>
+                </div>
+            </div>
+        </div>
+        <%= link_to pending_events_path do %>
+            <div class="panel-footer">
+                <span class="pull-left">View Details</span>
+                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                <div class="clearfix"></div>
+            </div>
+        <% end %>
+    </div>
+</div>
+<div class="col-lg-3 col-md-6">
+    <div class="panel panel-danger">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-xs-3">
+                    <i class="fa fa-user fa-5x"></i>
+                </div>
+                <div class="col-xs-9 text-right">
+                    <div class="huge"><%= amount_own %></div>
+                    <div>My Events</div>
+                </div>
+            </div>
+        </div>
+        <%= link_to events_path do %>
+            <div class="panel-footer">
+                <span class="pull-left">View Details</span>
+                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                <div class="clearfix"></div>
+            </div>
+        <% end %>
+    </div>
+</div>
+<div class="col-lg-3 col-md-6">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-xs-3">
+                    <i class="fa fa-folder fa-5x"></i>
+                </div>
+                <div class="col-xs-9 text-right">
+                    <div class="huge"><%= amount_passed %></div>
+                    <div>Passed Events</div>
+                </div>
+            </div>
+        </div>
+        <%= link_to passed_events_path do %>
+            <div class="panel-footer">
+                <span class="pull-left">View Details</span>
+                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                <div class="clearfix"></div>
+            </div>
+        <% end %>
+        </a>
+    </div>
+</div>
+<div class="col-lg-12">

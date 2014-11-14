@@ -1,40 +1,58 @@
-<h1>Event#new</h1>
-<p>Create a new event.</p>
-
-<%= form_for @event do |f| %>
-
+<h1 class="page-header"><%= fa_icon 'pencil' %> New Event</h1>
+<%= form_for(@event, class: "form-group") do |f| %>
     <% if @event.errors.any? %>
-        <ul>
-            <% @event.errors.full_messages.each do |msg| %>
-                <li><%= msg %></li>
+        <% @event.errors.full_messages.each do |msg| %>
+            <div class="alert alert-dismissable alert-danger">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <%= msg %>
+            </div>
+        <% end %>
+    <% end %>
+    <p>
+        <div><%= f.label :title %>
+            <%= f.text_field :title, class: "form-control", autofocus: true %>
+        </div>
+    <p>
+        <div><%= f.label :activity %>
+            <%= f.collection_select(:sport_id, @sports, :id, :name, class: "form-control") %>
+        </div>
+    </p>
+    <p>
+        <div><%= f.label :deadline %><br />
+            <%= f.datetime_select :deadline, class: "form-control" %>
+        </div>
+    </p>
+    <p>
+        <div><%= f.label :description %>
+            <%= f.text_area :description, size: '60x5', class: "form-control" %>
+        </div>
+    </p>
+    <p>
+        <div><%= f.label :dates %><br />
+            <%= f.nested_fields_for :spoodle_dates do |ff| %>
+                <%= ff.label :from %>
+                <%= ff.datetime_select :from %>
+                <%= ff.label :to %>
+                <%= ff.datetime_select :to %>
+                <%= ff.remove_nested_fields_link fa_icon 'times' %>
             <% end %>
-        </ul>
-    <% end %>
-
-    <p>
-        <%= f.label :title %><br/>
-        <%= f.text_field :title %>
-    </p>
-
-    <p>
-        <%= f.label :description %><br/>
-        <%= f.text_area :description, size: '60x12' %>
+            <%= f.add_nested_fields_link :spoodle_dates, 'Add a date' %>
+        </div>
     </p>
     <p>
-        <%= f.collection_select(:sport_id, @sports, :id, :name) %>
+        <div>
+            <%= f.label :invitations %><br />
+            <%= f.nested_fields_for :invitations do |fff| %>
+                <%= fff.collection_select :user_id, @users, :id, :username %>
+                <%= fff.remove_nested_fields_link fa_icon 'times' %>
+            <% end %>
+            <%= f.add_nested_fields_link :invitations, 'Invite someone' %>
+        </div>
     </p>
-
-    <%= f.nested_fields_for :spoodle_dates do |ff| %>
-        <%= ff.remove_nested_fields_link 'Remove date' %>
-        <%= ff.datetime_select :datetime %>
-    <% end %>
-    <%= f.add_nested_fields_link :spoodle_dates, 'Add more dates' %>
-
-    <%= f.nested_fields_for :invitations do |fff| %>
-        <%= fff.remove_nested_fields_link 'Remove invitation' %>
-        <%= fff.collection_select :user_id, @users, :id, :username %>
-    <% end %>
-    <%= f.add_nested_fields_link :invitations, 'Add more invitations' %>
-
-    <%= f.submit 'Create' %>
+    <div style="float: left; width: auto;">
+        <div><%= f.submit "Create", class: "btn btn-success" %></div>
+    </div>
 <% end %>
+<div style="float: right; width: auto;">
+    <%= button_to 'Discard', unauthenticated_root_path, method: :get, class: "btn btn-warning" %>
+</div>

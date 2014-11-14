@@ -12,23 +12,29 @@ Rails.application.routes.draw do
              :controllers => { registrations: 'registrations',
                                sessions: 'sessions' }
 
+  resources :users do
+  end
   devise_scope :user do
 
     authenticated :user do
-      root :to => "events#index", :as => "authenticated_root"
+      root :to => "home#index", :as => "authenticated_root"
     end
 
     unauthenticated :user do
-      root :to => 'devise/sessions#new', as: :unauthenticated_root
+      root :to => 'welcome#index', as: :unauthenticated_root
     end
 
   end
 
+  # Event routes
+  get     'upcoming'         => 'events#upcoming', as: 'upcoming_events'
+  get     'pending'          => 'events#pending',  as: 'pending_events'
+  get     'passed'           => 'events#passed',   as: 'passed_events'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
-  # You can have the root of your site routed with "root"
-  # root 'welcome#index'
+
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

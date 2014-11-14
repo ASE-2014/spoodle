@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
 
   has_many :events
   has_many :invitations
+  has_many :availabilities
   has_many :events, through: :invitations
   has_and_belongs_to_many :spoodle_dates
   # Include default devise modules. Others available are:

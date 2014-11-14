@@ -1,21 +1,46 @@
-<h1>Event#edit</h1>
-
-<%= form_for @event do |f| %>
-    <%= f.label :title %>
-    <%= f.text_field :title %>
-
-    <%= f.label :description %>
-    <%= f.text_area :description, size: '60x12' %>
-    <p>
-        <strong>Sport:</strong>
-        <%= @event.sport.name %>
-    </p>
-
-    <%= f.nested_fields_for :spoodle_dates do |ff| %>
-        <%= ff.remove_nested_fields_link 'Remove date' %>
-        <%= ff.datetime_select :datetime %>
+<h1 class="page-header"><%= fa_icon 'pencil' %> Edit Event</h1>
+<%= form_for(@event, class: "form-group") do |f| %>
+    <% if @event.errors.any? %>
+        <% @event.errors.full_messages.each do |msg| %>
+            <div class="alert alert-dismissable alert-danger">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <%= msg %>
+            </div>
+        <% end %>
     <% end %>
-    <%= f.add_nested_fields_link :spoodle_dates, 'Add more dates' %>
-
-    <%= f.submit 'Update' %>
+    <p>
+        <div><%= f.label :title %>
+            <%= f.text_field :title, class: "form-control", autofocus: true %>
+        </div>
+    </p>
+    <% if @event.deadline>Time.now %>
+        <p>
+            <div><%= f.label :deadline %><br />
+                <%= f.datetime_select :deadline, class: "form-control" %>
+            </div>
+        </p>
+    <% end %>
+    <p>
+        <div><%= f.label :description %>
+            <%= f.text_area :description, size: '60x5', class: "form-control" %>
+        </div>
+    </p>
+    <p>
+        <div><%= f.label :dates %><br />
+            <%= f.nested_fields_for :spoodle_dates do |ff| %>
+                <%= ff.label :from %>
+                <%= ff.datetime_select :from %>
+                <%= ff.label :to %>
+                <%= ff.datetime_select :to %>
+                <%= ff.remove_nested_fields_link fa_icon 'times' %>
+            <% end %>
+            <%= f.add_nested_fields_link :spoodle_dates, 'Add a date' %>
+        </div>
+    </p>
+    <div style="float: left; width: auto;">
+        <div><%= f.submit "Update", class: "btn btn-success" %></div>
+    </div>
 <% end %>
+<div style="float: right; width: auto;">
+    <%= button_to 'Discard', @event, method: :get, class: "btn btn-warning" %>
+</div>
