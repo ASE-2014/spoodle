@@ -10,8 +10,14 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require bootstrap
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
 //= require nested_form_fields
 //= require_tree .
+
+//= require metisMenu.min
+//= require sb-admin-2
+
+
