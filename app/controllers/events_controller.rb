@@ -93,17 +93,4 @@ class EventsController < ApplicationController
     params.require(:event).permit(:title, :description, spoodle_dates_attributes: [:id, :from, :to, :_destroy])
   end
 
-  #AS: TODO: Factor out
-  def get_sports_by_id
-    by_id = {}
-    get_sports.each{ |sport| by_id[sport['id']] = sport.tap{ |sport| sport.delete('id') } }
-    by_id
-  end
-
-  def get_sports
-    response = HTTParty.get("http://diufvm31.unifr.ch:8090/CyberCoachServer/resources/sports/",:headers => {'Accept' => 'application/json'})
-    response["sports"]
-  end
-
-
 end
