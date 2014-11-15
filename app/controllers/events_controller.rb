@@ -93,4 +93,12 @@ class EventsController < ApplicationController
     params.require(:event).permit(:title, :description, spoodle_dates_attributes: [:id, :from, :to, :_destroy])
   end
 
+  # Performs a search query on each event of an array, returns an array of all events matching the query (ignore case)
+  # Searches in title, description, sport, owner (username)
+  #OS: TODO: Search is slow because it fetches list of sports from cybercoach. Update this method once the sports retrieval has been refactored
+  def search(event_array, query)
+      query = query.downcase
+      event_array.select{ |event| (event.title.downcase.include? query or event.description.downcase.include? query or
+              event.sport.name.downcase.include? query or event.owner.username.downcase.include? query) }
+  end
 end
