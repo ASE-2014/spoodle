@@ -5,18 +5,39 @@
         <%= msg %>
     </div>
 <% end %>
-<div class="media">
-    <a class="media-left">
-        <img class="default <%= @sport.downcase %>"/>
-    </a>
-    <div class="media-body">
-        <p>
-            <%= @sport %> event by <%= link_to @event.owner.username, @event.owner %>.
-            <%= @event.is_deadline_over? ? 'The deadline has passed.' : "You can assign to the proposed dates until "+@event.deadline.strftime("%A, %d. %B %Y at %R.") %>
-        </p>
-        <strong>Description: </strong><%= @event.description %>
-    </div>
 </div>
+<div class="col-lg-6 media">
+        <a class="media-left">
+            <img class="default <%= @sport.downcase %>"/>
+        </a>
+        <div class="media-body">
+            <p>
+                <%= @sport %> event by <%= link_to @event.owner.username, @event.owner %>.
+                <%= @event.is_deadline_over? ? 'The deadline has passed.' : "You can assign to the proposed dates until "+@event.deadline.strftime("%A, %d. %B %Y at %R.") %>
+            </p>
+            <strong>Description: </strong><%= @event.description %>
+        </div>
+</div>
+<div class="col-lg-6">
+    <form>
+        <input id="geocomplete" type="hidden" />
+    </form>
+
+    <div class="map_canvas show"></div>
+    <script>
+        $(function(){
+
+            var options = {
+                map: ".map_canvas",
+                location: "<%= @event.location %>"
+            };
+
+            $("#geocomplete").geocomplete(options);
+
+        });
+    </script>
+</div>
+<div class="col-lg-12">
 <hr>
 <h3>Invited Users</h3>
 

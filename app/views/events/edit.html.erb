@@ -24,7 +24,26 @@
         <div><%= f.label :description %>
             <%= f.text_area :description, size: '60x5', class: "form-control" %>
         </div>
+    </p>    <p>
+    <div><%= f.label :location %><br />
+        <%= f.text_field :location, id: "geocomplete", placeholder: "Enter a Location", class: "form-control" %>
+    </div>
     </p>
+
+    <div id="examples">
+        <p>    Examples:
+            <a href="#">Bern</a>
+            <a href="#">Hochschulstrasse 4, Bern</a></p>
+    </div>
+    <%= f.hidden_field :longitude %>
+    <%= f.hidden_field :latitude %>
+    <!-- <label>Latitude</label>
+        <input name="event[latitude]" type="text" value="">
+
+        <label>Longitude</label>
+        <input name="event[longitude]" type="text" value="">
+        -->
+    <div class="map_canvas"></div>
     <p>
         <div><%= f.label :dates %><br />
             <%= f.nested_fields_for :spoodle_dates do |ff| %>
@@ -44,3 +63,31 @@
 <div style="float: right; width: auto;">
     <%= button_to 'Discard', @event, method: :get, class: "btn btn-warning" %>
 </div>
+<script>
+    $(function(){
+        $("#geocomplete").geocomplete({
+            map: ".map_canvas",
+            details: "form",
+            types: ["geocode"],
+            markerOptions: {
+            }
+        });
+
+        $("#geocomplete").bind("geocode:dragged", function(event, latLng){
+            $("input[name='event[latitude]']").val(latLng.lat());
+            $("input[name='event[longitude]']").val(latLng.lng());
+            $("#reset").show();
+        });
+
+        $("#find").click(function(){
+            $("#geocomplete").trigger("geocode");
+            $.proxy(this.markerDragged, this)
+        });
+
+
+        $("#examples a").click(function(){
+            $("#geocomplete").val($(this).text()).trigger("geocode");
+            return false;
+        });
+    });
+</script>

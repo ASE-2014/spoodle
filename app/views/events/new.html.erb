@@ -27,13 +27,20 @@
         <%= f.text_field :location, id: "geocomplete", placeholder: "Enter a Location", class: "form-control" %>
     </div>
     </p>
+
+    <div id="examples">
+    <p>    Examples:
+        <a href="#">Bern</a>
+        <a href="#">Hochschulstrasse 4, Bern</a></p>
+    </div>
             <%= f.hidden_field :longitude %>
             <%= f.hidden_field :latitude %>
-        <label>Latitude</label>
+    <!-- <label>Latitude</label>
         <input name="event[latitude]" type="text" value="">
 
         <label>Longitude</label>
         <input name="event[longitude]" type="text" value="">
+        -->
     <div class="map_canvas"></div>
     <p>
         <div><%= f.label :description %>
@@ -76,7 +83,6 @@
             details: "form",
             types: ["geocode"],
             markerOptions: {
-                draggable: true
             }
         });
 
@@ -92,5 +98,9 @@
         });
 
 
+        $("#examples a").click(function(){
+            $("#geocomplete").val($(this).text()).trigger("geocode");
+            return false;
+        });
     });
 </script>
