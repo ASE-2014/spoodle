@@ -19,5 +19,6 @@
 
 //= require metisMenu.min
 //= require sb-admin-2
+//= require jquery.geocomplete.min
 
 
