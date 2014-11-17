@@ -1,0 +1,2 @@
+class CybercoachSport < CybercoachResource
+end

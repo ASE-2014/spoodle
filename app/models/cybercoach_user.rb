@@ -1,0 +1,2 @@
+class CybercoachUser < CybercoachResource
+end

@@ -70,6 +70,10 @@ class Event < ActiveRecord::Base
     @definitive_date
   end
 
+  def sport
+    CybercoachSport.find_by(:id, self.sport_id)[0]
+  end
+
   private
 
   # Selects the spoodle_date with the most and strongest votes

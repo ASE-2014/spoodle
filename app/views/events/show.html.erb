@@ -7,16 +7,16 @@
 <% end %>
 </div>
 <div class="col-lg-6 media">
-        <a class="media-left">
-            <img class="default <%= @sport.downcase %>"/>
-        </a>
-        <div class="media-body">
-            <p>
-                <%= @sport %> event by <%= link_to @event.owner.username, @event.owner %>.
-                <%= @event.is_deadline_over? ? 'The deadline has passed.' : "You can assign to the proposed dates until "+@event.deadline.strftime("%A, %d. %B %Y at %R.") %>
-            </p>
-            <strong>Description: </strong><%= @event.description %>
-        </div>
+    <a class="media-left">
+        <img class="default <%= @event.sport.name.downcase %>"/>
+    </a>
+    <div class="media-body">
+        <p>
+            <%= @sport %> event by <%= link_to @event.owner.username, @event.owner %>.
+            <%= @event.is_deadline_over? ? 'The deadline has passed.' : "You can assign to the proposed dates until "+@event.deadline.strftime("%A, %d. %B %Y at %R.") %>
+        </p>
+        <strong>Description: </strong><%= @event.description %>
+    </div>
 </div>
 <div class="col-lg-6">
     <form>
@@ -26,45 +26,45 @@
     <div class="map_canvas show"></div>
 </div>
 <div class="col-lg-12">
-<hr>
-<h3>Invited Users</h3>
+    <hr>
+    <h3>Invited Users</h3>
 
-<%= render @event.invitations %>
+    <%= render @event.invitations %>
 
-<% unless @event.is_deadline_over? %>
-    <%= link_to new_event_invitation_path(@event) do %>
-        <%= image_tag("plus.png") %>
+    <% unless @event.is_deadline_over? %>
+        <%= link_to new_event_invitation_path(@event) do %>
+            <%= image_tag("plus.png") %>
+        <% end %>
     <% end %>
-<% end %>
-<hr>
-<h3>Proposed Dates</h3>
-<div class="row">
-    <%= render @event.spoodle_dates %>
-</div>
-<hr>
-<% if @event.belongs_to?(current_user) %>
-    <div style="float: left; width: auto;">
-         <%= button_to 'Edit Event', edit_event_path(@event), method: :get, class: "btn btn-info" %>
+    <hr>
+    <h3>Proposed Dates</h3>
+    <div class="row">
+        <%= render @event.spoodle_dates %>
     </div>
-    <div style="float: left; width: auto;">
-        <p>&nbsp;</p>
-    </div>
-    <div style="float: left; width: auto;">
-        <%= button_to 'Delete Event', event_path(@event), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary" %>
-    </div>
-    <br/>
-    <br/>
-    <br/>
-<% end %>
-<script>
-    $(function(){
+    <hr>
+    <% if @event.belongs_to?(current_user) %>
+        <div style="float: left; width: auto;">
+            <%= button_to 'Edit Event', edit_event_path(@event), method: :get, class: "btn btn-info" %>
+        </div>
+        <div style="float: left; width: auto;">
+            <p>&nbsp;</p>
+        </div>
+        <div style="float: left; width: auto;">
+            <%= button_to 'Delete Event', event_path(@event), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary" %>
+        </div>
+        <br/>
+        <br/>
+        <br/>
+    <% end %>
+    <script>
+        $(function(){
 
-        var options = {
-            map: ".map_canvas",
-            location: "<%= @event.location %>"
-        };
+            var options = {
+                map: ".map_canvas",
+                location: "<%= @event.location %>"
+            };
 
-        $("#geocomplete").geocomplete(options);
+            $("#geocomplete").geocomplete(options);
 
-    });
-</script>
+        });
+    </script>

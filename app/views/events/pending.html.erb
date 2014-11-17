@@ -33,7 +33,7 @@
                 <% @pending_events.each do |event| %>
                     <tr>
                         <td><%= link_to event.title, event_path(event) %></td>
-                        <td><%= @sports[event.sport_id]['name'] %></td>
+                        <td><%= event.sport.name %></td>
                         <td><%= event.owner.username %></td>
                         <td>
                             <% event.spoodle_dates.each do |date| %>
