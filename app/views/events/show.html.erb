@@ -24,18 +24,6 @@
     </form>
 
     <div class="map_canvas show"></div>
-    <script>
-        $(function(){
-
-            var options = {
-                map: ".map_canvas",
-                location: "<%= @event.location %>"
-            };
-
-            $("#geocomplete").geocomplete(options);
-
-        });
-    </script>
 </div>
 <div class="col-lg-12">
 <hr>
@@ -68,4 +56,15 @@
     <br/>
     <br/>
 <% end %>
+<script>
+    $(function(){
 
+        var options = {
+            map: ".map_canvas",
+            location: "<%= @event.location %>"
+        };
+
+        $("#geocomplete").geocomplete(options);
+
+    });
+</script>

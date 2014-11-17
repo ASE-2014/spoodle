@@ -91,13 +91,13 @@ class EventsController < ApplicationController
   private
 
   def event_params
-    params.require(:event).permit(:title, :description, :deadline, :location, :longitude, :latitude, :sport_id, spoodle_dates_attributes: [:id, :from, :to, :_destroy], invitations_attributes: [:id, :user_id, :_destroy])
+    params.require(:event).permit(:title, :description, :deadline, :location, :sport_id, spoodle_dates_attributes: [:id, :from, :to, :_destroy], invitations_attributes: [:id, :user_id, :_destroy])
   end
 
   # Don't allow invitations_attributes, since the invitations can't be deleted.
   # Invitations are added through the invitations controller.
   def event_update_params
-    params.require(:event).permit(:title, :description, :location, :longitude, :latitude, spoodle_dates_attributes: [:id, :from, :to, :_destroy])
+    params.require(:event).permit(:title, :description, :location, spoodle_dates_attributes: [:id, :from, :to, :_destroy])
   end
 
   #AS: TODO: Factor out

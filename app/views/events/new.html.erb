@@ -29,18 +29,11 @@
     </p>
 
     <div id="examples">
-    <p>    Examples:
-        <a href="#">Bern</a>
-        <a href="#">Hochschulstrasse 4, Bern</a></p>
+        <p>    Examples:
+            <a href="#">Bern</a>
+            <a href="#">Hochschulstrasse 4, Bern</a>
+        </p>
     </div>
-            <%= f.hidden_field :longitude %>
-            <%= f.hidden_field :latitude %>
-    <!-- <label>Latitude</label>
-        <input name="event[latitude]" type="text" value="">
-
-        <label>Longitude</label>
-        <input name="event[longitude]" type="text" value="">
-        -->
     <div class="map_canvas"></div>
     <p>
         <div><%= f.label :description %>
@@ -76,6 +69,9 @@
 <div style="float: right; width: auto;">
     <%= button_to 'Discard', unauthenticated_root_path, method: :get, class: "btn btn-warning" %>
 </div>
+<br/>
+<br/>
+<br/>
 <script>
     $(function(){
         $("#geocomplete").geocomplete({
@@ -86,17 +82,10 @@
             }
         });
 
-        $("#geocomplete").bind("geocode:dragged", function(event, latLng){
-            $("input[name='event[latitude]']").val(latLng.lat());
-            $("input[name='event[longitude]']").val(latLng.lng());
-            $("#reset").show();
-        });
-
         $("#find").click(function(){
             $("#geocomplete").trigger("geocode");
             $.proxy(this.markerDragged, this)
         });
-
 
         $("#examples a").click(function(){
             $("#geocomplete").val($(this).text()).trigger("geocode");
