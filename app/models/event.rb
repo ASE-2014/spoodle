@@ -16,6 +16,7 @@ class Event < ActiveRecord::Base
 
   validates :title, presence: true
   validates :deadline, presence: true
+  validates :location, presence: true
   validate :minimal_one_spoodle_date
   validate :spoodle_dates_after_deadline
 

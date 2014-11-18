@@ -23,6 +23,19 @@
         </div>
     </p>
     <p>
+    <div><%= f.label :location %><br />
+        <%= f.text_field :location, id: "geocomplete", placeholder: "Enter a Location", class: "form-control" %>
+    </div>
+    </p>
+
+    <div id="examples">
+        <p>    Examples:
+            <a href="#">Bern</a>
+            <a href="#">Hochschulstrasse 4, Bern</a>
+        </p>
+    </div>
+    <div class="map_canvas"></div>
+    <p>
         <div><%= f.label :description %>
             <%= f.text_area :description, size: '60x5', class: "form-control" %>
         </div>
@@ -56,3 +69,27 @@
 <div style="float: right; width: auto;">
     <%= button_to 'Discard', unauthenticated_root_path, method: :get, class: "btn btn-warning" %>
 </div>
+<br/>
+<br/>
+<br/>
+<script>
+    $(function(){
+        $("#geocomplete").geocomplete({
+            map: ".map_canvas",
+            details: "form",
+            types: ["geocode"],
+            markerOptions: {
+            }
+        });
+
+        $("#find").click(function(){
+            $("#geocomplete").trigger("geocode");
+            $.proxy(this.markerDragged, this)
+        });
+
+        $("#examples a").click(function(){
+            $("#geocomplete").val($(this).text()).trigger("geocode");
+            return false;
+        });
+    });
+</script>
