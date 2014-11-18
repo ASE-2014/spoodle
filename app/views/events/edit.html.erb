@@ -64,6 +64,7 @@
         $("#geocomplete").geocomplete({
             map: ".map_canvas",
             details: "form",
+            location: "<%= @event.location %>",
             types: ["geocode"],
             markerOptions: {
             }

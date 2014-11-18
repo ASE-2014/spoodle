@@ -12,7 +12,7 @@
     </a>
     <div class="media-body">
         <p>
-            <%= @sport %> event by <%= link_to @event.owner.username, @event.owner %>.
+            <%= @sport %> Event by <%= link_to @event.owner.username, @event.owner %>.
             <%= @event.is_deadline_over? ? 'The deadline has passed.' : "You can assign to the proposed dates until "+@event.deadline.strftime("%A, %d. %B %Y at %R.") %>
         </p>
         <strong>Description: </strong><%= @event.description %>
