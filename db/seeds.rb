@@ -27,6 +27,8 @@ event1_date1.availabilities.new(user: oliver, weight: 0.5)
 event1_date2.availabilities.new(user: arun, weight: 1)
 event1.invitations.new(user: urs)
 event1.invitations.new(user: oliver)
+event1.event_data = EventData.new( distance:100)
+
 event1.save!
 
 
@@ -41,6 +43,7 @@ event2_date2 = event2.spoodle_dates.new(from: 10.minutes.from_now, to: 15.minute
 event2_date1.availabilities.new(user: oliver, weight: 0.5)
 event2_date2.availabilities.new(user: arun, weight: 1)
 event2.invitations.new(user: arun)
+event2.event_data = EventData.new(distance:200)
 event2.save!
 
 
@@ -55,4 +58,6 @@ event3_date2 = event3.spoodle_dates.new(from: 10.minutes.from_now, to: 15.minute
 event3_date1.availabilities.new(user: oliver, weight: 0.9)
 event3_date2.availabilities.new(user: oliver, weight: 0.7)
 event3.invitations.new(user: arun)
+event3.event_data = EventData.new(distance:300)
 event3.save!
+
