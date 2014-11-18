@@ -20,3 +20,17 @@
 .boxing{
   content:url("boxing128.png");
 }
+
+#examples a {
+  text-decoration: underline;
+}
+
+.map_canvas {
+  width: 100%;
+  height: 400px;
+  margin: 10px 20px 10px 0;
+}
+
+.show {
+  height: 300px;
+}
