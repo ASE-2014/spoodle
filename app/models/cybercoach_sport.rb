@@ -3,11 +3,11 @@ class CybercoachSport < CybercoachResource
   # Specifies which data attributes make sense for a sport
   def data_attributes
     case self.name
-      when "running"
+      when "Running"
         return [:distance]
-      when "soccer"
+      when "Soccer"
         return [:party_1_name, :party_2_name, :winner_name, :score_1, :score_2]
-      when "boxing"
+      when "Boxing"
         return [:party_1_name, :party_2_name, :winner_name]
       else
         return []

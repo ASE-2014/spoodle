@@ -75,6 +75,17 @@ class Event < ActiveRecord::Base
     CybercoachSport.find_by(:id, self.sport_id)[0]
   end
 
+  # Overrides getter
+  # Returns only the attributes which make sense for the sport which belongs to the event
+  alias_method :event_data_original, :event_data
+  def event_data
+    attributes = {}
+    event_data_original.attributes.each do |attribute|
+    attributes[attribute] = event_data_original.send(attribute)
+    end
+    attributes
+  end
+
   private
 
   # Selects the spoodle_date with the most and strongest votes
