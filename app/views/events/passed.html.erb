@@ -18,36 +18,35 @@
             </div>
         </div>
     <% end %>
-    <div class="table-responsive">
-        <table class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Sport</th>
-                    <th>Organizer</th>
-                    <th>From</th>
-                    <th>To</th>
-                    <th>Participants</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% @passed_events.each do |event| %>
-                    <tr>
-                        <td><%= link_to event.title, event_path(event) %></td>
-                        <td><%= event.sport.name %></td>
-                        <td><%= event.owner.username %></td>
-                        <td>
-                            <%= fa_icon 'calendar'%>
-                            <%= event.definitive_date.from.strftime("%a, %d.%m.%y: %R") %>
-                        </td>
-                        <td>
-                            <%= fa_icon 'calendar'%>
-                            <%= event.definitive_date.to.strftime("%a, %d.%m.%y: %R") %>
-                        </td>
-                        <td><%= event.participants.map{ |user| user }.join(',<br/>').html_safe %></td>
-                    </tr>
-                <% end %>
-            </tbody>
-        </table>
-    </div>
+    <% @passed_events.each do |event| %>
+        <div class="panel panel-default">
+            <div class="panel-heading media">
+                <a class="media-left" href="<%= event_path(event) %>">
+                    <img class="media-object default <%= event.sport.name.downcase %> hidden-xs hidden-sm"/>
+                    <img class="default <%= event.sport.name.downcase %>64 visible-xs visible-sm"/>
+                </a>
+                <div class="media-body">
+                    <h4><%= link_to event.title, event_path(event) %></h4>
+                    <p><%= event.description[0..400] %></p>
+                    <ul class="list-inline list-unstyled">
+                        <li>
+                            <span><%= fa_icon 'calendar fw'%><%= event.definitive_date.from.strftime(" %a, %d. %b %Y") %></span>
+                        </li>
+                        |
+                        <li>
+                            <span><%= event.sport.name %></span>
+                        </li>
+                        |
+                        <li>
+                            <span>by <%= link_to event.owner, user_path(event.owner) %></span>
+                        </li>
+                        |
+                        <li>
+                            <span><%= event.participants.count %> Participant<%= event.participants.count==1 ? "" : "s"%></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    <% end %>
 <% end %>
