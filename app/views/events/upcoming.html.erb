@@ -18,36 +18,5 @@
             </div>
         </div>
     <% end %>
-    <div class="table-responsive">
-        <table class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Sport</th>
-                    <th>Organizer</th>
-                    <th>From</th>
-                    <th>To</th>
-                    <th>Participants</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% @upcoming_events.each do |event| %>
-                    <tr>
-                        <td><%= link_to event.title, event_path(event) %></td>
-                        <td><%= event.sport.name %></td>
-                        <td><%= event.owner.username %></td>
-                        <td>
-                            <%= fa_icon 'calendar'%>
-                            <%= event.definitive_date.from.strftime("%a, %d.%m.%y: %R") %>
-                        </td>
-                        <td>
-                            <%= fa_icon 'calendar'%>
-                            <%= event.definitive_date.to.strftime("%a, %d.%m.%y: %R") %>
-                        </td>
-                        <td><%= event.participants.map{ |user| user }.join(',<br/>').html_safe %></td>
-                    </tr>
-                <% end %>
-            </tbody>
-        </table>
-    </div>
+    <%= render @upcoming_events %>
 <% end %>
