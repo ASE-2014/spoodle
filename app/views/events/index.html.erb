@@ -42,7 +42,7 @@
                                 <br>
                             <% end %>
                         </td>
-                        <td><%= event.invitations.map{ |invitation| invitation.user.username }.join(',<br/>').html_safe %></td>
+                        <td><%= event.invitations.map{ |invitation| invitation.user }.join(',<br/>').html_safe %></td>
                     </tr>
                 <% end %>
             </tbody>

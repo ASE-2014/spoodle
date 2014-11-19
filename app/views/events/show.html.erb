@@ -12,8 +12,9 @@
     </a>
     <div class="media-body">
         <p>
-            <%= @sport %> Event by <%= link_to @event.owner.username, @event.owner %>.
-            <%= @event.is_deadline_over? ? 'The deadline has passed.' : "You can assign to the proposed dates until "+@event.deadline.strftime("%A, %d. %B %Y at %R.") %>
+            <%= @event.is_deadline_over? ? (@event.is_passed? ? 'Passed ' : 'Upcoming ') : "Pending " %>
+            <%= @event.sport.name %> event by <%= link_to @event.owner.username, @event.owner %>.
+            <br><%= @event.is_deadline_over? ? "" : "You can assign to the proposed dates until "+@event.deadline.strftime("%A, %d. %B %Y at %R.") %>
         </p>
         <strong>Description: </strong><%= @event.description %>
     </div>
@@ -27,21 +28,36 @@
 </div>
 <div class="col-lg-12">
     <hr>
-    <h3>Invited Users</h3>
-
-    <%= render @event.invitations %>
-
     <% unless @event.is_deadline_over? %>
+        <h3>Invited Users</h3>
+        <%= render @event.invitations %>
         <%= link_to new_event_invitation_path(@event) do %>
             <%= image_tag("plus.png") %>
         <% end %>
     <% end %>
+    <% if @event.is_deadline_over? %>
+        <h3>Participants</h3>
+        <% @event.participants.each do |user| %>
+            <%= link_to user_path(user) do %>
+                <%= image_tag("profile.png") %>
+            <% end %>
+        <% end %>
+    <% end %>
     <hr>
-    <h3>Proposed Dates</h3>
-    <div class="row">
-        <%= render @event.spoodle_dates %>
-    </div>
-    <hr>
+    <% unless @event.is_deadline_over? %>
+        <h3>Proposed Dates</h3>
+        <div class="row">
+            <%= render @event.spoodle_dates %>
+        </div>
+        <hr>
+    <% end %>
+    <% if (@event.is_deadline_over? and @event.is_passed?) %>
+        <h3>Event Data</h3>
+        <div class="row">
+            <%= @event.event_data %>
+        </div>
+        <hr>
+    <% end %>
     <% if @event.belongs_to?(current_user) %>
         <div style="float: left; width: auto;">
             <%= button_to 'Edit Event', edit_event_path(@event), method: :get, class: "btn btn-info" %>

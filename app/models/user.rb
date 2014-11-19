@@ -57,4 +57,8 @@ class User < ActiveRecord::Base
     # Nothing to do here
   end
 
+  def to_s
+    self.username
+  end
+
 end

@@ -43,6 +43,16 @@ class Event < ActiveRecord::Base
     user.eql? self.owner
   end
 
+  # Returns all users that have assigned a value to the definitive Spoodle date
+  # If the definitive date is not yet set, an empty array is returned
+  def participants
+    if definitive_date
+      definitive_date.users
+    else
+      Array.new
+    end
+  end
+
   # Checks if the deadline is over yet
   def is_deadline_over?
     self.deadline < DateTime.now
