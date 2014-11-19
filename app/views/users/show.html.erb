@@ -1,0 +1,4 @@
+<h1>Personal profile</h1>
+<% @user.friendships.each do |f| %>
+  <%= f.email %>
+<% end %>
