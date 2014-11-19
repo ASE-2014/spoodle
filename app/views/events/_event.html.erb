@@ -13,7 +13,7 @@
                         <%= fa_icon 'calendar fw'%> <%= event.definitive_date.from.strftime(" %a, %d. %b %Y at %R") %>
                     <% end %>
                 <% else %>
-                    <%= fa_icon 'calendar fw'%><%= event.spoodle_dates.count %> proposed Date<%= event.spoodle_dates.count==1 ? "" : "s"%>
+                    <%= fa_icon 'calendar fw'%> <%= event.spoodle_dates.count %> proposed Date<%= event.spoodle_dates.count==1 ? "" : "s"%>
                 <% end %></p>
             <p><%= event.description[0..400] %></p>
             <ul class="list-inline list-unstyled">
