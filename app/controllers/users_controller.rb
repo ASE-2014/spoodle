@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_filter :authenticate_user!
+
   def show
     @user = User.find(params[:id])
   end
@@ -16,4 +18,6 @@ class UsersController < ApplicationController
     query = query.downcase
     users_array.select{ |user| (user.username.downcase.include? query or user.email.include? query) }
   end
+
+
 end
