@@ -1,32 +1,70 @@
-<h1>Event#show</h1>
-<p>Look at that damn nice event!</p>
+<h1 class="page-header"><%= @event.title %></h1>
+<% flash.each do |name, msg| %>
+    <div class="alert alert-dismissable alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <%= msg %>
+    </div>
+<% end %>
+</div>
+<div class="col-lg-6 media">
+    <a class="media-left">
+        <img class="default <%= @event.sport.name.downcase %>"/>
+    </a>
+    <div class="media-body">
+        <p>
+            <%= @sport %> Event by <%= link_to @event.owner.username, @event.owner %>.
+            <%= @event.is_deadline_over? ? 'The deadline has passed.' : "You can assign to the proposed dates until "+@event.deadline.strftime("%A, %d. %B %Y at %R.") %>
+        </p>
+        <strong>Description: </strong><%= @event.description %>
+    </div>
+</div>
+<div class="col-lg-6">
+    <form>
+        <input id="geocomplete" type="hidden" />
+    </form>
 
-<p>
-    <%= link_to 'Invite a new user', new_event_invitation_path(@event) %>
-</p>
+    <div class="map_canvas show"></div>
+</div>
+<div class="col-lg-12">
+    <hr>
+    <h3>Invited Users</h3>
 
-<p>
-    <strong>Title:</strong><br/>
-    <%= @event.title %>
-</p>
+    <%= render @event.invitations %>
 
-<p>
-    <strong>Description:</strong><br/>
-    <%= @event.description %>
-</p>
+    <% unless @event.is_deadline_over? %>
+        <%= link_to new_event_invitation_path(@event) do %>
+            <%= image_tag("plus.png") %>
+        <% end %>
+    <% end %>
+    <hr>
+    <h3>Proposed Dates</h3>
+    <div class="row">
+        <%= render @event.spoodle_dates %>
+    </div>
+    <hr>
+    <% if @event.belongs_to?(current_user) %>
+        <div style="float: left; width: auto;">
+            <%= button_to 'Edit Event', edit_event_path(@event), method: :get, class: "btn btn-info" %>
+        </div>
+        <div style="float: left; width: auto;">
+            <p>&nbsp;</p>
+        </div>
+        <div style="float: left; width: auto;">
+            <%= button_to 'Delete Event', event_path(@event), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary" %>
+        </div>
+        <br/>
+        <br/>
+        <br/>
+    <% end %>
+    <script>
+        $(function(){
 
-<p>
-    <strong>Sport:</strong>
-    <%= @sport %>
-</p>
+            var options = {
+                map: ".map_canvas",
+                location: "<%= @event.location %>"
+            };
 
+            $("#geocomplete").geocomplete(options);
 
-<h2>Dates</h2>
-<%= render @event.spoodle_dates %>
-
-<h2>Invitations</h2>
-<%= render @event.invitations %>
-
-<%= link_to 'Destroy Event', event_path(@event), method: :delete, data: { confirm: 'Are you sure?' } %> |
-<%= link_to 'Edit Event', edit_event_path(@event) %> |
-<%= link_to 'Back to Events', events_path %>
+        });
+    </script>

@@ -1,40 +1,52 @@
-<h1>Event#index</h1>
-
-<% flash.each do |name, msg| -%>
-    <%= content_tag :div, msg, class: name %>
-<% end -%>
-
-<p>Index of all events</p>
-
-<%= link_to 'New event', new_event_path %>
-<table>
-    <tr>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Sport</th>
-        <th>Owner</th>
-        <th>Dates</th>
-        <th>Invitations</th>
-        <th colspan="3"></th>
-    </tr>
-
-    <% @events.each do |event| %>
-        <tr>
-            <td><%= event.title %></td>
-            <td><%= event.description %></td>
-            <td><%= @sports[event.sport_id]['name'] %></td>
-            <td><%= event.owner.username %></td>
-            <td><%= event.spoodle_dates.map{ |spoodle_date| spoodle_date.datetime }.join(',<br/>').html_safe %></td>
-            <td><%= event.invitations.map{ |invitation| invitation.user.username }.join(',<br/>').html_safe %></td>
-            <td><%= link_to 'Show', event_path(event) %></td>
-            <td><%= link_to 'Edit', edit_event_path(event) %></td>
-            <td><%= link_to 'Destroy', event_path(event), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-            <td><%= link_to 'Invite a new user', new_event_invitation_path(event) %></td>
-        </tr>
+<h1 class="page-header"><%= fa_icon 'user' %> My Events</h1>
+<% flash.each do |name, msg| %>
+    <div class="alert alert-dismissable alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <%= msg %>
+    </div>
+<% end %>
+<% if @my_events %>
+    <%= form_tag events_path, method: :get do %>
+        <div class="form-group">
+            <div class="input-group">
+                <%= text_field_tag :search, params[:search], placeholder: "Filter", class: "form-control" %>
+                <span class="input-group-btn">
+                    <%= button_tag( :class => "btn btn-default") do %>
+                        <i class="fa fa-search"></i>
+                    <% end %>
+                </span>
+            </div>
+        </div>
     <% end %>
-</table>
-
-<p>Logged in as: <%= current_user.username %></p>
-
-<%= link_to 'Sign out', destroy_user_session_path, :method => :delete %>
-<%= link_to 'Delete user', user_registration_path, :method => :delete %>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Sport</th>
+                    <th>Organizer</th>
+                    <th>Dates</th>
+                    <th>Invited</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @my_events.each do |event| %>
+                    <tr>
+                        <td><%= link_to event.title, event_path(event) %></td>
+                        <td><%= event.sport.name %></td>
+                        <td><%= event.owner.username %></td>
+                        <td>
+                            <% event.spoodle_dates.each do |date| %>
+                                <%= fa_icon 'calendar'%>
+                                <%= date.from.strftime("%a, %d.%m.%y: %R") %>
+                                <br>
+                            <% end %>
+                        </td>
+                        <td><%= event.invitations.map{ |invitation| invitation.user.username }.join(',<br/>').html_safe %></td>
+                    </tr>
+                <% end %>
+            </tbody>
+        </table>
+    </div>
+<% end %>
+<%= button_to "New Event", new_event_path, :method => "get", class: "btn btn-success" %>

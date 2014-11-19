@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  distance: 1
+  winner_name: MyString
+  party_1_name: MyString
+  party_2_name: MyString
+  score_1: 1
+  score_2: 1
+
+two:
+  distance: 1
+  winner_name: MyString
+  party_1_name: MyString
+  party_2_name: MyString
+  score_1: 1
+  score_2: 1
