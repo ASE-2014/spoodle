@@ -2,11 +2,12 @@
     <div class="panel-heading media">
         <a class="media-left" href="<%= event_path(event) %>">
             <img class="media-object default <%= event.sport.name.downcase %> hidden-xs hidden-sm"/>
-            <img class="default <%= event.sport.name.downcase %>64 visible-xs visible-sm"/>
+            <img class="default64 <%= event.sport.name.downcase %>64 visible-xs visible-sm"/>
         </a>
         <div class="media-body">
             <h4><%= link_to event.title, event_path(event) %></h4>
-            <p><% if event.is_deadline_over? %>
+            <p>
+                <% if event.is_deadline_over? %>
                     <% if event.is_passed? %>
                         <%= fa_icon 'calendar fw'%> <%= event.definitive_date.from.strftime(" %a, %d. %b %Y") %>
                     <% else %>
@@ -14,7 +15,8 @@
                     <% end %>
                 <% else %>
                     <%= fa_icon 'calendar fw'%> <%= event.spoodle_dates.count %> proposed Date<%= event.spoodle_dates.count==1 ? "" : "s"%>
-                <% end %></p>
+                <% end %>
+            </p>
             <p><%= event.description[0..400] %></p>
             <ul class="list-inline list-unstyled">
                 <% if event.is_deadline_over? %>
@@ -28,15 +30,15 @@
                 <% end %>
                 |
                 <li>
-                    <span><%= fa_icon 'map-marker fw' %> <%= event.location[0..40] %></span>
+                    <%= fa_icon 'map-marker fw' %> <%= event.location[0..40] %>
                 </li>
                 |
                 <li>
-                    <span><%= event.sport.name %></span>
+                    <%= event.sport.name %>
                 </li>
                 |
                 <li>
-                    <span><%= fa_icon 'user fw' %> by <%= link_to event.owner, user_path(event.owner) %></span>
+                    <%= fa_icon 'user fw' %> by <%= link_to event.owner, user_path(event.owner) %>
                 </li>
                 |
                 <li>
