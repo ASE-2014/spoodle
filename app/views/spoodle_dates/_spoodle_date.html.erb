@@ -1,7 +1,10 @@
 <div class="col-lg-4 col-md-6">
-    <div class="panel panel-default">
+    <div class="panel panel-default spoodle-date">
         <div class="panel-heading">
-            <%= fa_icon 'calendar' %> <%= spoodle_date.from.strftime("%A, %d. %B %Y") %>
+            <p class="no-margin"><%= fa_icon 'calendar' %> <%= spoodle_date.from.strftime("%A, %d. %B %Y") %>
+            <small><% if @event.belongs_to?(current_user) %>
+                    <%= link_to "Delete", event_spoodle_date_path(@event, spoodle_date), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary btn-xs no-margin" %>
+                <% end %></small></p>
         </div>
         <div class="panel-body">
             <p class="lead">
@@ -11,7 +14,6 @@
                 <% end %>
                 <%= spoodle_date.to.strftime("%R") %>
             </p>
-
             <p>
                 <strong>Current Total:</strong>
                 <%= spoodle_date.votes %>
@@ -34,12 +36,9 @@
                         </div>
                     <% end %>
                 <% else %>
-                    <%= button_to 'Cancel assignment', cancel_event_spoodle_date_path(@event, spoodle_date), method: :put, class: "btn btn-warning btn-sm" %></p>
+                <p class="no-margin">You assigned <b><%= spoodle_date.availability(current_user).weight %></b> <%= link_to 'Cancel', cancel_event_spoodle_date_path(@event, spoodle_date), method: :put, class: "btn btn-warning btn-xs no-margin" %></p>
                 <% end %>
             </p>
-            <% if @event.belongs_to?(current_user) %>
-                <%= button_to "Delete Date", event_spoodle_date_path(@event, spoodle_date), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary btn-xs" %></p>
-            <% end %>
         </div>
     </div>
 </div>

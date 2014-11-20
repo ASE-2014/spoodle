@@ -1,4 +1,4 @@
-<h1>Users list</h1>
+<h1 class="page-header"><%= fa_icon 'users' %> Users</h1>
 <% flash.each do |name, msg| %>
     <div class="alert alert-dismissable alert-info">
       <button type="button" class="close" data-dismiss="alert">×</button>
@@ -33,7 +33,7 @@
           <td><%= link_to user.username, user_path(user) %></td>
           <td><%= user.email %></td>
           <td>
-            <% if(! current_user.friends.exists?(user.id)) %>
+            <% unless current_user.friends.exists?(user) %>
                 <%= button_to "Add friend", friendships_path(:friend_id => user), :method => "post", class: "btn btn-success" %>
             <% end %>
           </td>

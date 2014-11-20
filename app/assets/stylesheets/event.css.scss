@@ -21,6 +21,26 @@
   content:url("boxing128.png");
 }
 
+.default64{
+  content:url("default64.png");
+}
+
+.cycling64{
+  content:url("cycling64.png");
+}
+
+.running64{
+  content:url("running64.png");
+}
+
+.soccer64{
+  content:url("soccer64.png");
+}
+
+.boxing64{
+  content:url("boxing64.png");
+}
+
 #examples a {
   text-decoration: underline;
 }
@@ -33,4 +53,15 @@
 
 .show {
   height: 300px;
+}
+
+.spoodle-date {
+  height: 220px;
+}
+
+.no-margin {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
 }
