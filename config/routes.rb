@@ -13,7 +13,14 @@ Rails.application.routes.draw do
                                sessions: 'sessions' }
 
   resources :users do
+    member do
+      get :friends
+    end
   end
+
+  resources :friendships
+
+
   devise_scope :user do
 
     authenticated :user do

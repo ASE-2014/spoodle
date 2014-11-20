@@ -95,7 +95,14 @@
                 <a href="#"><i class="fa fa-trophy fa-fw"></i> Global Toplist</a>
             </li>
             <li>
-                <a href="#"><i class="fa fa-users fa-fw"></i> Friends</a>
+            <%= link_to user_path(current_user.id) do %>
+                <%= fa_icon 'user fw' %> Profile
+            <% end %>
+            </li>
+            <li>
+                <%= link_to users_path do %>
+                  <%= fa_icon 'users fw' %> Users
+                <% end %>
             </li>
         </ul>
     </div>
