@@ -92,7 +92,7 @@ class Event < ActiveRecord::Base
   def event_data
     attributes = {}
     event_data_original.attributes.each do |attribute|
-    attributes[attribute] = event_data_original.send(attribute)
+      attributes[attribute] = event_data_original.send(attribute)
     end
     attributes
   end
@@ -102,8 +102,6 @@ class Event < ActiveRecord::Base
   # Selects the spoodle_date with the most and strongest votes
   # Sets definitive_date to nil if nobody assigned to any date
   def select_definitive_date
-    p "this is #{self.title}"
-    p "definite date is #{@definitive_date}"
     self.spoodle_dates.each do |spoodle_date|
       if @definitive_date.nil? or spoodle_date.votes > @definitive_date.votes
         @definitive_date = spoodle_date
@@ -112,22 +110,22 @@ class Event < ActiveRecord::Base
   end
 
   # Returns an array of all upcoming events where the user is taking part
-  def self.get_upcoming(user)
+  def self.get_upcoming(user) #TODO move to user
     Event.select{ |event| (event.is_upcoming? and (event.is_invited? user or event.belongs_to? user)) }
   end
 
   # Returns an array of all passed events where the user took part
-  def self.get_passed(user)
+  def self.get_passed(user) #TODO move to user
     Event.select{ |event| (event.is_passed? and (event.is_invited? user or event.belongs_to? user)) }
   end
 
   # Returns an array of all events that were created by the user
-  def self.get_own(user)
+  def self.get_own(user) #TODO move to user
     Event.select{ |event| (event.belongs_to? user) }
   end
 
   # Returns an array of all events where the user has set his availability but the deadline has not yet passed
-  def self.get_pending(user)
+  def self.get_pending(user) #TODO move to user
     Event.select{ |event| (!event.is_deadline_over? and (event.is_invited? user or event.belongs_to? user)) }
   end
 

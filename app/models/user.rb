@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :spoodle_dates
   has_many :friendships, :dependent => :destroy
   has_many :friends, :through => :friendships
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -39,20 +40,22 @@ class User < ActiveRecord::Base
   def create_user_on_cyber_coach
     self.cyber_coach_username = self.username + Time.now.strftime('%Y%m%d%H%M%S%L')
     self.cyber_coach_password = Random.rand(99999).to_s
-    self.save
-
-    response = CybercoachUser.create(self.cyber_coach_username, {email: self.email, password: self.cyber_coach_password, publicvisible: '2', realname: self.cyber_coach_username})
-    raise 'RegisterError' unless response.success?
+    self.save!
+    response = CybercoachUser.create(self.cyber_coach_username, { email: self.email,
+                                                                  password: self.cyber_coach_password,
+                                                                  publicvisible: '2',
+                                                                  realname: self.cyber_coach_username })
+    raise 'RegisterError' unless response.success? #TODO handle error
   end
 
   def destroy_user_on_cyber_coach
     response = CybercoachUser.destroy(self.cyber_coach_username, self.cyber_coach_username, self.cyber_coach_password)
-    raise 'DestroyError' unless response.success?
+    raise 'DestroyError' unless response.success? #TODO handle error
   end
 
   def login_on_cyber_coach
     response = CybercoachResource.login(self.cyber_coach_username, self.cyber_coach_password)
-    raise 'LoginError' unless response.success?
+    raise 'LoginError' unless response.success? #TODO handle error
   end
 
   def logout_on_cyber_coach
@@ -63,7 +66,7 @@ class User < ActiveRecord::Base
     self.username
   end
 
-  def get_created_events
+  def get_created_events #TODO rename to 'created_events'
     Event.where(:owner_id => self)
   end
 

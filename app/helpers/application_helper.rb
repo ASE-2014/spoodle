@@ -1,4 +1,5 @@
 module ApplicationHelper
+
   def amount_upcoming
     Event.get_upcoming(current_user).count
   end
@@ -14,4 +15,5 @@ module ApplicationHelper
   def amount_own
     Event.get_own(current_user).count
   end
+
 end
