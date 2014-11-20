@@ -1,19 +1,19 @@
 module ApplicationHelper
 
   def amount_upcoming
-    Event.get_upcoming(current_user).count
+    current_user.upcoming_events.count
   end
 
   def amount_passed
-    Event.get_passed(current_user).count
+    current_user.passed_events.count
   end
 
   def amount_pending
-    Event.get_pending(current_user).count
+    current_user.pending_events.count
   end
 
   def amount_own
-    Event.get_own(current_user).count
+    current_user.created_events.count
   end
 
 end

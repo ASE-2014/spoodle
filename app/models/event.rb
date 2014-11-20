@@ -109,24 +109,4 @@ class Event < ActiveRecord::Base
     end
   end
 
-  # Returns an array of all upcoming events where the user is taking part
-  def self.get_upcoming(user) #TODO move to user
-    Event.select{ |event| (event.is_upcoming? and (event.is_invited? user or event.belongs_to? user)) }
-  end
-
-  # Returns an array of all passed events where the user took part
-  def self.get_passed(user) #TODO move to user
-    Event.select{ |event| (event.is_passed? and (event.is_invited? user or event.belongs_to? user)) }
-  end
-
-  # Returns an array of all events that were created by the user
-  def self.get_own(user) #TODO move to user
-    Event.select{ |event| (event.belongs_to? user) }
-  end
-
-  # Returns an array of all events where the user has set his availability but the deadline has not yet passed
-  def self.get_pending(user) #TODO move to user
-    Event.select{ |event| (!event.is_deadline_over? and (event.is_invited? user or event.belongs_to? user)) }
-  end
-
 end
