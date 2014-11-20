@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
   has_many :availabilities
   has_many :events, through: :invitations
   has_and_belongs_to_many :spoodle_dates
+  has_many :friendships, :dependent => :destroy
+  has_many :friends, :through => :friendships
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
