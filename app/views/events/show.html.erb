@@ -62,8 +62,10 @@
 <% unless @event.is_deadline_over? %>
     <h3><%= fa_icon 'users fw' %> Invited Users</h3>
     <%= render @event.invitations %>
-    <%= link_to new_event_invitation_path(@event) do %>
-        <%= image_tag("plus.png") %>
+    <% if @event.belongs_to?(current_user) %>
+        <%= link_to new_event_invitation_path(@event) do %>
+            <%= image_tag("plus.png") %>
+        <% end %>
     <% end %>
 <% end %>
 <% if @event.is_deadline_over? %>
