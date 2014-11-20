@@ -128,20 +128,20 @@
             location: "<%= @event.location %>"
         };
         $("#geocomplete").geocomplete(options);
+        <% if @event.document %>
+            var myOptions = {
+                center: new google.maps.LatLng(39.397, -100.644),
+                zoom: 4,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var gpsmap = new google.maps.Map(document.getElementById('gps'), myOptions);
+
+            var geoXml = new geoXML3.parser({
+                map: gpsmap,
+                singleInfoWindow: true,
+            });
+            geoXml.parse('<%= event_document_path(@event, @event.document) %>');
+        <% end %>
     });
 </script>
-<% if @event.document %>
-<script>
-    function initialize() {
-    var myLatlng = new google.maps.LatLng(46.95, 7.45);
-    var myOptions = {
-        zoom: 5,
-        center: myLatlng,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    map2 = new google.maps.Map(document.getElementById('gps'), myOptions);
-    geoXml = new geoXML3.parser({map: map2, singleInfoWindow: true});
-    geoXml.parse('<%= event_document_path(@event, @event.document) %>');
-};
-</script>
-<% end %>
+
