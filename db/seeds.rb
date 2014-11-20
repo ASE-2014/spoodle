@@ -28,13 +28,13 @@ peter = User.create!(email: 'p@d.ch',
                       password: '12345678',
                       password_confirmation: '12345678')
 
-# this event will be listed in the pending events list
-event1 = Event.new(title: 'Gurtenlauf preparation run',
-                      description: "We are running up the Gurten. This is not a proper mountain, just a little hill. In case someone isn't fit enough, they can catch the Gurtenbahn and join us at the top for a beer!",
-                      owner: arun,
-                      sport_id: 1,
-                      location: 'Gurtenbahnstation, Koeniz, Switzerland',
-                      deadline: 19.days.from_now )
+# this event will be listed in the upcoming events list
+event1 = Event.new(title: 'Kamikaze football Grumpel tournament sponsored by Inselspital AG',
+                   description: "This football tournament is open to everyone who knows what football is. Teams consist of 5 players each (including goalkeeper). Bring your friends, bring a pack of beer. And bring shin-pads some ice because things will get ugly. We are proud to introduce the Inselspital AG as our main sponsor.",
+                   owner: peter,
+                   sport_id: 3,
+                   location: 'Bern, Neufeld',
+                   deadline: 10.seconds.from_now )
 event1_date1 = event1.spoodle_dates.new(from: 30.days.from_now, to: 30.days.from_now + 2.hours)
 event1_date2 = event1.spoodle_dates.new(from: 40.days.from_now, to: 40.days.from_now + 2.hours)
 event1_date3 = event1.spoodle_dates.new(from: 50.days.from_now, to: 50.days.from_now + 2.hours)
@@ -44,13 +44,13 @@ event1_date6 = event1.spoodle_dates.new(from: 80.days.from_now, to: 80.days.from
 event1_date1.availabilities.new(user: urs, weight: 0.7)
 event1_date1.availabilities.new(user: oliver, weight: 0.5)
 event1_date2.availabilities.new(user: arun, weight: 1)
-event1_date1.availabilities.new(user: urs, weight: 0.6)
+event1_date6.availabilities.new(user: urs, weight: 0.6)
 event1_date3.availabilities.new(user: oliver, weight: 0.2)
 event1_date4.availabilities.new(user: urs, weight: 1)
 event1_date1.availabilities.new(user: pascal, weight: 0.7)
-event1_date1.availabilities.new(user: oliver, weight: 0.3)
+event1_date5.availabilities.new(user: oliver, weight: 0.3)
 event1_date2.availabilities.new(user: arun, weight: 0.8)
-event1_date1.availabilities.new(user: pascal, weight: 0.2)
+event1_date1.availabilities.new(user: peter, weight: 0.2)
 event1_date3.availabilities.new(user: urs, weight: 0.5)
 event1_date4.availabilities.new(user: arun, weight: 1)
 event1.invitations.new(user: urs)
@@ -65,7 +65,7 @@ event2 = Event.new(title: '20th annual Bern Grand Prix',
                       description: "Some people say these are prettiest 10 miles in the world (most definitely not). The course leads through all of Bern and starts and finishes at the Guisanplatz. Bring a bottle of water!",
                       owner: peter,
                       sport_id: 1,
-                      location: 'Guisanplatz, Bern',
+                      location: 'Guisanplatz',
                       deadline: 10.days.from_now )
 event2_date1 = event2.spoodle_dates.new(from: 20.days.from_now, to: 20.days.from_now + 1.5.hours)
 event2_date2 = event2.spoodle_dates.new(from: 30.days.from_now, to: 30.days.from_now + 1.5.hours)
@@ -81,9 +81,9 @@ event3 = Event.new(title: 'EPO presents: Tour de Suisse 2014',
                    owner: urs,
                    sport_id: 2,
                    location: 'Luzern',
-                   deadline: 20.seconds.from_now )
-event3_date1 = event3.spoodle_dates.new(from: 30.seconds.from_now, to: 10.days.from_now)
-event3_date2 = event3.spoodle_dates.new(from: 10.days.from_now, to: 24.days.from_now)
+                   deadline: 1.seconds.from_now )
+event3_date1 = event3.spoodle_dates.new(from: 2.seconds.from_now, to: 14.days.from_now)
+event3_date2 = event3.spoodle_dates.new(from: 14.days.from_now, to: 28.days.from_now)
 event3_date1.availabilities.new(user: oliver, weight: 0.9)
 event3_date2.availabilities.new(user: oliver, weight: 0.7)
 event3.invitations.new(user: peter)
@@ -118,11 +118,11 @@ event4.event_data = EventData.new(distance:300)
 event4.save!
 
 # this event will be listed in the passed events list
-event5 = Event.new(title: 'Kamikaze football Grumpel tournament sponsored by Inselspital AG',
-                   description: "This football tournament is open to everyone who knows what football is. Teams consist of 5 players each (including goalkeeper). Bring your friends, bring a pack of beer. And bring shin-pads some ice because things will get ugly. We are proud to introduce the Inselspital AG as our main sponsor.",
-                   owner: peter,
-                   sport_id: 3,
-                   location: 'Bern, Neufeld',
+event5 = Event.new(title: 'Gurtenlauf preparation run',
+                   description: "We are running up the Gurten. This is not a proper mountain, just a little hill. In case someone isn't fit enough, they can catch the Gurtenbahn and join us at the top for a beer!",
+                   owner: arun,
+                   sport_id: 1,
+                   location: 'Gurtenbahnstation',
                    deadline: 1.days.ago )
 event5_date1 = event5.spoodle_dates.new(from: 11.hours.ago, to: 1.hours.ago)
 event5_date1.availabilities.new(user: oliver, weight: 0.9)

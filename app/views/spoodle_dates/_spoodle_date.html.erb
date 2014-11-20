@@ -36,7 +36,7 @@
                         </div>
                     <% end %>
                 <% else %>
-                    <%= button_to 'Cancel assignment', cancel_event_spoodle_date_path(@event, spoodle_date), method: :put, class: "btn btn-warning btn-sm" %></p>
+                <p class="no-margin">You assigned <b><%= spoodle_date.availability(current_user).weight %></b> <%= link_to 'Cancel', cancel_event_spoodle_date_path(@event, spoodle_date), method: :put, class: "btn btn-warning btn-xs no-margin" %></p>
                 <% end %>
             </p>
         </div>

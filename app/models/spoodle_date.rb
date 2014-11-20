@@ -25,4 +25,13 @@ class SpoodleDate < ActiveRecord::Base
     votes
   end
 
+  # returns the availability of a given user. Nil if user has no availability.
+  def availability(user)
+    self.availabilities.each do |a|
+      if a.user==user
+        return a
+      end
+    end
+    nil
+  end
 end

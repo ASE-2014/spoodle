@@ -19,6 +19,10 @@
             </p>
             <p><%= event.description[0..400] %></p>
             <ul class="list-inline list-unstyled">
+                <li><%= fa_icon 'tags fw' %>
+                    <%= event.sport.name %>
+                </li>
+                |
                 <% if event.is_deadline_over? %>
                     <% if event.is_passed? %>
                         <li><%= fa_icon 'folder fw' %> Passed</li>
@@ -26,15 +30,11 @@
                         <li><%= fa_icon 'calendar fw' %> Upcoming</li>
                     <% end %>
                 <% else %>
-                    <li><%= fa_icon 'folder fw' %> Pending</li>
+                    <li><%= fa_icon 'spinner fw' %> Pending</li>
                 <% end %>
                 |
                 <li>
                     <%= fa_icon 'map-marker fw' %> <%= event.location[0..40] %>
-                </li>
-                |
-                <li>
-                    <%= event.sport.name %>
                 </li>
                 |
                 <li>

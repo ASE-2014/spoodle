@@ -36,6 +36,7 @@
         </div>
     <% end %>
     <p>
+        <%= fa_icon 'tags fw' %> <%= @event.sport.name %> |
         <% if @event.is_deadline_over? %>
             <% if @event.is_passed? %>
                 <%= fa_icon 'folder fw' %> Passed
@@ -45,7 +46,6 @@
         <% else %>
             <%= fa_icon 'folder fw' %> Pending
         <% end %> |
-        <%= @event.sport.name %> |
         <%= fa_icon 'user fw' %> by <%= link_to @event.owner, user_path(@event.owner) %>
     </p>
     <p><%= @event.description %></p>
