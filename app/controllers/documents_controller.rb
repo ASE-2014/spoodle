@@ -1,12 +1,8 @@
 class DocumentsController < ApplicationController
-  before_action :set_document, only: [:show, :edit, :update, :destroy]
-  before_filter :authenticate_user!
-  before_filter :owns_event!, only: [:new, :create]
-
-  def index
-    @documents = Document.all
-    respond_with(@documents)
-  end
+  before_filter :authenticate_user!, except: :show
+  before_action :set_document, only: [:show, :destroy]
+  before_filter :owns_event!, except: :show
+  before_filter :event_is_passed!
 
   def show
     send_data(@document.file_contents,

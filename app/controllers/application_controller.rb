@@ -28,9 +28,18 @@ class ApplicationController < ActionController::Base
     event = Event.find(params[:event_id].nil? ? params[:id] : params[:event_id])
     if event.is_deadline_over?
       flash[:error] = 'The deadline is already over!'
-      redirect_to events_path
+      redirect_to event_path event
     end
   end
+
+  def event_is_passed!
+    event = Event.find(params[:event_id].nil? ? params[:id] : params[:event_id])
+    unless event.is_passed?
+      flash[:error] = 'The event is not passed yet!'
+      redirect_to event_path
+    end
+  end
+
 
   protected
 
