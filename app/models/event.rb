@@ -5,6 +5,8 @@ class Event < ActiveRecord::Base
   has_one :definitive_date, foreign_key: 'definitive_date_id', class_name: 'SpoodleDate'
 
   has_one :event_data
+  has_one :document
+
 
   has_many :spoodle_dates
   accepts_nested_attributes_for :spoodle_dates, allow_destroy: true

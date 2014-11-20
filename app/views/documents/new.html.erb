@@ -1,0 +1,14 @@
+<h1 class="page-header"><%= fa_icon 'map-marker' %> Upload KML file</h1>
+<%= form_for([@event, @document], class: "form-group") do |f| %>
+    <p>
+    <div>
+        <%= f.file_field :file %>
+    </div>
+    </p>
+    <div style="float: left; width: auto;">
+        <div><%= f.submit "Upload", class: "btn btn-success" %></div>
+    </div>
+<% end %>
+<div style="float: right; width: auto;">
+    <%= button_to 'Discard', @event, method: :get, class: "btn btn-warning" %>
+</div>

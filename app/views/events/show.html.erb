@@ -58,6 +58,9 @@
 </form>
 
 <div class="map_canvas show"></div>
+
+<hr>
+<%= link_to "add KML", new_event_document_path(@event)%>
 <hr>
 <% unless @event.is_deadline_over? %>
     <h3><%= fa_icon 'users fw' %> Invited Users</h3>
@@ -92,6 +95,9 @@
 <% if (@event.is_deadline_over? and @event.is_passed?) %>
     <h3><%= fa_icon 'bar-chart fw' %> Event Data</h3>
         <%= @event.event_data %>
+        <% if @event.document %>
+            <%= link_to 'KML', event_document_path(@event, @event.document) %>
+        <% end %>
     <hr>
 <% end %>
 <% if @event.belongs_to?(current_user) %>
@@ -108,6 +114,7 @@
     <br/>
     <br/>
 <% end %>
+
 <script>
     $(function(){
 
