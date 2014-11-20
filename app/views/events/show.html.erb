@@ -57,10 +57,8 @@
     <input id="geocomplete" type="hidden" />
 </form>
 
-<div class="map_canvas show"></div>
+<div class="map_canvas location"></div>
 
-<hr>
-<%= link_to "add KML", new_event_document_path(@event)%>
 <hr>
 <% unless @event.is_deadline_over? %>
     <h3><%= fa_icon 'users fw' %> Invited Users</h3>
@@ -92,11 +90,11 @@
     </div>
     <hr>
 <% end %>
-<% if (@event.is_deadline_over? and @event.is_passed?) %>
+<% if @event.is_deadline_over? and @event.is_passed? %>
     <h3><%= fa_icon 'bar-chart fw' %> Event Data</h3>
         <%= @event.event_data %>
         <% if @event.document %>
-            <%= link_to 'KML', event_document_path(@event, @event.document) %>
+            <div id="gps" class="map_canvas"></div>
         <% end %>
     <hr>
 <% end %>
@@ -104,6 +102,14 @@
     <div style="float: left; width: auto;">
         <%= button_to 'Edit Event', edit_event_path(@event), method: :get, class: "btn btn-info" %>
     </div>
+    <div style="float: left; width: auto;">
+        <p>&nbsp;</p>
+    </div>
+    <% unless @event.document %>
+        <div style="float: left; width: auto;">
+            <%= button_to "Add GPS data (KML)", new_event_document_path(@event), method: :get, class: "btn btn-success" %>
+        </div>
+    <% end %>
     <div style="float: left; width: auto;">
         <p>&nbsp;</p>
     </div>
@@ -117,13 +123,25 @@
 
 <script>
     $(function(){
-
         var options = {
-            map: ".map_canvas",
+            map: ".location",
             location: "<%= @event.location %>"
         };
-
         $("#geocomplete").geocomplete(options);
-
     });
 </script>
+<% if @event.document %>
+<script>
+    function initialize() {
+    var myLatlng = new google.maps.LatLng(46.95, 7.45);
+    var myOptions = {
+        zoom: 5,
+        center: myLatlng,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    map2 = new google.maps.Map(document.getElementById('gps'), myOptions);
+    geoXml = new geoXML3.parser({map: map2, singleInfoWindow: true});
+    geoXml.parse('<%= event_document_path(@event, @event.document) %>');
+};
+</script>
+<% end %>

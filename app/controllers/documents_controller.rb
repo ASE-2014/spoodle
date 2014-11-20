@@ -9,7 +9,9 @@ class DocumentsController < ApplicationController
   end
 
   def show
-    render xml: @document.file_contents
+    send_data(@document.file_contents,
+              type: @document.content_type,
+              filename: @document.filename)
   end
 
   def new
