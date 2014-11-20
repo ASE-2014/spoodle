@@ -34,4 +34,5 @@ class SpoodleDate < ActiveRecord::Base
     end
     nil
   end
+
 end

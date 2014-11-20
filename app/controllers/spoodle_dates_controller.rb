@@ -8,7 +8,7 @@ class SpoodleDatesController < ApplicationController
   def assign
     @event = Event.find(params[:event_id])
     @spoodle_date = SpoodleDate.find(params[:id])
-    @availability = @spoodle_date.availabilities.new(availability_params);
+    @availability = @spoodle_date.availabilities.new(availability_params)
     @availability.user = current_user
     if @availability.save
       flash[:success] = "Successfully assigned weight #{@availability.weight} to #{@spoodle_date.from.strftime("%a, %d.%m.%y: %R")}"

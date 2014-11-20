@@ -6,7 +6,7 @@ class InvitationsController < ApplicationController
 
   def new
     @event = Event.find(params[:event_id])
-    @users = User.select{ |user| @event.users.exclude? user and not @event.owner.eql? user }
+    @users = User.select{ |user| @event.users.exclude? user and not @event.belongs_to? user }
     if @users.empty?
       flash[:error] = "All Spoodle Users are already invited to this event!"
       redirect_to @event

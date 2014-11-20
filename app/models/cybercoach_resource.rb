@@ -1,11 +1,12 @@
 class CybercoachResource
-# Helps map a Cybercoach REST Resource to Ruby objects. Is meant to be extended by subclasses which follow the naming convention CybercoachXyz (eg. CybercoachUser)
+# Helps map a Cybercoach REST Resource to Ruby objects. Is meant to be extended by subclasses which follow the naming
+# convention CybercoachXyz (eg. CybercoachUser)
 
   # Extends subclasses
   def self.inherited(base)
     base.extend(ClassMethods)
     base.instance_variable_set(:@resources_base, 'http://diufvm31.unifr.ch:8090/CyberCoachServer/resources')
-    resource_name = base.name.split(/(?=[A-Z])/)[1].downcase
+    resource_name = base.name.split(/(?=[A-Z])/)[1].downcase #TODO use of classname as 'variable' is bad practice, otherwise nice implemenation!
     base.instance_variable_set(:@resource_name, resource_name)
   end
 
@@ -48,10 +49,12 @@ class CybercoachResource
     end
 
     private
+
     def get_rest_response
       response = HTTParty.get("#{@resources_base}/#{@resource_name.pluralize}/",:headers => {'Accept' => 'application/json'})
       response[@resource_name.pluralize]
     end
+
   end
 
   # Logs into Cybercoach with the given username password combination
@@ -63,6 +66,7 @@ class CybercoachResource
   end
 
   private
+
   # Generates an xml payload which corresponds to the given hash and has the given root argument as root element
   def self.generate_payload(root, hash)
     xmlstring = "<#{root}>"
