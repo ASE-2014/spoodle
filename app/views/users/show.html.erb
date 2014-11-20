@@ -1,4 +1,4 @@
-<h1 class="page-header">Personal profile</h1>
+<h1 class="page-header"><%= fa_icon 'user fw' %><%= @user.username %></h1>
 
 <% flash.each do |name, msg| %>
     <div class="alert alert-dismissable alert-info">
@@ -10,13 +10,14 @@
 <ul>
   <li>Username : <%= @user.username %></li>
   <li>Email : <%= @user.email %></li>
+  <li>Events created : <%= @user.get_created_events.count %></li>
 </ul>
 
 <h2>Friends list</h2>
 <ul>
   <% @user.friendships.each do |f| %>
     <li>
-      <%= f.friend.username %>
+       <%= link_to f.friend, user_path(f.friend) %>
       (<%= link_to "Remove", f, :method => "delete" %>)
     </li>
   <% end %>

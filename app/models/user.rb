@@ -63,4 +63,8 @@ class User < ActiveRecord::Base
     self.username
   end
 
+  def get_created_events
+    Event.where(:owner_id => self)
+  end
+
 end
