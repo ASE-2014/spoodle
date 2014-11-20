@@ -35,32 +35,50 @@
             </div>
         </div>
     <% end %>
+
     <p>
         <%= fa_icon 'tags fw' %> <%= @event.sport.name %> |
-        <% if @event.is_deadline_over? %>
-            <% if @event.is_passed? %>
-                <%= fa_icon 'folder fw' %> Passed
-            <% else %>
-                <%= fa_icon 'calendar fw' %> Upcoming
-            <% end %>
+        <% if @event.is_passed? %>
+            <%= fa_icon 'folder fw' %> Passed
+        <% elsif @event.is_deadline_over? %>
+            <%= fa_icon 'calendar fw' %> Upcoming
         <% else %>
             <%= fa_icon 'folder fw' %> Pending
         <% end %> |
         <%= fa_icon 'user fw' %> by <%= link_to @event.owner, user_path(@event.owner) %>
     </p>
     <p><%= @event.description %></p>
+
 </div>
+
 <hr>
-<h3> <%= fa_icon 'map-marker' %> Location</h3>
+
+<h3><%= fa_icon 'map-marker fw' %> Location</h3>
 <p><%= @event.location %></p>
-<form>
-    <input id="geocomplete" type="hidden" />
-</form>
-
-<div class="map_canvas location"></div>
+<% unless @event.document %>
+    <form>
+        <input id="geocomplete" type="hidden" />
+    </form>
+    <div class="map_canvas location"></div>
+<% end %>
 
 <hr>
-<% unless @event.is_deadline_over? %>
+
+<% if @event.is_deadline_over? %>
+
+    <h3><%= fa_icon 'users fw' %> Participants</h3>
+    <% if @event.participants.empty? %>
+        <p>Nobody wants to participate <%= fa_icon 'frown-o' %></p>
+    <% else %>
+        <% @event.participants.each do |user| %>
+            <%= link_to user_path(user) do %>
+                <%= image_tag("profile.png") %>
+            <% end %>
+        <% end %>
+    <% end %>
+
+<% else %>
+
     <h3><%= fa_icon 'users fw' %> Invited Users</h3>
     <%= render @event.invitations %>
     <% if @event.belongs_to?(current_user) %>
@@ -68,51 +86,42 @@
             <%= image_tag("plus.png") %>
         <% end %>
     <% end %>
-<% end %>
-<% if @event.is_deadline_over? %>
-    <h3><%= fa_icon 'users fw' %> Participants</h3>
-    <% if @event.participants.empty? %>
-    <p>Nobody wants to participate <%= fa_icon 'frown-o' %></p>
-    <% else %>
-    <% @event.participants.each do |user| %>
-        <%= link_to user_path(user) do %>
-            <%= image_tag("profile.png") %>
-        <% end %>
-    <% end %>
-    <% end %>
-<% end %>
-<hr>
-<% unless @event.is_deadline_over? %>
+
+    <hr>
+
     <h3><%= fa_icon 'calendar fw' %> Proposed Dates</h3>
-    <p>You can assign to the proposed dates until <%= @event.deadline.strftime("%A, %d. %B %Y at %R.") %>
+    <p>You can assign to the proposed dates until <%= @event.deadline.strftime("%A, %d. %B %Y at %R.") %></p>
     <div class="row">
         <%= render @event.spoodle_dates %>
     </div>
-    <hr>
+
 <% end %>
-<% if @event.is_deadline_over? and @event.is_passed? %>
+
+<hr>
+
+
+<% if @event.is_passed? %>
     <h3><%= fa_icon 'bar-chart fw' %> Event Data</h3>
-        <%= @event.event_data %>
-        <% if @event.document %>
-            <div id="gps" class="map_canvas"></div>
+    <%= @event.event_data %>
+    <% if @event.document %>
+        <h4>Map</h4>
+        <div id="gps" class="map_canvas"></div>
+    <% end %>
+    <% if @event.belongs_to?(current_user) %>
+        <% unless @event.document %>
+            <%= button_to "Add Map", new_event_document_path(@event), method: :get, class: "btn btn-success btn-small" %>
+        <% else %>
+            <%= link_to "Delete Map", event_document_path(@event, @event.document), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary btn-xs no-margin" %>
         <% end %>
+    <% end %>
     <hr>
 <% end %>
+
 <% if @event.belongs_to?(current_user) %>
     <div style="float: left; width: auto;">
         <%= button_to 'Edit Event', edit_event_path(@event), method: :get, class: "btn btn-info" %>
     </div>
-    <div style="float: left; width: auto;">
-        <p>&nbsp;</p>
-    </div>
-    <% unless @event.document %>
-        <div style="float: left; width: auto;">
-            <%= button_to "Add GPS data (KML)", new_event_document_path(@event), method: :get, class: "btn btn-success" %>
-        </div>
-    <% end %>
-    <div style="float: left; width: auto;">
-        <p>&nbsp;</p>
-    </div>
+    <div style="float: left; width: auto;"><p>&nbsp;</p></div>
     <div style="float: left; width: auto;">
         <%= button_to 'Delete Event', event_path(@event), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary" %>
     </div>
@@ -123,11 +132,6 @@
 
 <script>
     $(function(){
-        var options = {
-            map: ".location",
-            location: "<%= @event.location %>"
-        };
-        $("#geocomplete").geocomplete(options);
         <% if @event.document %>
             var myOptions = {
                 center: new google.maps.LatLng(39.397, -100.644),
@@ -141,6 +145,12 @@
                 singleInfoWindow: true,
             });
             geoXml.parse('<%= event_document_path(@event, @event.document) %>');
+        <% else %>
+            var options = {
+                map: ".location",
+                location: "<%= @event.location %>"
+            };
+            $("#geocomplete").geocomplete(options);
         <% end %>
     });
 </script>

@@ -20,9 +20,6 @@ class DocumentsController < ApplicationController
     render :new
   end
 
-  def edit
-  end
-
   def create
     @event = Event.find(params[:event_id])
     @document = Document.new(document_params)
@@ -36,14 +33,15 @@ class DocumentsController < ApplicationController
     end
   end
 
-  def update
-    @document.update(document_params)
-    respond_with(@document)
-  end
-
   def destroy
-    @document.destroy
-    respond_with(@document)
+    @event = Event.find(params[:event_id])
+    @document = Document.find(params[:id])
+    if @document.destroy
+      flash[:success] = "Successfully deleted File #{@document.filename}."
+    else
+      flash[:error] = "The File #{@document.filename} could not be deleted!"
+    end
+    redirect_to @event
   end
 
   private

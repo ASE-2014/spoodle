@@ -1,9 +1,10 @@
-<h1 class="page-header"><%= fa_icon 'map-marker' %> Upload KML file</h1>
+<h1 class="page-header"><%= fa_icon 'upload fw' %> Upload KML file</h1>
 <%= form_for([@event, @document], class: "form-group") do |f| %>
     <p>
     <div>
-        <%= f.file_field :file %>
+        <%= f.file_field :file, accept: 'application/vnd.google-earth.kml+xml' %>
     </div>
+    <p class="help-block">At this moment, only .kml files can be uploaded.</p>
     </p>
     <div style="float: left; width: auto;">
         <div><%= f.submit "Upload", class: "btn btn-success" %></div>
