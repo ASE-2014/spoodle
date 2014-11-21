@@ -3,13 +3,10 @@ class FriendshipsController < ApplicationController
   before_filter :authenticate_user!
 
   def create
-    redirect_to users_path if current_user.friends.exists?(params[:friend_id]) or params[:friend_id] == current_user.id #TODO refactor (outsource into model)
-
-    @friendship = current_user.friendships.build(:friend_id => params[:friend_id]) #TODO refactor (use new?)
-    @friend = User.find(params[:friend_id])
-    @reverse_friendship = @friend.friendships.build(:friend_id => current_user.id) #TODO refactor (use new?)
-    if @friendship.save and @reverse_friendship.save
-      flash[:success] = "#{@friend.username} added as a friend"
+    friend = User.find(params[:friend_id])
+    @friendship = Friendship.new(user: current_user, friend: friend)
+    if @friendship.save
+      flash[:success] = "#{friend.username} added as a friend"
     else
       flash[:error] = "Friend could not be added!"
     end

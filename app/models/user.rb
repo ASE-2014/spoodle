@@ -66,6 +66,10 @@ class User < ActiveRecord::Base
     self.username
   end
 
+  def friends_with(user)
+    friends.include? user
+  end
+
   def all_events
     self.own_events + self.invited_events
   end
