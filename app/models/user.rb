@@ -5,8 +5,8 @@ class User < ActiveRecord::Base
 
   has_many :invitations
   has_many :availabilities
-  has_many :events, foreign_key: :owner_id, class_name: 'Event'
-  has_many :invited_events, through: :invitations, class_name: 'Event'
+  has_many :created_events, foreign_key: :owner_id, class_name: 'Event'
+  has_many :events, through: :invitations, class_name: 'Event'
   has_and_belongs_to_many :spoodle_dates
   has_many :friendships, :dependent => :destroy
   has_many :friends, :through => :friendships
@@ -67,16 +67,7 @@ class User < ActiveRecord::Base
   end
 
   def all_events
-    p '------------'
-    p self.events
-    p '============'
-    p self.invited_events
-    self.events.merge self.invited_events
-  end
-
-  # Returns an array of all events that were created by the user
-  def created_events
-    self.events
+    events + created_events
   end
 
   # Returns an array of all upcoming events where the user is taking part
