@@ -3,9 +3,9 @@ class User < ActiveRecord::Base
   after_create :create_user_on_cyber_coach, only: :create
   before_destroy :destroy_user_on_cyber_coach, only: :delete
 
-  has_many :own_events, class_name: 'Event'
   has_many :invitations
   has_many :availabilities
+  has_many :events, foreign_key: :owner_id, class_name: 'Event'
   has_many :invited_events, through: :invitations, class_name: 'Event'
   has_and_belongs_to_many :spoodle_dates
   has_many :friendships, :dependent => :destroy
@@ -66,33 +66,32 @@ class User < ActiveRecord::Base
     self.username
   end
 
-  def events
-    p '-------------'
-    p self.own_events
+  def all_events
+    p '------------'
+    p self.events
+    p '============'
     p self.invited_events
-    unless self.own_events.nil? or self.invited_events.nil?
-      return self.own_events.merge self.invited_events
-    end
+    self.events.merge self.invited_events
   end
 
   # Returns an array of all events that were created by the user
   def created_events
-    self.own_events
+    self.events
   end
 
   # Returns an array of all upcoming events where the user is taking part
   def upcoming_events
-    self.events.select{ |event| event.is_upcoming? }
+    self.all_events.select{ |event| event.is_upcoming? }
   end
 
   # Returns an array of all passed events where the user took part
   def passed_events
-    self.events.select{ |event| event.is_passed? }
+    self.all_events.select{ |event| event.is_passed? }
   end
 
   # Returns an array of all events where the user has set his availability but the deadline has not yet passed
   def pending_events
-    self.events.select{ |event| !event.is_deadline_over? }
+    self.all_events.select{ |event| !event.is_deadline_over? }
   end
 
 end

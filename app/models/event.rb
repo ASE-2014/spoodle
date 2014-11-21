@@ -3,7 +3,6 @@ class Event < ActiveRecord::Base
   belongs_to :owner, foreign_key: 'owner_id', class_name: 'User'
 
   has_one :definitive_date, foreign_key: 'definitive_date_id', class_name: 'SpoodleDate'
-
   has_one :event_data
 
   has_many :spoodle_dates
