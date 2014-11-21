@@ -1,25 +1,25 @@
 <h1 class="page-header"><%= fa_icon 'user fw' %><%= @user.username %></h1>
-<% unless current_user.friends.exists?(@user) %>
-   <%= button_to "Add friend", friendships_path(:friend_id => @user), :method => "post", class: "btn btn-success pull" %>
+<% if add_friend_button? @user %>
+    <%= button_to "Add friend", friendships_path(friend_id: @user), method: :post, class: "btn btn-success pull" %>
 <% end %>
 <% flash.each do |name, msg| %>
     <div class="alert alert-dismissable alert-info">
-      <button type="button" class="close" data-dismiss="alert">×</button>
-      <%= msg %>
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <%= msg %>
     </div>
 <% end %>
 <h2>About</h2>
 <ul>
-  <li>Username : <%= @user.username %></li>
-  <li>Email : <%= @user.email %></li>
-  <li>Events created : <%= @user.created_events.count %></li>
+    <li>Username : <%= @user.username %></li>
+    <li>Email : <%= @user.email %></li>
+    <li>Events created : <%= @user.created_events.count %></li>
 </ul>
-<h2>Friends list</h2>
+<h2>Friends</h2>
 <ul>
-  <% @user.friendships.each do |f| %>
-    <li>
-       <%= link_to f.friend, user_path(f.friend) %>
-      (<%= link_to "Remove", f, :method => "delete" %>)
-    </li>
-  <% end %>
+    <% @user.friendships.each do |f| %>
+        <li>
+            <%= link_to f.friend, user_path(f.friend) %>
+            (<%= link_to "Remove", f, :method => "delete" %>)
+        </li>
+    <% end %>
 </ul>
