@@ -67,7 +67,12 @@ class User < ActiveRecord::Base
   end
 
   def all_events
-    own_events + invited_events
+    self.own_events + self.invited_events
+  end
+
+  # Returns an array of all events that were created by the user
+  def created_events
+    self.own_events
   end
 
   # Returns an array of all upcoming events where the user is taking part
