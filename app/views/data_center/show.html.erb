@@ -1,9 +1,35 @@
 <h1 class="page-header"><%= fa_icon 'bar-chart' %> Data Center</h1>
 <div class="panel panel-default">
     <div class="panel-heading">
-        Distribution of events by sports you took part at
+        Your personal distribution of events by sports
     </div>
     <div class="panel-body">
-        <%= pie_chart @event_sport_data %>
+        <%= pie_chart @user_event_sport_data %>
     </div>
 </div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Total distribution of events by sports
+    </div>
+    <div class="panel-body">
+        <%= pie_chart @total_event_sport_data %>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Total distribution of events by sports
+    </div>
+    <div class="panel-body">
+        <%= column_chart @user_event_sport_data %>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Total distribution of events by sports
+    </div>
+    <div class="panel-body">
+        <%= column_chart @total_event_sport_data %>
+    </div>
+</div>
+
+
