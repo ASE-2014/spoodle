@@ -134,3 +134,37 @@ event5.invitations.new(user: pascal)
 event5.event_data = EventData.new(distance:300)
 event5.save!
 
+event6 = Event.new(title: 'Quick dummy passed boxing event', description: "bla", owner: peter, sport_id: 4, location: 'Bern', deadline: 1.days.ago )
+event6_date1 = event6.spoodle_dates.new(from: 11.hours.ago, to: 1.hours.ago)
+event6_date1.availabilities.new(user: peter, weight: 1)
+event6.save!
+
+event7 = Event.new(title: 'Quick dummy passed soccer event', description: "bla", owner: peter, sport_id: 3, location: 'Bern', deadline: 1.days.ago )
+event7_date1 = event7.spoodle_dates.new(from: 11.hours.ago, to: 1.hours.ago)
+event7_date1.availabilities.new(user: peter, weight: 1)
+event7.save!
+
+event8 = Event.new(title: 'Quick dummy passed cycling event', description: "bla", owner: peter, sport_id: 2, location: 'Bern', deadline: 1.days.ago )
+event8_date1 = event8.spoodle_dates.new(from: 11.hours.ago, to: 1.hours.ago)
+event8_date1.availabilities.new(user: peter, weight: 1)
+event8.save!
+
+event9 = Event.new(title: 'Quick dummy passed running event', description: "bla", owner: peter, sport_id: 1, location: 'Bern', deadline: 1.days.ago )
+event9_date1 = event9.spoodle_dates.new(from: 11.hours.ago, to: 1.hours.ago)
+event9_date1.availabilities.new(user: peter, weight: 1)
+event9.save!
+
+event10 = Event.new(title: 'Quick dummy passed soccer event', description: "bla", owner: peter, sport_id: 3, location: 'Bern', deadline: 1.days.ago )
+event10_date1 = event10.spoodle_dates.new(from: 11.hours.ago, to: 1.hours.ago)
+event10_date1.availabilities.new(user: peter, weight: 1)
+event10.save!
+
+event11 = Event.new(title: 'Quick dummy passed running event', description: "bla", owner: peter, sport_id: 1, location: 'Bern', deadline: 1.days.ago )
+event11_date1 = event11.spoodle_dates.new(from: 11.hours.ago, to: 1.hours.ago)
+event11_date1.availabilities.new(user: peter, weight: 1)
+event11.save!
+
+event12 = Event.new(title: 'Quick dummy passed cycling event', description: "bla", owner: peter, sport_id: 2, location: 'Bern', deadline: 1.days.ago )
+event12_date1 = event12.spoodle_dates.new(from: 11.hours.ago, to: 1.hours.ago)
+event12_date1.availabilities.new(user: peter, weight: 1)
+event12.save!

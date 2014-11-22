@@ -89,9 +89,10 @@
                     <%= fa_icon 'folder fw' %> Passed Events <span class="badge"><%= amount_passed %></span>
                 <% end %>
             </li>
-
             <li>
-                <a href="#"><i class="fa fa-bar-chart fa-fw"></i> Data Center</a>
+                <%= link_to data_center_path do %>
+                    <%= fa_icon 'bar-chart fw' %> Data Center</span>
+                <% end %>
             </li>
             <li>
                 <a href="#"><i class="fa fa-trophy fa-fw"></i> Global Toplist</a>
