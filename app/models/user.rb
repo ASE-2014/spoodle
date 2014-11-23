@@ -9,7 +9,6 @@ class User < ActiveRecord::Base
   has_many :invited_events, through: :invitations, :source => :event, class_name: 'Event'
   has_and_belongs_to_many :spoodle_dates
   has_many :friendships, :dependent => :destroy
-  has_many :friends, :through => :friendships
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -67,7 +66,9 @@ class User < ActiveRecord::Base
   end
 
   def friends_with(user)
-    friends.include? user
+    self.friendships.each do |friendship|
+      friendship.include? user
+    end
   end
 
   def all_events
