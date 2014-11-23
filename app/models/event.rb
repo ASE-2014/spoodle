@@ -105,8 +105,14 @@ class Event < ActiveRecord::Base
     ical_event.dtstart = self.definitive_date.from.strftime("%Y%m%dT%H%M%S")
     ical_event.dtend = self.definitive_date.to.strftime("%Y%m%dT%H%M%S")
     ical_event.summary = self.title
+    ical_event.location = self.location
+    ical_event.created = self.created_at
     if self.description?
       ical_event.description = self.description
+    end
+    ical_event.attendee = "mailto:#{self.owner.email}"
+    self.users.each do |user|
+      ical_event.append_attendee "mailto:#{user.email}"
     end
     ical_event
   end
