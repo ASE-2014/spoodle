@@ -65,3 +65,6 @@ gem 'httparty'
 
 # FontAwesome
 gem "font-awesome-rails"
+
+#icalendar
+gem "icalendar"
