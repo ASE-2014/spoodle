@@ -81,6 +81,20 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
+
+    # Offer the possibility to export event
+    # in ical format for pending and passed events
+    if @event.is_deadline_over?
+      respond_to do |wants|
+        wants.html
+        wants.ics do
+          calendar = Icalendar::Calendar.new
+          calendar.add_event(@event.to_ical)
+          calendar.publish
+          render :text => calendar.to_ical
+        end
+      end
+    end
   end
 
   private
