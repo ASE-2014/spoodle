@@ -8,7 +8,8 @@ class User < ActiveRecord::Base
   has_many :own_events, foreign_key: :owner_id, class_name: 'Event'
   has_many :invited_events, through: :invitations, :source => :event, class_name: 'Event'
   has_and_belongs_to_many :spoodle_dates
-  has_many :friendships, :dependent => :destroy
+  has_many :friendships_one, foreign_key: :friend_one_id, class_name: 'Friendship' # hacky - but the model demands it
+  has_many :friendships_two, foreign_key: :friend_two_id, class_name: 'Friendship'
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -67,8 +68,11 @@ class User < ActiveRecord::Base
 
   def friends_with(user)
     self.friendships.each do |friendship|
-      friendship.include? user
+      if friendship.includes? user
+        return true
+      end
     end
+    return false
   end
 
   def all_events
@@ -93,6 +97,10 @@ class User < ActiveRecord::Base
   # Returns an array of all events where the user has set his availability but the deadline has not yet passed
   def pending_events
     self.all_events.select{ |event| !event.is_deadline_over? }
+  end
+
+  def friendships
+    self.friendships_one.all + self.friendships_two.all
   end
 
 end

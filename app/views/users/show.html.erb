@@ -18,7 +18,7 @@
 <ul>
     <% @user.friendships.each do |f| %>
         <li>
-            <%= link_to f.friend, user_path(f.friend) %> (<%= link_to "Remove", f, :method => "delete" %>)
+            <%= f %> <!-- TODO fix -->
         </li>
     <% end %>
 </ul>
