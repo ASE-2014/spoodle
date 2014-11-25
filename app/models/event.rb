@@ -110,8 +110,7 @@ class Event < ActiveRecord::Base
     if self.description?
       ical_event.description = self.description
     end
-    ical_event.attendee = "mailto:#{self.owner.email}"
-    self.users.each do |user|
+    self.participants.each do |user|
       ical_event.append_attendee "mailto:#{user.email}"
     end
     ical_event
