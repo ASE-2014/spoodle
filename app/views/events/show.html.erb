@@ -117,9 +117,9 @@
     <hr>
 <% end %>
 
-<% if @event.is_deadline_over? %>
+<% if @event.is_upcoming? %>
     <div>
-      <%= link_to event_path(@event), method: :get, format: :ics %>
+      <%= button_to "Export event", event_path(@event, format: :ics), method: :get, class: "btn btn-info"%>
     </div>
     <br/>
 <% end %>
