@@ -31,13 +31,12 @@ class Friendship < ActiveRecord::Base
   end
 
   def friend_of(user)
-    if not (friend_one.eql? user or friend_two.eql? user)
-      nil
+    if not friend_one.eql? user and not friend_two.eql? user
+      return nil
     else
-      friend_one if friend_two.eql? user
-      friend_two if friend_one.eql? user
+      return friend_one if friend_two.eql? user
+      return friend_two if friend_one.eql? user
     end
   end
-
 
 end

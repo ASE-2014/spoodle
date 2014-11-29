@@ -18,7 +18,8 @@
 <ul>
     <% @user.friendships.each do |f| %>
         <li>
-            <%= f %> <!-- TODO fix -->
+            <%= link_to (f.friend_of @user), user_path(f.friend_of @user) %>
+            <%= (@user.eql? current_user) ? (link_to "Unfriend", f, :method => "delete") : "" %>
         </li>
     <% end %>
 </ul>

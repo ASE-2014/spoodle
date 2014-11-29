@@ -68,11 +68,9 @@ class User < ActiveRecord::Base
 
   def friends_with(user)
     self.friendships.each do |friendship|
-      if friendship.includes? user
-        return true
-      end
+      return true if friendship.includes? user
     end
-    return false
+    false
   end
 
   def all_events
@@ -99,8 +97,17 @@ class User < ActiveRecord::Base
     self.all_events.select{ |event| !event.is_deadline_over? }
   end
 
+  # Combines all existing friendships
   def friendships
     self.friendships_one.all + self.friendships_two.all
+  end
+
+  def friends
+    friends = Array.new
+    self.friendships.each do |f|
+      friends << (f.friend_of self)
+    end
+    friends
   end
 
 end
