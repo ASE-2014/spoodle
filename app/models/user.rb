@@ -3,13 +3,13 @@ class User < ActiveRecord::Base
   after_create :create_user_on_cyber_coach, only: :create
   before_destroy :destroy_user_on_cyber_coach, only: :delete
 
-  has_many :events
   has_many :invitations
   has_many :availabilities
-  has_many :events, through: :invitations
+  has_many :own_events, foreign_key: :owner_id, class_name: 'Event'
+  has_many :invited_events, through: :invitations, :source => :event, class_name: 'Event'
   has_and_belongs_to_many :spoodle_dates
-  has_many :friendships, :dependent => :destroy
-  has_many :friends, :through => :friendships
+  has_many :friendships_one, foreign_key: :friend_one_id, class_name: 'Friendship' # hacky - but the model demands it
+  has_many :friendships_two, foreign_key: :friend_two_id, class_name: 'Friendship'
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -66,8 +66,48 @@ class User < ActiveRecord::Base
     self.username
   end
 
-  def get_created_events #TODO rename to 'created_events'
-    Event.where(:owner_id => self)
+  def friends_with(user)
+    self.friendships.each do |friendship|
+      return true if friendship.includes? user
+    end
+    false
+  end
+
+  def all_events
+    self.own_events + self.invited_events
+  end
+
+  # Returns an array of all events that were created by the user
+  def created_events
+    self.own_events
+  end
+
+  # Returns an array of all upcoming events where the user is taking part
+  def upcoming_events
+    self.all_events.select{ |event| event.is_upcoming? }
+  end
+
+  # Returns an array of all passed events where the user took part
+  def passed_events
+    self.all_events.select{ |event| event.is_passed? }
+  end
+
+  # Returns an array of all events where the user has set his availability but the deadline has not yet passed
+  def pending_events
+    self.all_events.select{ |event| !event.is_deadline_over? }
+  end
+
+  # Combines all existing friendships
+  def friendships
+    self.friendships_one.all + self.friendships_two.all
+  end
+
+  def friends
+    friends = Array.new
+    self.friendships.each do |f|
+      friends << (f.friend_of self)
+    end
+    friends
   end
 
 end
