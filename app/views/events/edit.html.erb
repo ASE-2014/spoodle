@@ -53,17 +53,17 @@
     <% end %>
     <p>
     <div>
-        <%= f.label :event_data %><br />
-        <%= f.fields_for :event_data do |ff| %>
+        <%= f.label :event_datas %><br />
+        <%= f.fields_for :event_datas do |ff| %>
 
-            <%= render 'event_data_textfield_attribute', attribute_name: :distance, ff: ff %>
-            <%= render 'event_data_textfield_attribute', attribute_name: :party_1_name, ff: ff %>
-            <%= render 'event_data_textfield_attribute', attribute_name: :party_2_name, ff: ff %>
-            <%= render 'event_data_textfield_attribute', attribute_name: :winner_name, ff: ff %>
-            <%= render 'event_data_textfield_attribute', attribute_name: :score_1, ff: ff %>
-            <%= render 'event_data_textfield_attribute', attribute_name: :score_2, ff: ff %>
+            <%= render 'event_datas/textfield_attribute', attribute_name: :distance, ff: ff %>
+            <%= render 'event_datas/textfield_attribute', attribute_name: :party_1_name, ff: ff %>
+            <%= render 'event_datas/textfield_attribute', attribute_name: :party_2_name, ff: ff %>
+            <%= render 'event_datas/textfield_attribute', attribute_name: :winner_name, ff: ff %>
+            <%= render 'event_datas/textfield_attribute', attribute_name: :score_1, ff: ff %>
+            <%= render 'event_datas/textfield_attribute', attribute_name: :score_2, ff: ff %>
 
-    <% end %>
+        <% end %>
     </div>
     </p>
 
