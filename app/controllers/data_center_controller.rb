@@ -10,7 +10,7 @@ class DataCenterController < ApplicationController
     # Prepare chart data here nicely. We want no logic in the view.
 
     sports = Array.new
-    Event.get_passed(current_user).each do |e| #TODO refactor when the fixes are merged
+    current_user.passed_events.each do |e|
       sports.push e.sport.name
     end
     # Convert array containing the sport.name of each event to a hash
