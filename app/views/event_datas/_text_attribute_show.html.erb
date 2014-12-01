@@ -1,3 +1,3 @@
-<% if not @event.event_data.valid_attributes[attribute_name].nil? %>
+<% if  @event.event_data.valid_attributes.has_key? attribute_name and not @event.event_data.valid_attributes[attribute_name].nil? %>
     <p><%= attribute_name.capitalize %>: <%= @event.event_data.valid_attributes[attribute_name] %></p>
 <% end %>
