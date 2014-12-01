@@ -65,3 +65,6 @@ gem 'httparty'
 
 # FontAwesome
 gem "font-awesome-rails"
+
+# JS charts for Rails: http://ankane.github.io/chartkick/
+gem "chartkick"

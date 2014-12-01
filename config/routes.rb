@@ -34,6 +34,9 @@ Rails.application.routes.draw do
 
   end
 
+
+  get     'data_center'      => 'data_center#show'
+
   # Event routes #TODO put into resources :events
   get     'upcoming'         => 'events#upcoming', as: 'upcoming_events'
   get     'pending'          => 'events#pending',  as: 'pending_events'
