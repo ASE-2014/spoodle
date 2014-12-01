@@ -56,7 +56,6 @@ event1_date4.availabilities.new(user: arun, weight: 1)
 event1.invitations.new(user: urs)
 event1.invitations.new(user: pascal)
 event1.invitations.new(user: oliver)
-event1.invitations.new(user: peter)
 event1.event_data = EventData.new( distance:100)
 event1.save!
 
