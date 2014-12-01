@@ -92,7 +92,7 @@ class EventsController < ApplicationController
   # Don't allow invitations_attributes, since the invitations can't be deleted.
   # Invitations are added through the invitations controller.
   def event_update_params
-    params.require(:event).permit(:title, :description, :location, spoodle_dates_attributes: [:id, :from, :to, :_destroy])
+    params.require(:event).permit(:title, :description, :location, spoodle_dates_attributes: [:id, :from, :to, :_destroy], event_data_attributes: @event.event_data.attributes)
   end
 
   # Performs a search query on each event of an array, returns an array of all events matching the query (ignore case)
