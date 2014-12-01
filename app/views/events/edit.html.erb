@@ -51,6 +51,18 @@
             </div>
         </p>
     <% end %>
+    <p>
+    <div>
+        <%= f.label :event_data %><br />
+        <%= f.fields_for :event_data do |ff| %>
+            <% if @event.event_data.valid_attributes.has_key? :distance %>
+                <%= ff.label :distance %>
+                <%= ff.text_field :distance, class: "form-control" %>
+            <% end %>
+        <% end %>
+
+    </div>
+    </p>
     <div style="float: left; width: auto;">
         <div><%= f.submit "Update", class: "btn btn-success" %></div>
     </div>
@@ -82,4 +94,4 @@
             return false;
         });
     });
-</script>
+</script><

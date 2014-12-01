@@ -7,4 +7,12 @@ class EventData < ActiveRecord::Base
     self.event.sport.data_attributes
   end
 
+  def valid_attributes
+    attr = {}
+    attributes.each do |attribute|
+      attr[attribute] = self.send(attribute)
+    end
+    attr
+  end
+
 end

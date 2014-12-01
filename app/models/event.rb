@@ -4,6 +4,8 @@ class Event < ActiveRecord::Base
 
   has_one :definitive_date, foreign_key: 'definitive_date_id', class_name: 'SpoodleDate'
   has_one :event_data
+  accepts_nested_attributes_for :event_data, allow_destroy: true
+
   has_one :document
 
 
@@ -87,16 +89,6 @@ class Event < ActiveRecord::Base
     CybercoachSport.find_by(:id, self.sport_id)[0]
   end
 
-  # Overrides getter
-  # Returns only the attributes which make sense for the sport which belongs to the event
-  alias_method :event_data_original, :event_data
-  def event_data
-    attributes = {}
-    event_data_original.attributes.each do |attribute|
-      attributes[attribute] = event_data_original.send(attribute)
-    end
-    attributes
-  end
 
   private
 

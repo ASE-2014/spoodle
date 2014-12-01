@@ -102,7 +102,9 @@
 
 <% if @event.is_passed? %>
     <h3><%= fa_icon 'bar-chart fw' %> Event Data</h3>
-    <%= @event.event_data %>
+    <% @event.event_data.valid_attributes.each do |key, val| %>
+        <%= key.capitalize %>: <%= val %>
+    <% end %>
     <% if @event.document %>
         <h4>Map</h4>
         <div id="gps" class="map_canvas"></div>
