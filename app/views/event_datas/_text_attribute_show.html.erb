@@ -1,0 +1,3 @@
+<% if not @event.event_data.valid_attributes[attribute_name].nil? %>
+    <p><%= attribute_name.capitalize %>: <%= @event.event_data.valid_attributes[attribute_name] %></p>
+<% end %>
