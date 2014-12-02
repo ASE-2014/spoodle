@@ -53,10 +53,9 @@
     <% end %>
     <p>
     <div>
-        <%= f.label :event_datas %><br />
-        <%= f.fields_for :event_datas do |ff| %>
+        <%= f.fields_for :event_data do |ff| %>
 
-            <%= render 'event_datas/textfield_form', attribute_name: :distance, ff: ff %>
+            <%= render 'event_datas/numberfield_form', attribute_name: :distance, ff: ff %>
             <%= render 'event_datas/textfield_form', attribute_name: :party_1_name, ff: ff %>
             <%= render 'event_datas/textfield_form', attribute_name: :party_2_name, ff: ff %>
             <%= render 'event_datas/textfield_form', attribute_name: :winner_name, ff: ff %>
