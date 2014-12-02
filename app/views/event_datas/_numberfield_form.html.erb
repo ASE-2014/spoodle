@@ -1,0 +1,4 @@
+<% if @event.event_data.valid_attributes.has_key? attribute_name %>
+    <%= ff.label attribute_name %>
+    <%= ff.number_field attribute_name, class: "form-control" %>
+<% end %>

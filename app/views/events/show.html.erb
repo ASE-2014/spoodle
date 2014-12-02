@@ -109,7 +109,12 @@
 
 <% if @event.is_passed? %>
     <h3><%= fa_icon 'bar-chart fw' %> Event Data</h3>
-    <%= @event.event_data %>
+    <%= render 'event_datas/text_attribute_show', attribute_name: :distance %>
+    <%= render 'event_datas/text_attribute_show', attribute_name: :party_1_name %>
+    <%= render 'event_datas/text_attribute_show', attribute_name: :party_2_name %>
+    <%= render 'event_datas/text_attribute_show', attribute_name: :winner_name %>
+    <%= render 'event_datas/text_attribute_show', attribute_name: :score_1 %>
+    <%= render 'event_datas/text_attribute_show', attribute_name: :score_2 %>
     <% if @event.document %>
         <h4>Map</h4>
         <div id="gps" class="map_canvas"></div>
