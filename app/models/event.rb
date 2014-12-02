@@ -90,6 +90,23 @@ class Event < ActiveRecord::Base
   end
 
 
+  # Creates a icalendar object from the event
+  def to_ical
+    ical_event = Icalendar::Event.new
+    ical_event.dtstart = self.definitive_date.from.strftime("%Y%m%dT%H%M%S")
+    ical_event.dtend = self.definitive_date.to.strftime("%Y%m%dT%H%M%S")
+    ical_event.summary = self.title
+    ical_event.location = self.location
+    ical_event.created = self.created_at
+    if self.description?
+      ical_event.description = self.description
+    end
+    self.participants.each do |user|
+      ical_event.append_attendee "mailto:#{user.email}"
+    end
+    ical_event
+  end
+
   private
 
   # Selects the spoodle_date with the most and strongest votes
