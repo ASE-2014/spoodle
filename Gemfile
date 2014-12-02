@@ -66,6 +66,9 @@ gem 'httparty'
 # FontAwesome
 gem "font-awesome-rails"
 
+# social share
+gem "social-buttons"
+
 #icalendar
 gem "icalendar"
 

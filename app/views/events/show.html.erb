@@ -49,6 +49,11 @@
     </p>
     <p><%= @event.description %></p>
 
+  <div class="social_buttons" style="display: inline">
+    <div class="social-button"><%= tweet_button(url: "http://www.spoodle.com", via: "spoodle", text: "I'm taking part to a spoodle event!", count: "horizontal") %></div>
+    <div class="social-button"><%= like_button(745564808869082, href: "http://www.spoodle.com") %></div>
+    <div class="social-button"><%= google_plus_button(href: "http://www.spoodle.com", script: true, size: "medium", annotation: "inline") %></div>
+  </div>
 </div>
 
 <hr>
@@ -63,6 +68,8 @@
 <% end %>
 
 <hr>
+
+
 
 <% if @event.is_deadline_over? %>
 
