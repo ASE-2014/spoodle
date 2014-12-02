@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.where.not(id: current_user.id) #TODO refactor
+    @users = User.all_except current_user
     if params[:search]
       @users = search(@users, params[:search])
     end
