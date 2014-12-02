@@ -124,6 +124,13 @@
     <hr>
 <% end %>
 
+<% if @event.is_upcoming? %>
+    <div>
+      <%= button_to "Export event", event_path(@event, format: :ics), method: :get, class: "btn btn-info"%>
+    </div>
+    <br/>
+<% end %>
+
 <% if @event.belongs_to?(current_user) %>
     <div style="float: left; width: auto;">
         <%= button_to 'Edit Event', edit_event_path(@event), method: :get, class: "btn btn-info" %>

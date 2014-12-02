@@ -51,28 +51,28 @@ class EventsController < ApplicationController
   end
 
   def upcoming
-    @upcoming_events = Event.get_upcoming(current_user) #TODO responsibility of User model
+    @upcoming_events = current_user.upcoming_events
     if params[:search]
       @upcoming_events = search(@upcoming_events, params[:search])
     end
   end
 
   def passed
-    @passed_events = Event.get_passed(current_user) #TODO responsibility of User model
+    @passed_events = current_user.passed_events
     if params[:search]
       @passed_events = search(@passed_events, params[:search])
     end
   end
 
   def pending
-    @pending_events = Event.get_pending(current_user) #TODO responsibility of User model
+    @pending_events = current_user.pending_events
     if params[:search]
       @pending_events = search(@pending_events, params[:search])
     end
   end
 
   def index
-    @my_events = Event.get_own(current_user) #TODO responsibility of User model
+    @my_events = current_user.created_events
     if params[:search]
       @my_events = search(@my_events, params[:search])
       (params[:search])
@@ -81,6 +81,21 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
+
+    # Offer the possibility to export event
+    # in ical format for pending and passed events
+    if @event.is_deadline_over?
+      respond_to do |wants|
+        wants.html
+        wants.ics do
+          calendar = Icalendar::Calendar.new
+          calendar.add_event(@event.to_ical)
+          calendar.publish
+          response.headers['Content-Disposition'] = 'attachment; filename="spoodle_event_' + @event.id.to_s + '.csv"'
+          render :text => calendar.to_ical
+        end
+      end
+    end
   end
 
   private
