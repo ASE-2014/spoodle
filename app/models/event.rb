@@ -98,6 +98,7 @@ class Event < ActiveRecord::Base
     ical_event.summary = self.title
     ical_event.location = self.location
     ical_event.created = self.created_at
+    #ical_event.uid = Rails.application.routes.url_helpers.event_path(self.id)
     if self.description?
       ical_event.description = self.description
     end
