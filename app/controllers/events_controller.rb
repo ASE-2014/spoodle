@@ -89,9 +89,9 @@ class EventsController < ApplicationController
         wants.html
         wants.ics do
           calendar = Icalendar::Calendar.new
-          calendar.add_event(@event.to_ical)
+          calendar.add_event(@event.to_ical(request.env["HTTP_HOST"] + event_path(@event)))
           calendar.publish
-          response.headers['Content-Disposition'] = 'attachment; filename="spoodle_event_' + @event.id.to_s + '.csv"'
+          response.headers['Content-Disposition'] = 'attachment; filename="spoodle_event_' + @event.id.to_s + '.ics"'
           render :text => calendar.to_ical
         end
       end
