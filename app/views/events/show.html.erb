@@ -8,7 +8,9 @@
 
 <a class="media-left hidden-xs">
     <img class="media-object default <%= @event.sport.name.downcase %> hidden-xs hidden-sm"/>
-    <img class="default64 <%= @event.sport.name.downcase %>64 visible-xs visible-sm"/>    </a>
+    <img class="default64 <%= @event.sport.name.downcase %>64 visible-xs visible-sm"/>
+</a>
+
 <div class="media-body">
 
     <% if @event.is_upcoming? %>
@@ -34,6 +36,10 @@
                 </div>
             </div>
         </div>
+        <div>
+            <%= button_to "Download Calendar File", event_path(@event, format: :ics), method: :get, class: "btn btn-info btn-sm"%>
+        </div>
+        <br/>
     <% end %>
 
     <p>
@@ -49,17 +55,12 @@
     </p>
     <p><%= @event.description %></p>
 
-  <% if @event.is_upcoming? %>
-      <div>
-        <%= button_to "Export event", event_path(@event, format: :ics), method: :get, class: "btn btn-info small"%>
-      </div>
-      <br/>
-  <% end %>
-  <div class="social_buttons" style="display: inline">
-    <div class="social-button"><%= tweet_button(url: "http://www.spoodle.com", via: "spoodle", text: "I'm taking part to a spoodle event!", count: "horizontal") %></div>
-    <div class="social-button"><%= like_button(745564808869082, href: "http://www.spoodle.com") %></div>
-    <div class="social-button"><%= google_plus_button(href: "http://www.spoodle.com", script: true, size: "medium", annotation: "inline") %></div>
-  </div>
+    <div class="social-likes">
+        <div class="facebook" title="Share link on Facebook">Facebook</div>
+        <div class="twitter" title="Share link on Twitter">Twitter</div>
+        <div class="plusone" title="Share link on Google+">Google+</div>
+        <div class="pinterest" title="Share image on Pinterest" data-media="">Pinterest</div>
+    </div>
 
 </div>
 
