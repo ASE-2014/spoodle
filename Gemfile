@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.6'
 
@@ -65,3 +64,10 @@ gem 'httparty'
 
 # FontAwesome
 gem "font-awesome-rails"
+
+#icalendar
+gem "icalendar"
+
+# JS charts for Rails: http://ankane.github.io/chartkick/
+gem "chartkick"
+

@@ -2,9 +2,12 @@
 <html>
 <head>
     <title>Spoodle</title>
-    <script src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?libraries=places&sensor=false"></script>
+    <script type="text/javascript" src="http://geoxml3.googlecode.com/svn/branches/polys/geoxml3.js"></script>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag "//www.google.com/jsapi" %>
+    <%= javascript_include_tag "application", "chartkick" %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= favicon_link_tag %>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -17,7 +20,6 @@
     <%= csrf_meta_tags %>
 </head>
 <body>
-
 <div id="wrapper">
 
 <!-- Navigation -->
@@ -87,15 +89,18 @@
                     <%= fa_icon 'folder fw' %> Passed Events <span class="badge"><%= amount_passed %></span>
                 <% end %>
             </li>
-
             <li>
-                <a href="#"><i class="fa fa-line-chart fa-fw"></i> Data Center</a>
+                <%= link_to data_center_path do %>
+                    <%= fa_icon 'bar-chart fw' %> Data Center</span>
+                <% end %>
             </li>
             <li>
                 <a href="#"><i class="fa fa-trophy fa-fw"></i> Global Toplist</a>
             </li>
             <li>
-                <a href="#"><i class="fa fa-users fa-fw"></i> Friends</a>
+                <%= link_to users_path do %>
+                  <%= fa_icon 'users fw' %> Users
+                <% end %>
             </li>
         </ul>
     </div>

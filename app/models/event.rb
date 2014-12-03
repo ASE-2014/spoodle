@@ -3,8 +3,11 @@ class Event < ActiveRecord::Base
   belongs_to :owner, foreign_key: 'owner_id', class_name: 'User'
 
   has_one :definitive_date, foreign_key: 'definitive_date_id', class_name: 'SpoodleDate'
-
   has_one :event_data
+  accepts_nested_attributes_for :event_data, allow_destroy: true
+
+  has_one :document
+
 
   has_many :spoodle_dates
   accepts_nested_attributes_for :spoodle_dates, allow_destroy: true
@@ -43,6 +46,16 @@ class Event < ActiveRecord::Base
     user.eql? self.owner
   end
 
+  # Returns all users that have assigned a value to the definitive Spoodle date
+  # If the definitive date is not yet set, an empty array is returned
+  def participants
+    if definitive_date
+      definitive_date.users
+    else
+      Array.new
+    end
+  end
+
   # Checks if the deadline is over yet
   def is_deadline_over?
     self.deadline < DateTime.now
@@ -76,15 +89,23 @@ class Event < ActiveRecord::Base
     CybercoachSport.find_by(:id, self.sport_id)[0]
   end
 
-  # Overrides getter
-  # Returns only the attributes which make sense for the sport which belongs to the event
-  alias_method :event_data_original, :event_data
-  def event_data
-    attributes = {}
-    event_data_original.attributes.each do |attribute|
-    attributes[attribute] = event_data_original.send(attribute)
+
+  # Creates a icalendar object from the event
+  def to_ical(url)
+    ical_event = Icalendar::Event.new
+    ical_event.dtstart = self.definitive_date.from.strftime("%Y%m%dT%H%M%S")
+    ical_event.dtend = self.definitive_date.to.strftime("%Y%m%dT%H%M%S")
+    ical_event.summary = self.title
+    ical_event.location = self.location
+    ical_event.created = self.created_at
+    ical_event.url = url
+    if self.description?
+      ical_event.description = self.description
     end
-    attributes
+    self.participants.each do |user|
+      ical_event.append_attendee "mailto:#{user.email}"
+    end
+    ical_event
   end
 
   private
@@ -92,33 +113,11 @@ class Event < ActiveRecord::Base
   # Selects the spoodle_date with the most and strongest votes
   # Sets definitive_date to nil if nobody assigned to any date
   def select_definitive_date
-    p "this is #{self.title}"
-    p "definite date is #{@definitive_date}"
     self.spoodle_dates.each do |spoodle_date|
       if @definitive_date.nil? or spoodle_date.votes > @definitive_date.votes
         @definitive_date = spoodle_date
       end
     end
-  end
-
-  # Returns an array of all upcoming events where the user is taking part
-  def self.get_upcoming(user)
-    Event.select{ |event| (event.is_upcoming? and (event.is_invited? user or event.belongs_to? user)) }
-  end
-
-  # Returns an array of all passed events where the user took part
-  def self.get_passed(user)
-    Event.select{ |event| (event.is_passed? and (event.is_invited? user or event.belongs_to? user)) }
-  end
-
-  # Returns an array of all events that were created by the user
-  def self.get_own(user)
-    Event.select{ |event| (event.belongs_to? user) }
-  end
-
-  # Returns an array of all events where the user has set his availability but the deadline has not yet passed
-  def self.get_pending(user)
-    Event.select{ |event| (!event.is_deadline_over? and (event.is_invited? user or event.belongs_to? user)) }
   end
 
 end

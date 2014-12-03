@@ -13,7 +13,7 @@
             <%= f.text_field :title, class: "form-control", autofocus: true %>
         </div>
     </p>
-    <% if @event.deadline>Time.now %>
+    <% unless @event.is_deadline_over? %>
         <p>
             <div><%= f.label :deadline %><br />
                 <%= f.datetime_select :deadline, class: "form-control" %>
@@ -36,19 +36,37 @@
             <a href="#">Hochschulstrasse 4, Bern</a>
         </p>
     </div>
-    <div class="map_canvas"></div>
+    <div class="map_canvas location"></div>
+    <% unless @event.is_deadline_over? %>
+        <p>
+            <div><%= f.label :dates %><br />
+                <%= f.nested_fields_for :spoodle_dates do |ff| %>
+                    <%= ff.label :from %>
+                    <%= ff.datetime_select :from %>
+                    <%= ff.label :to %>
+                    <%= ff.datetime_select :to %>
+                    <%= ff.remove_nested_fields_link fa_icon 'times' %>
+                <% end %>
+                <%= f.add_nested_fields_link :spoodle_dates, 'Add a date' %>
+            </div>
+        </p>
+    <% end %>
     <p>
-        <div><%= f.label :dates %><br />
-            <%= f.nested_fields_for :spoodle_dates do |ff| %>
-                <%= ff.label :from %>
-                <%= ff.datetime_select :from %>
-                <%= ff.label :to %>
-                <%= ff.datetime_select :to %>
-                <%= ff.remove_nested_fields_link fa_icon 'times' %>
-            <% end %>
-            <%= f.add_nested_fields_link :spoodle_dates, 'Add a date' %>
-        </div>
+    <div>
+        <%= f.fields_for :event_data do |ff| %>
+
+            <%= render 'event_datas/numberfield_form', attribute_name: :distance, ff: ff %>
+            <%= render 'event_datas/textfield_form', attribute_name: :party_1_name, ff: ff %>
+            <%= render 'event_datas/textfield_form', attribute_name: :party_2_name, ff: ff %>
+            <%= render 'event_datas/textfield_form', attribute_name: :winner_name, ff: ff %>
+            <%= render 'event_datas/textfield_form', attribute_name: :score_1, ff: ff %>
+            <%= render 'event_datas/textfield_form', attribute_name: :score_2, ff: ff %>
+
+        <% end %>
+    </div>
     </p>
+
+
     <div style="float: left; width: auto;">
         <div><%= f.submit "Update", class: "btn btn-success" %></div>
     </div>
@@ -80,4 +98,4 @@
             return false;
         });
     });
-</script>
+</script><

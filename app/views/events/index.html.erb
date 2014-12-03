@@ -18,35 +18,9 @@
             </div>
         </div>
     <% end %>
-    <div class="table-responsive">
-        <table class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Sport</th>
-                    <th>Organizer</th>
-                    <th>Dates</th>
-                    <th>Invited</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% @my_events.each do |event| %>
-                    <tr>
-                        <td><%= link_to event.title, event_path(event) %></td>
-                        <td><%= event.sport.name %></td>
-                        <td><%= event.owner.username %></td>
-                        <td>
-                            <% event.spoodle_dates.each do |date| %>
-                                <%= fa_icon 'calendar'%>
-                                <%= date.from.strftime("%a, %d.%m.%y: %R") %>
-                                <br>
-                            <% end %>
-                        </td>
-                        <td><%= event.invitations.map{ |invitation| invitation.user.username }.join(',<br/>').html_safe %></td>
-                    </tr>
-                <% end %>
-            </tbody>
-        </table>
-    </div>
+    <%= render @my_events %>
+    <%= button_to "New Event", new_event_path, :method => "get", class: "btn btn-success" %>
+    <br>
+    <br>
+    <br>
 <% end %>
-<%= button_to "New Event", new_event_path, :method => "get", class: "btn btn-success" %>

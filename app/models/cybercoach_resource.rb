@@ -1,12 +1,18 @@
 class CybercoachResource
-# Helps map a Cybercoach REST Resource to Ruby objects. Is meant to be extended by subclasses which follow the naming convention CybercoachXyz (eg. CybercoachUser)
+# Helps map a Cybercoach REST Resource to Ruby objects. Is meant to be extended by subclasses which follow the naming
+# convention CybercoachXyz (eg. CybercoachUser) - alternatively you can configure the resource name by setting the
+# instance variable @resource_name (eg. @resource_name = 'Sport')
 
   # Extends subclasses
   def self.inherited(base)
     base.extend(ClassMethods)
     base.instance_variable_set(:@resources_base, 'http://diufvm31.unifr.ch:8090/CyberCoachServer/resources')
-    resource_name = base.name.split(/(?=[A-Z])/)[1].downcase
-    base.instance_variable_set(:@resource_name, resource_name)
+    if not defined?(@resource_name)
+      splitted_name = base.name.split(/(?=[A-Z])/)
+      splitted_name.shift
+      resource_name = splitted_name.join
+      base.instance_variable_set(:@resource_name, resource_name)
+    end
   end
 
   # Initializes the resource with the attributes given in the hash
@@ -32,9 +38,9 @@ class CybercoachResource
 
     # Creates a resource with given id and the attribute value pairs given in the hash
     def create(id, hash)
-      uri = "#{@resources_base}/#{@resource_name.pluralize}/#{id}"
+      uri = "#{@resources_base}/#{@resource_name.downcase.pluralize}/#{id}"
       headers = {'Accept' => 'application/json','Content-Type' => 'application/xml'}
-      payload = CybercoachResource.generate_payload(@resource_name, hash)
+      payload = CybercoachResource.generate_payload(@resource_name.downcase, hash)
 
       HTTParty.put(uri, headers: headers, body: payload )
     end
@@ -43,15 +49,17 @@ class CybercoachResource
     def destroy(id, username, password)
       headers = { "Authorization" => 'Basic ' + Base64.encode64(username + ":" + password),
                   "Accept" => "text/html" }
-      uri = "#{@resources_base}/#{@resource_name.pluralize}/#{id}"
+      uri = "#{@resources_base}/#{@resource_name.downcase.pluralize}/#{id}"
       HTTParty.delete(uri, headers: headers)
     end
 
     private
+
     def get_rest_response
-      response = HTTParty.get("#{@resources_base}/#{@resource_name.pluralize}/",:headers => {'Accept' => 'application/json'})
-      response[@resource_name.pluralize]
+      response = HTTParty.get("#{@resources_base}/#{@resource_name.downcase.pluralize}/",:headers => {'Accept' => 'application/json'})
+      response[@resource_name.downcase.pluralize]
     end
+
   end
 
   # Logs into Cybercoach with the given username password combination
@@ -63,6 +71,7 @@ class CybercoachResource
   end
 
   private
+
   # Generates an xml payload which corresponds to the given hash and has the given root argument as root element
   def self.generate_payload(root, hash)
     xmlstring = "<#{root}>"
