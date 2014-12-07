@@ -71,3 +71,5 @@ gem "icalendar"
 # JS charts for Rails: http://ankane.github.io/chartkick/
 gem "chartkick"
 
+# Caching objects (mostly stuff from Cybercoach)
+gem 'dalli'

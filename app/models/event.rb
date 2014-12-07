@@ -86,7 +86,22 @@ class Event < ActiveRecord::Base
   end
 
   def sport
-    CybercoachSport.find_by(:id, self.sport_id)[0]
+     if @sport.nil?
+       @sport = Rails.cache.fetch("sport_#{self.sport_id}".to_sym, expires_in: 1.day) do # if yielding good results, maybe generalize to CybercoachResource
+         CybercoachSport.find_by(:id, self.sport_id)[0]
+       end
+     end
+    @sport
+    # mockup
+    #@sport
+    #sport = Object.new
+    #def sport.name
+    #  "Running"
+    #end
+    #def sport.data_attributes
+    #  {}
+    #end
+    #sport
   end
 
 
