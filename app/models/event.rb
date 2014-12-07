@@ -2,7 +2,7 @@ class Event < ActiveRecord::Base
 
   belongs_to :owner, foreign_key: 'owner_id', class_name: 'User'
 
-  has_one :definitive_date, foreign_key: 'definitive_date_id', class_name: 'SpoodleDate'
+  has_one :definitive_date, class_name: 'SpoodleDate'
   has_one :event_data
   accepts_nested_attributes_for :event_data, allow_destroy: true
 
@@ -80,9 +80,9 @@ class Event < ActiveRecord::Base
   # Updates the definitive date if the deadline is over and it hasn't been selected yet
   def definitive_date
     if is_deadline_over?
-      select_definitive_date if @definitive_date.nil?
+      select_definitive_date if self.instance_variable_get(:@definitive_date).nil?
     end
-    @definitive_date
+    self.instance_variable_get(:@definitive_date)
   end
 
   def sport
@@ -118,6 +118,20 @@ class Event < ActiveRecord::Base
         @definitive_date = spoodle_date
       end
     end
+    self.instance_variable_set(:@definitive_date, @definitive_date)
+    self.save
+    # Create entries on cybercoach
+    create_event_entries
+  end
+
+
+  def create_event_entries
+      self.participants.each do |participant|
+        participant.create_entry_on_cyber_coach(self.sport.name.downcase,
+                                                          {publicvisible: '2',
+                                                           entrylocation: self.location,
+                                                           comment: "I'm taking part to a spoodle event!"})
+      end
   end
 
 end
