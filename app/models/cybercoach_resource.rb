@@ -7,14 +7,14 @@ class CybercoachResource
   def self.inherited(base)
     base.extend(ClassMethods)
     base.instance_variable_set(:@resources_base, 'http://diufvm31.unifr.ch:8090/CyberCoachServer/resources')
-    splitted_name = base.name.split(/(?=[A-Z])/)
-    splitted_name.shift
-    resource_name = splitted_name.join
     if not defined?(@resource_name)
+      splitted_name = base.name.split(/(?=[A-Z])/)
+      splitted_name.shift
+      resource_name = splitted_name.join
       base.instance_variable_set(:@resource_name, resource_name)
     end
     if not defined?(@xml_root_name)
-      base.instance_variable_set(:@xml_root_name, resource_name)
+      base.instance_variable_set(:@xml_root_name, base.instance_variable_get(:@resource_name))
     end
   end
 
