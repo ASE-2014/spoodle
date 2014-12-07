@@ -37,9 +37,13 @@ class CybercoachResource
     end
 
     # Creates a resource with given id and the attribute value pairs given in the hash
-    def create(id, hash)
+    # Username and password are optional and are necessary to create some objects
+    def create(id, hash, username=nil, password=nil)
       uri = "#{@resources_base}/#{@resource_name.downcase.pluralize}/#{id}"
       headers = {'Accept' => 'application/json','Content-Type' => 'application/xml'}
+      if not username.nil? and not password.nil?
+        headers["Authorization"] = 'Basic ' + Base64.encode64(username + ":" + password)
+      end
       payload = CybercoachResource.generate_payload(@resource_name.downcase, hash)
 
       HTTParty.put(uri, headers: headers, body: payload )
