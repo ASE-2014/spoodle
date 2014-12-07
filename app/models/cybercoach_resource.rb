@@ -41,7 +41,14 @@ class CybercoachResource
       uri = "#{@resources_base}/#{@resource_name.downcase.pluralize}/#{id}"
       headers = {'Accept' => 'application/json','Content-Type' => 'application/xml'}
       payload = CybercoachResource.generate_payload(@resource_name.downcase, hash)
+      HTTParty.put(uri, headers: headers, body: payload )
+    end
 
+    def create_with_authentication(id, hash, username, password)
+      uri = "#{@resources_base}/#{@resource_name.downcase.pluralize}/#{id}"
+      headers = {'Accept' => 'application/json','Content-Type' => 'application/xml',
+                'Authorization' => 'Basic ' + Base64.encode64(username + ":" + password)}
+      payload = CybercoachResource.generate_payload("subscription", hash)
       HTTParty.put(uri, headers: headers, body: payload )
     end
 
