@@ -13,7 +13,7 @@ class CybercoachResource
       resource_name = splitted_name.join
       base.instance_variable_set(:@resource_name, resource_name)
     end
-    if not defined?(@resource_name)
+    if not defined?(@xml_root_name)
       base.instance_variable_set(:@xml_root_name, base.instance_variable_get(:@resource_name))
     end
   end
