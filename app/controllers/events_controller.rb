@@ -81,7 +81,16 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
+    #TODO: do this only once
+    if @event.is_deadline_over?
+      @event.participants.each do |participant|
+        participant.create_entry_on_cyber_coach(@event.sport.name.downcase,
+                                                          {publicvisible: '2',
+                                                           entrylocation: @event.location,
+                                                           comment: "I'm taking part to an event!"})
+      end
 
+    end
     # Offer the possibility to export event
     # in ical format for pending and passed events
     if @event.is_deadline_over?
