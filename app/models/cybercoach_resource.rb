@@ -7,11 +7,14 @@ class CybercoachResource
   def self.inherited(base)
     base.extend(ClassMethods)
     base.instance_variable_set(:@resources_base, 'http://diufvm31.unifr.ch:8090/CyberCoachServer/resources')
+    splitted_name = base.name.split(/(?=[A-Z])/)
+    splitted_name.shift
+    resource_name = splitted_name.join
     if not defined?(@resource_name)
-      splitted_name = base.name.split(/(?=[A-Z])/)
-      splitted_name.shift
-      resource_name = splitted_name.join
       base.instance_variable_set(:@resource_name, resource_name)
+    end
+    if not defined?(@resource_name)
+      base.instance_variable_set(:@xml_root_name, resource_name)
     end
   end
 
@@ -38,15 +41,15 @@ class CybercoachResource
 
     # Creates a resource with given id and the attribute value pairs given in the hash
     # Username and password are optional and are necessary to create some objects
-    def create(id, hash, username=nil, password=nil)
+    def create(id, hash, username=nil, password=nil, action=:put)
       uri = "#{@resources_base}/#{@resource_name.downcase.pluralize}/#{id}"
       headers = {'Accept' => 'application/json','Content-Type' => 'application/xml'}
       if not username.nil? and not password.nil?
         headers["Authorization"] = 'Basic ' + Base64.encode64(username + ":" + password)
       end
-      payload = CybercoachResource.generate_payload(@resource_name.downcase, hash)
+      payload = CybercoachResource.generate_payload(@xml_root_name.downcase, hash)
 
-      HTTParty.put(uri, headers: headers, body: payload )
+      HTTParty.send(action, uri, headers: headers, body: payload )
     end
 
     # Destroys the resource which corresponds to the given id if the username password combination is accepted
