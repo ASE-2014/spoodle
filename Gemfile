@@ -71,3 +71,8 @@ gem "icalendar"
 # JS charts for Rails: http://ankane.github.io/chartkick/
 gem "chartkick"
 
+# omniauth for facebook integration
+gem 'omniauth'
+
+# omniauth-facebook for facebook integration
+gem 'omniauth-facebook'

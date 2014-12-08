@@ -12,7 +12,8 @@ Rails.application.routes.draw do
 
   devise_for :users,
              :controllers => { registrations: 'registrations',
-                               sessions: 'sessions' }
+                               sessions: 'sessions',
+                               omniauth_callbacks: "omniauth_callbacks"}
 
   resources :users do
     member do #TODO maybe simply 'get :friends, on: :member'?
