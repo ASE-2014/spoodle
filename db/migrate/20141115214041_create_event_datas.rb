@@ -1,6 +1,6 @@
-class CreateEventData < ActiveRecord::Migration
+class CreateEventDatas < ActiveRecord::Migration
   def change
-    create_table :event_data do |t|
+    create_table :event_datas do |t|
       t.belongs_to :event, index: true
       t.integer :distance
       t.string :winner_name
