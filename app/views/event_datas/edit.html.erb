@@ -2,17 +2,18 @@
 <%= form_for([@event, @event_data], class: "form-group") do |f| %>
     <p>
     <div>
-        <%= render 'numberfield_form', attribute_name: :distance, ff: f %>
+        <%= render 'numberfield_form', attribute_name: :distance, units: 'Meters', ff: f %>
         <%= render 'textfield_form', attribute_name: :party_1_name, ff: f %>
         <%= render 'textfield_form', attribute_name: :party_2_name, ff: f %>
         <%= render 'textfield_form', attribute_name: :winner_name, ff: f %>
-        <%= render 'numberfield_form', attribute_name: :score_1, ff: f %>
-        <%= render 'numberfield_form', attribute_name: :score_2, ff: f %>
+        <%= render 'numberfield_form', attribute_name: :score_1, units: 'Points', ff: f %>
+        <%= render 'numberfield_form', attribute_name: :score_2, units: 'Points', ff: f %>
     </div>
     </p>
     <p>
     <div>
         <%= f.fields_for :document do |ff| %>
+            GPS Dump
             <%= ff.file_field :file, accept: 'application/vnd.google-earth.kml+xml' %>
         <% end %>
     </div>

@@ -36,14 +36,14 @@ class EventDatasController < ApplicationController
   end
 
   def edit
-    @event = Event.find(params[:id])
-    @event_data = @event.event_data
-    @document = @event_data.document || @event.event_data.build_document
+    @event = Event.find(params[:event_id])
+    @event_data = EventData.find(params[:id])
+    @document = @event_data.document || @event_data.build_document
   end
 
   def update
-    @event = Event.find(params[:id])
-    @event_data = @event.event_data
+    @event = Event.find(params[:event_id])
+    @event_data = EventData.find(params[:id])
     if @event_data.update(event_data_params)
       flash[:success] = "Successfully updated event data."
       redirect_to @event
