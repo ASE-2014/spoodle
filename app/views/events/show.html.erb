@@ -68,7 +68,7 @@
 
 <h3><%= fa_icon 'map-marker fw' %> Location</h3>
 <p><%= @event.location %></p>
-<% unless @event.event_data.document %>
+<% unless @event.event_data and @event.event_data.document %>
     <form>
         <input id="geocomplete" type="hidden" />
     </form>
@@ -113,7 +113,7 @@
 <hr>
 
 
-<% if @event.is_passed? %>
+<% if true# @event.is_passed? %>
     <h3><%= fa_icon 'bar-chart fw' %> Event Data</h3>
     <% if @event.event_data %>
         <%= render 'event_datas/text_attribute_show', attribute_name: :distance %>
@@ -122,7 +122,7 @@
         <%= render 'event_datas/text_attribute_show', attribute_name: :winner_name %>
         <%= render 'event_datas/text_attribute_show', attribute_name: :score_1 %>
         <%= render 'event_datas/text_attribute_show', attribute_name: :score_2 %>
-        <% if @event.event_data.document %>
+        <% if @event.event_data and @event.event_data.document %>
             <h4>Map</h4>
             <div id="gps" class="map_canvas"></div>
         <% end %>
@@ -137,11 +137,6 @@
             <div style="float: left; width: auto;">
                 <%= link_to "Delete Event Data", event_event_data_path(@event, @event.event_data), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary btn-xs no-margin" %>
             </div>
-            <% unless @event.event_data.document %>
-                <%= button_to "Add Map", new_event_event_data_document_path(@event, @event.event_data), method: :get, class: "btn btn-success btn-small" %>
-            <% else %>
-                <%= link_to "Delete Map", event_event_data_document_path(@event, @event.event_data, @event.event_data.document), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary btn-xs no-margin" %>
-            <% end %>
         <% end %>
     <% end %>
     <hr>
@@ -162,7 +157,7 @@
 
 <script>
     $(function(){
-        <% if @event.event_data.document %>
+        <% if @event.event_data and @event.event_data.document %>
             var myOptions = {
                 center: new google.maps.LatLng(39.397, -100.644),
                 zoom: 4,

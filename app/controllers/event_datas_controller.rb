@@ -8,6 +8,7 @@ class EventDatasController < ApplicationController
       redirect_to @event
     else
       @event_data = @event.build_event_data
+      @document = @event.event_data.build_document
     end
   end
 
@@ -37,6 +38,7 @@ class EventDatasController < ApplicationController
   def edit
     @event = Event.find(params[:id])
     @event_data = @event.event_data
+    @document = @event_data.document || @event.event_data.build_document
   end
 
   def update
@@ -53,6 +55,11 @@ class EventDatasController < ApplicationController
 
   def event_data_params
     @event = Event.find(params[:event_id])
-    params.require(:event_data).permit(@event.sport.data_attributes)
+    attributes = @event.sport.data_attributes
+    document_attributes = []
+    if attributes.delete(:document) == :document
+      document_attributes = [:file]
+    end
+    params.require(:event_data).permit(attributes, document_attributes: document_attributes)
   end
 end

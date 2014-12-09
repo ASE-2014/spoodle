@@ -10,8 +10,16 @@
         <%= render 'numberfield_form', attribute_name: :score_2, ff: f %>
     </div>
     </p>
+    <p>
+    <div>
+        <%= f.fields_for :document do |ff| %>
+            <%= ff.file_field :file, accept: 'application/vnd.google-earth.kml+xml' %>
+        <% end %>
+    </div>
+    <p class="help-block">At this moment, only .kml files can be uploaded.</p>
+    </p>
     <div style="float: left; width: auto;">
-        <div><%= f.submit "Update", class: "btn btn-success" %></div>
+        <div><%= f.submit "Save", class: "btn btn-success" %></div>
     </div>
 <% end %>
 <div style="float: right; width: auto;">
