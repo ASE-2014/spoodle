@@ -3,8 +3,8 @@ class Event < ActiveRecord::Base
   belongs_to :owner, foreign_key: 'owner_id', class_name: 'User'
 
   has_one :definitive_date, foreign_key: 'definitive_date_id', class_name: 'SpoodleDate'
+
   has_one :event_data
-  accepts_nested_attributes_for :event_data, allow_destroy: true
 
   has_many :spoodle_dates
   accepts_nested_attributes_for :spoodle_dates, allow_destroy: true
