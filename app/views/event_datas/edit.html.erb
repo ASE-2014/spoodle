@@ -1,0 +1,19 @@
+<h1 class="page-header"><%= fa_icon 'bar-chart' %> Edit Event Data</h1>
+<%= form_for([@event, @event_data], class: "form-group") do |f| %>
+    <p>
+    <div>
+        <%= render 'numberfield_form', attribute_name: :distance, ff: f %>
+        <%= render 'textfield_form', attribute_name: :party_1_name, ff: f %>
+        <%= render 'textfield_form', attribute_name: :party_2_name, ff: f %>
+        <%= render 'textfield_form', attribute_name: :winner_name, ff: f %>
+        <%= render 'numberfield_form', attribute_name: :score_1, ff: f %>
+        <%= render 'numberfield_form', attribute_name: :score_2, ff: f %>
+    </div>
+    </p>
+    <div style="float: left; width: auto;">
+        <div><%= f.submit "Update", class: "btn btn-success" %></div>
+    </div>
+<% end %>
+<div style="float: right; width: auto;">
+    <%= button_to 'Discard', @event, method: :get, class: "btn btn-warning" %>
+</div>

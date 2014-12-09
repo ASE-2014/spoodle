@@ -32,6 +32,23 @@ class EventDatasController < ApplicationController
     redirect_to @event
   end
 
+  def edit
+    @event = Event.find(params[:id])
+    @event_data = @event.event_data
+  end
+
+  def update
+    @event = Event.find(params[:id])
+    @event_data = @event.event_data
+    if @event_data.update(event_data_params)
+      flash[:success] = "Successfully updated event data."
+      redirect_to @event
+    else
+      flash[:error] = "Could not update event data."
+      render :edit
+    end
+  end
+
   def event_data_params
     @event = Event.find(params[:event_id])
     params.require(:event_data).permit(@event.sport.data_attributes)
