@@ -1,4 +1,6 @@
 class EventDatasController < ApplicationController
+  before_filter :authenticate_user!
+
   def new
     @event = Event.find(params[:event_id])
     if not @event.event_data.nil?

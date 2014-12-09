@@ -13,13 +13,15 @@ class DocumentsController < ApplicationController
   def new
     @document = Document.new
     @event = Event.find(params[:event_id])
+    @event_data = @event.event_data
     render :new
   end
 
   def create
     @event = Event.find(params[:event_id])
     @document = Document.new(document_params)
-    @event.document = @document
+    @event_data = @event.event_data
+    @event_data.document = @document
     if @document.save
       flash[:success] = "Successfully uploaded File."
       redirect_to @event

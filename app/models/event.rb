@@ -6,9 +6,6 @@ class Event < ActiveRecord::Base
   has_one :event_data
   accepts_nested_attributes_for :event_data, allow_destroy: true
 
-  has_one :document
-
-
   has_many :spoodle_dates
   accepts_nested_attributes_for :spoodle_dates, allow_destroy: true
 

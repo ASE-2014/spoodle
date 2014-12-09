@@ -6,8 +6,9 @@ Rails.application.routes.draw do
       put :cancel, on: :member
     end
     resources :invitations
-    resources :documents
-    resources :event_datas
+    resources :event_datas do
+      resources :documents
+    end
   end
 
   devise_for :users,
