@@ -2,6 +2,7 @@
 <%= form_for([@event, @event_data], class: "form-group") do |f| %>
     <p>
     <div>
+        <%= render 'numberfield_form', attribute_name: :duration, units: 'Minutes', ff: f %>
         <%= render 'numberfield_form', attribute_name: :distance, units: 'Meters', ff: f %>
         <%= render 'textfield_form', attribute_name: :party_1_name, ff: f %>
         <%= render 'textfield_form', attribute_name: :party_2_name, ff: f %>

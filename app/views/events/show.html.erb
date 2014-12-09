@@ -116,6 +116,7 @@
 <% if true# @event.is_passed? %>
     <h3><%= fa_icon 'bar-chart fw' %> Event Data</h3>
     <% if @event.event_data %>
+        <%= render 'event_datas/number_attribute_show', attribute_name: :duration, units: 'Minutes' %>
         <%= render 'event_datas/number_attribute_show', attribute_name: :distance, units: 'Meters' %>
         <%= render 'event_datas/text_attribute_show', attribute_name: :party_1_name %>
         <%= render 'event_datas/text_attribute_show', attribute_name: :party_2_name %>
