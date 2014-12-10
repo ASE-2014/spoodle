@@ -127,6 +127,7 @@ class Event < ActiveRecord::Base
   end
 
   def create_entries_on_cybercoach
+    # TODO participants are without owner (adding it manually)
     [*self.participants, self.owner].each do |participant|
       participant.create_entry_on_cyber_coach(self.sport.name.downcase,
                                               {publicvisible: '2',

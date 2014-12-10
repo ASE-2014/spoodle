@@ -13,8 +13,8 @@ class CybercoachResource
       resource_name = splitted_name.join
       base.instance_variable_set(:@resource_name, resource_name)
     end
-    if not defined?(@xml_root_name)
-      base.instance_variable_set(:@xml_root_name, base.instance_variable_get(:@resource_name))
+    if not defined?(@payload_root_name)
+      base.instance_variable_set(:@payload_root_name, base.instance_variable_get(:@resource_name))
     end
   end
 
@@ -41,13 +41,13 @@ class CybercoachResource
 
     # Creates a resource with given id and the attribute value pairs given in the hash
     # Username and password are optional and are necessary to create some objects
-    def create(id, hash, username=nil, password=nil, action=:put, xml_root_name=@xml_root_name)
+    def create(id, hash, username=nil, password=nil, action=:put, payload_root_name=@payload_root_name)
       uri = "#{@resources_base}/#{@resource_name.downcase.pluralize}/#{id}"
       headers = {'Accept' => 'application/json','Content-Type' => 'application/xml'}
       if not username.nil? and not password.nil?
         headers["Authorization"] = 'Basic ' + Base64.encode64(username + ":" + password)
       end
-      payload = CybercoachResource.generate_payload(xml_root_name.downcase, hash)
+      payload = CybercoachResource.generate_payload(payload_root_name.downcase, hash)
 
       HTTParty.send(action, uri, headers: headers, body: payload )
     end

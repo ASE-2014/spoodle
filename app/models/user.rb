@@ -64,7 +64,7 @@ class User < ActiveRecord::Base
 
   # Creates an entry on cybercoach
   def create_entry_on_cyber_coach(sport, content)
-    # Check the existence of the sport subscription
+    # Creates subscription on cybercoach (if one exists, nothing happens)
     self.create_subscription_on_cyber_coach(sport)
     CybercoachEntry.create("#{self.cyber_coach_username}/#{sport}",
                            content,
