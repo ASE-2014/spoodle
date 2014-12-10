@@ -1,3 +1,3 @@
 class CybercoachSubscription < CybercoachResource
-  @resource_name = 'users'
+  @fixed_path = 'users'
 end

@@ -7,14 +7,14 @@ class CybercoachResource
   def self.inherited(base)
     base.extend(ClassMethods)
     base.instance_variable_set(:@resources_base, 'http://diufvm31.unifr.ch:8090/CyberCoachServer/resources')
-    if not defined?(@resource_name)
+    if not defined?(@fixed_path)
       splitted_name = base.name.split(/(?=[A-Z])/)
       splitted_name.shift
       resource_name = splitted_name.join
-      base.instance_variable_set(:@resource_name, resource_name)
+      base.instance_variable_set(:@fixed_path, resource_name)
     end
     if not defined?(@payload_root_name)
-      base.instance_variable_set(:@payload_root_name, base.instance_variable_get(:@resource_name))
+      base.instance_variable_set(:@payload_root_name, base.instance_variable_get(:@fixed_path))
     end
   end
 
@@ -41,8 +41,8 @@ class CybercoachResource
 
     # Creates a resource with given id and the attribute value pairs given in the hash
     # Username and password are optional and are necessary to create some objects
-    def create(id, hash, username=nil, password=nil, action=:put, payload_root_name=@payload_root_name)
-      uri = "#{@resources_base}/#{@resource_name.downcase.pluralize}/#{id}"
+    def create(variable_path, hash, username=nil, password=nil, action=:put, payload_root_name=@payload_root_name)
+      uri = "#{@resources_base}/#{@fixed_path.downcase.pluralize}/#{variable_path}"
       headers = {'Accept' => 'application/json','Content-Type' => 'application/xml'}
       if not username.nil? and not password.nil?
         headers["Authorization"] = 'Basic ' + Base64.encode64(username + ":" + password)
@@ -56,15 +56,15 @@ class CybercoachResource
     def destroy(id, username, password)
       headers = { "Authorization" => 'Basic ' + Base64.encode64(username + ":" + password),
                   "Accept" => "text/html" }
-      uri = "#{@resources_base}/#{@resource_name.downcase.pluralize}/#{id}"
+      uri = "#{@resources_base}/#{@fixed_path.downcase.pluralize}/#{id}"
       HTTParty.delete(uri, headers: headers)
     end
 
     private
 
     def get_rest_response
-      response = HTTParty.get("#{@resources_base}/#{@resource_name.downcase.pluralize}/",:headers => {'Accept' => 'application/json'})
-      response[@resource_name.downcase.pluralize]
+      response = HTTParty.get("#{@resources_base}/#{@fixed_path.downcase.pluralize}/",:headers => {'Accept' => 'application/json'})
+      response[@fixed_path.downcase.pluralize]
     end
 
   end
