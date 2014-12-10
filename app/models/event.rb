@@ -2,7 +2,7 @@ class Event < ActiveRecord::Base
 
   belongs_to :owner, foreign_key: 'owner_id', class_name: 'User'
 
-  has_one :definitive_date, foreign_key: 'definitive_date_id', class_name: 'SpoodleDate'
+  belongs_to :definitive_date, foreign_key: 'definitive_date_id', class_name: 'SpoodleDate'
   has_one :event_data
   accepts_nested_attributes_for :event_data, allow_destroy: true
 
@@ -82,7 +82,7 @@ class Event < ActiveRecord::Base
     if is_deadline_over?
       select_definitive_date if @definitive_date.nil?
     end
-    @definitive_date
+    super
   end
 
   def sport
@@ -111,13 +111,15 @@ class Event < ActiveRecord::Base
   private
 
   # Selects the spoodle_date with the most and strongest votes
-  # Sets definitive_date to nil if nobody assigned to any date
+  # Sets definitive_date to the first date if nobody assigned to any date
   def select_definitive_date
     self.spoodle_dates.each do |spoodle_date|
       if @definitive_date.nil? or spoodle_date.votes > @definitive_date.votes
         @definitive_date = spoodle_date
       end
     end
+    self.definitive_date = @definitive_date
+    self.save!
   end
 
 end
