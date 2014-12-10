@@ -11,14 +11,15 @@ class DocumentsController < ApplicationController
   end
 
   def destroy
-    @event_data = Event.find(params[:event_data_id])
+    @event_data = EventData.find(params[:event_data_id])
+    @event = @event_data.event
     @document = Document.find(params[:id])
     if @document.destroy
       flash[:success] = "Successfully deleted File #{@document.filename}."
     else
       flash[:error] = "The File #{@document.filename} could not be deleted!"
     end
-    redirect_to @event_data
+    redirect_to edit_event_event_data_path(@event, @event_data)
   end
 
   private

@@ -39,6 +39,7 @@ class EventDatasController < ApplicationController
   def edit
     @event = Event.find(params[:event_id])
     @event_data = EventData.find(params[:id])
+    @document_preexisting = !@event_data.document.nil?
     @document = @event_data.document || @event_data.build_document
   end
 

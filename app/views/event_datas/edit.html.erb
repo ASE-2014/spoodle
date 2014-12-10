@@ -13,13 +13,11 @@
     </p>
     <p>
     <div>
-        GPS Dump
-        <% if not @event_data.document and not @event_data.document.id %>
+        <% if not @document_preexisting %>
+            GPS Dump
             <%= f.fields_for :document do |ff| %>
-            <%= ff.file_field :file, accept: 'application/vnd.google-earth.kml+xml' %>
+                <%= ff.file_field :file, accept: 'application/vnd.google-earth.kml+xml' %>
             <% end %>
-        <% else %>
-            <%= button_to 'Delete GPS Dump', event_event_data_document_path(@event, @event_data, @event_data.document), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary btn-xs" %>
         <% end %>
     </div>
     <p class="help-block">At this moment, only .kml files can be uploaded.</p>
@@ -27,6 +25,11 @@
     <div style="float: left; width: auto;">
         <div><%= f.submit "Save", class: "btn btn-success" %></div>
     </div>
+<% end %>
+
+<% if @document_preexisting %>
+    GPS Dump
+    <%= button_to 'Delete GPS Dump', event_event_data_document_path(@event, @event_data, @document), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary btn-xs" %>
 <% end %>
 <div style="float: right; width: auto;">
     <%= button_to 'Discard', @event, method: :get, class: "btn btn-warning" %>
