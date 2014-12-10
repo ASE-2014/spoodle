@@ -1,5 +1,6 @@
 class EventDatasController < ApplicationController
   before_filter :authenticate_user!
+  before_filter :owns_event!
 
   def new
     @event = Event.find(params[:event_id])

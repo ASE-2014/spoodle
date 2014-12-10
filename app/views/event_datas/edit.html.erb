@@ -13,11 +13,12 @@
     </p>
     <p>
     <div>
-        <%= f.fields_for :document do |ff| %>
         GPS Dump
-        <%= ff.file_field :file, accept: 'application/vnd.google-earth.kml+xml' %>
-        <% end %>
-        <% if @event_data.document and @event_data.document.id %>
+        <% if not @event_data.document and not @event_data.document.id %>
+            <%= f.fields_for :document do |ff| %>
+            <%= ff.file_field :file, accept: 'application/vnd.google-earth.kml+xml' %>
+            <% end %>
+        <% else %>
             <%= button_to 'Delete GPS Dump', event_event_data_document_path(@event, @event_data, @event_data.document), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary btn-xs" %>
         <% end %>
     </div>

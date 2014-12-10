@@ -2,7 +2,7 @@ class EventData < ActiveRecord::Base
 
   belongs_to :event
   has_one :document
-  accepts_nested_attributes_for :document, allow_destroy: true
+  accepts_nested_attributes_for :document, allow_destroy: true, update_only: true
 
   validates_numericality_of :distance, greater_than_or_equal_to: 0, allow_nil: true
   validates_numericality_of :score_1, greater_than_or_equal_to: 0, allow_nil: true
