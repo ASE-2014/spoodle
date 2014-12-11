@@ -1,13 +1,14 @@
 Rails.application.routes.draw do
 
-
   resources :events do
     resources :spoodle_dates do
       put :assign, on: :member
       put :cancel, on: :member
     end
     resources :invitations
-    resources :documents
+    resources :event_datas do
+      resources :documents
+    end
   end
 
   devise_for :users,

@@ -1,5 +1,5 @@
 <h1 class="page-header"><%= fa_icon 'upload fw' %> Upload KML file</h1>
-<%= form_for([@event, @document], class: "form-group") do |f| %>
+<%= form_for([@event, @event_data, @document], class: "form-group") do |f| %>
     <p>
     <div>
         <%= f.file_field :file, accept: 'application/vnd.google-earth.kml+xml' %>

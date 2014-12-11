@@ -3,11 +3,8 @@ class Event < ActiveRecord::Base
   belongs_to :owner, foreign_key: 'owner_id', class_name: 'User'
 
   belongs_to :definitive_date, foreign_key: 'definitive_date_id', class_name: 'SpoodleDate'
+
   has_one :event_data
-  accepts_nested_attributes_for :event_data, allow_destroy: true
-
-  has_one :document
-
 
   has_many :spoodle_dates
   accepts_nested_attributes_for :spoodle_dates, allow_destroy: true
@@ -86,7 +83,17 @@ class Event < ActiveRecord::Base
   end
 
   def sport
-    CybercoachSport.find_by(:id, self.sport_id)[0]
+    # Stores sports_name in db because of performance issues (Cybercoach queries take time). "Hacky".
+    # Memcached alternative didn't work well in dev environment.
+    if self.sports_name.nil?
+      sport = CybercoachSport.find_by(:id, self.sport_id)[0]
+      self.sports_name = sport.name
+      self.save!
+      return sport
+    else
+      sport = CybercoachSport.new({name: self.sports_name})
+      return sport
+    end
   end
 
 

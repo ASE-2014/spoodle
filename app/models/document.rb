@@ -1,5 +1,5 @@
 class Document < ActiveRecord::Base
-  belongs_to :event
+  belongs_to :event_data
 
   def initialize(params = {})
     file = params.delete(:file)

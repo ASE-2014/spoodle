@@ -68,7 +68,7 @@
 
 <h3><%= fa_icon 'map-marker fw' %> Location</h3>
 <p><%= @event.location %></p>
-<% unless @event.document %>
+<% unless @event.event_data and @event.event_data.document %>
     <form>
         <input id="geocomplete" type="hidden" />
     </form>
@@ -76,8 +76,6 @@
 <% end %>
 
 <hr>
-
-
 
 <% if @event.is_deadline_over? %>
 
@@ -117,21 +115,29 @@
 
 <% if @event.is_passed? %>
     <h3><%= fa_icon 'bar-chart fw' %> Event Data</h3>
-    <%= render 'event_datas/text_attribute_show', attribute_name: :distance %>
-    <%= render 'event_datas/text_attribute_show', attribute_name: :party_1_name %>
-    <%= render 'event_datas/text_attribute_show', attribute_name: :party_2_name %>
-    <%= render 'event_datas/text_attribute_show', attribute_name: :winner_name %>
-    <%= render 'event_datas/text_attribute_show', attribute_name: :score_1 %>
-    <%= render 'event_datas/text_attribute_show', attribute_name: :score_2 %>
-    <% if @event.document %>
-        <h4>Map</h4>
-        <div id="gps" class="map_canvas"></div>
+    <% if @event.event_data %>
+        <%= render 'event_datas/number_attribute_show', attribute_name: :duration, units: 'Minutes' %>
+        <%= render 'event_datas/number_attribute_show', attribute_name: :distance, units: 'Meters' %>
+        <%= render 'event_datas/text_attribute_show', attribute_name: :party_1_name %>
+        <%= render 'event_datas/text_attribute_show', attribute_name: :party_2_name %>
+        <%= render 'event_datas/text_attribute_show', attribute_name: :winner_name %>
+        <%= render 'event_datas/number_attribute_show', attribute_name: :score_1, units: 'Points' %>
+        <%= render 'event_datas/number_attribute_show', attribute_name: :score_2, units: 'Points' %>
+        <% if @event.event_data and @event.event_data.document %>
+            <h4>Map</h4>
+            <div id="gps" class="map_canvas"></div>
+        <% end %>
     <% end %>
     <% if @event.belongs_to?(current_user) %>
-        <% unless @event.document %>
-            <%= button_to "Add Map", new_event_document_path(@event), method: :get, class: "btn btn-success btn-small" %>
+        <% unless @event.event_data %>
+            <%= button_to "Enter Event Data", new_event_event_data_path(@event), method: :get, class: "btn btn-success btn-small" %>
         <% else %>
-            <%= link_to "Delete Map", event_document_path(@event, @event.document), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary btn-xs no-margin" %>
+            <div style="float: left; width: auto;">
+                <%= button_to 'Edit Event Data', edit_event_event_data_path(@event, @event.event_data), method: :get, class: "btn btn-info btn-xs" %>
+            </div>
+            <div style="float: left; width: auto;">
+                <%= link_to "Delete Event Data", event_event_data_path(@event, @event.event_data), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary btn-xs" %>
+            </div>
         <% end %>
     <% end %>
     <hr>
@@ -152,7 +158,7 @@
 
 <script>
     $(function(){
-        <% if @event.document %>
+        <% if @event.event_data and @event.event_data.document %>
             var myOptions = {
                 center: new google.maps.LatLng(39.397, -100.644),
                 zoom: 4,
@@ -164,7 +170,7 @@
                 map: gpsmap,
                 singleInfoWindow: true,
             });
-            geoXml.parse('<%= event_document_path(@event, @event.document) %>');
+            geoXml.parse('<%= event_event_data_document_path(@event, @event.event_data, @event.event_data.document) %>');
         <% else %>
             var options = {
                 map: ".location",
