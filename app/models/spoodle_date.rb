@@ -1,6 +1,6 @@
 class SpoodleDate < ActiveRecord::Base
 
-  belongs_to :event
+  has_one :event
   has_many :availabilities
   has_many :users, through: :availabilities
 
