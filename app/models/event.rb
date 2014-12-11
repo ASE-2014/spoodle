@@ -46,6 +46,7 @@ class Event < ActiveRecord::Base
   # Returns all users that have assigned a value to the definitive Spoodle date
   # If the definitive date is not yet set, an empty array is returned
   def participants
+    #TODO include owner?
     if definitive_date
       definitive_date.users
     else
@@ -75,9 +76,10 @@ class Event < ActiveRecord::Base
 
   # Overwrites getter
   # Updates the definitive date if the deadline is over and it hasn't been selected yet
+  alias_method :original_definitive_date, :definitive_date
   def definitive_date
     if is_deadline_over?
-      select_definitive_date if @definitive_date.nil?
+      select_definitive_date if self.original_definitive_date.nil?
     end
     super
   end
@@ -125,8 +127,20 @@ class Event < ActiveRecord::Base
         @definitive_date = spoodle_date
       end
     end
+
     self.definitive_date = @definitive_date
     self.save!
+    create_entries_on_cybercoach
+  end
+
+  def create_entries_on_cybercoach
+    # TODO participants are without owner (adding it manually)
+    [*self.participants, self.owner].each do |participant|
+      participant.create_entry_on_cyber_coach(self.sport.name.downcase,
+                                              {publicvisible: '2',
+                                               entrylocation: self.location,
+                                               comment: "Spoodle "+self.title})
+    end
   end
 
 end

@@ -62,6 +62,26 @@ class User < ActiveRecord::Base
     # Nothing to do here
   end
 
+  # Creates an entry on cybercoach
+  def create_entry_on_cyber_coach(sport, content)
+    # Creates subscription on cybercoach (if one exists an update is sent but nothing should actually change)
+    self.create_subscription_on_cyber_coach(sport)
+    CybercoachEntry.create("#{self.cyber_coach_username}/#{sport}",
+                           content,
+                           self.cyber_coach_username,
+                           self.cyber_coach_password,
+                           :post,
+                           "entry#{sport}")
+  end
+
+  # Creates, or updates if it already exists, a sport subscription on cybercoach
+  def create_subscription_on_cyber_coach(sport)
+    CybercoachSubscription.create("#{self.cyber_coach_username}/#{sport}",
+                                  {publicvisible: '2'},
+                                  self.cyber_coach_username,
+                                  self.cyber_coach_password)
+  end
+
   def to_s
     self.username
   end

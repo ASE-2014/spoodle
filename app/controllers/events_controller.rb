@@ -81,7 +81,6 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
-
     # Offer the possibility to export event
     # in ical format for pending and passed events
     if @event.is_deadline_over?
