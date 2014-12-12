@@ -130,16 +130,19 @@
     <% end %>
     <% if @event.belongs_to?(current_user) %>
         <% unless @event.event_data %>
-            <%= button_to "Enter Event Data", new_event_event_data_path(@event), method: :get, class: "btn btn-success btn-small" %>
+            <%= button_to "Enter Event Data", new_event_event_data_path(@event), method: :get, class: "btn btn-success" %>
         <% else %>
             <div style="float: left; width: auto;">
-                <%= button_to 'Edit Event Data', edit_event_event_data_path(@event, @event.event_data), method: :get, class: "btn btn-info btn-xs" %>
+                <%= button_to 'Edit Event Data', edit_event_event_data_path(@event, @event.event_data), method: :get, class: "btn btn-info" %>
             </div>
+            <div style="float: left; width: auto;"><p>&nbsp;</p></div>
             <div style="float: left; width: auto;">
-                <%= link_to "Delete Event Data", event_event_data_path(@event, @event.event_data), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary btn-xs" %>
+                <%= link_to "Delete Event Data", event_event_data_path(@event, @event.event_data), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary" %>
             </div>
         <% end %>
     <% end %>
+    <br/>
+    <br/>
     <hr>
 <% end %>
 
