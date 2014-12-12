@@ -8,7 +8,6 @@ class EventsController < ApplicationController
     @event = Event.new
     @event.spoodle_dates.build # (DEV) Create one empty date to begin with
     @sports = CybercoachSport.get_all
-    @users = User.all_except current_user
   end
 
   def create
@@ -20,7 +19,6 @@ class EventsController < ApplicationController
       redirect_to events_path
     else
       # Recreate all variables, since render will not call events#new
-      @users = User.all_except current_user
       @sports = CybercoachSport.get_all
       render :new
     end
@@ -99,8 +97,9 @@ class EventsController < ApplicationController
 
   private
 
+  # Don't allow invitations_attributes, invitations are added through the invitations controller.
   def event_params
-    params.require(:event).permit(:title, :description, :deadline, :location, :sport_id, spoodle_dates_attributes: [:id, :from, :to, :_destroy], invitations_attributes: [:id, :user_id, :_destroy])
+    params.require(:event).permit(:title, :description, :deadline, :location, :sport_id, spoodle_dates_attributes: [:id, :from, :to, :_destroy])
   end
 
   # Don't allow invitations_attributes, since the invitations can't be deleted.
