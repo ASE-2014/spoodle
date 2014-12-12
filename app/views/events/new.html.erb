@@ -15,7 +15,7 @@
     </p>
     <p>
         <div><%= f.label :activity %>
-            <%= f.collection_select(:sport_id, @sports, :id, :name, class: "form-control") %>
+            <%= f.collection_select(:sport_id, all_sports, :id, :name, class: "form-control") %>
         </div>
     </p>
     <p>

@@ -7,7 +7,6 @@ class EventsController < ApplicationController
   def new
     @event = Event.new
     @event.spoodle_dates.build # (DEV) Create one empty date to begin with
-    @sports = CybercoachSport.get_all
   end
 
   def create
@@ -18,8 +17,6 @@ class EventsController < ApplicationController
       flash[:success] = "Successfully created Event '#{@event.title}'."
       redirect_to events_path
     else
-      # Recreate all variables, since render will not call events#new
-      @sports = CybercoachSport.get_all
       render :new
     end
   end
