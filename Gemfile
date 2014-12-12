@@ -65,9 +65,14 @@ gem 'httparty'
 # FontAwesome
 gem "font-awesome-rails"
 
-#icalendar
+# social share
+gem "social-buttons"
+
+# Icalendar
 gem "icalendar"
 
 # JS charts for Rails: http://ankane.github.io/chartkick/
 gem "chartkick"
 
+# Twitter
+gem "twitter"

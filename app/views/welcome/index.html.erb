@@ -63,3 +63,8 @@
                     <%= msg %>
                 </div>
             <% end %>
+            <h2>Latest tweets</h2>
+            <div class="tweets">
+                <%= render partial: "tweet", collection: @tweets %>
+            </div>
+
