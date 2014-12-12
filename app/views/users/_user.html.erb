@@ -9,6 +9,9 @@
                 <% if add_friend_button? user %>
                     <%= button_to "Add friend", friendships_path(friend_id: user), method: :post, class: "btn btn-sm btn-success" %>
                 <% end %>
+                <% if add_unfriend_button? user %>
+                    <%= button_to "Unfriend", friendship_of(current_user, user), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-sm btn-primary" %>
+                <% end %>
             </div>
         </div>
     </div>

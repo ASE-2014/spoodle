@@ -24,7 +24,9 @@
                     </a>
                     <div class="media-body  panel-user">
                         <h4><%= link_to (f.friend_of @user), user_path(f.friend_of @user) %></h4>
-                        <%= (@user.eql? current_user) ? (button_to "Unfriend", f, :method => "delete", data: { confirm: 'Are you sure?' }, class: "btn btn-sm btn-primary") : "" %>
+                        <% if @user.eql? current_user %>
+                            <%= button_to "Unfriend", f, :method => "delete", data: { confirm: 'Are you sure?' }, class: "btn btn-sm btn-primary" %>
+                        <% end %>
                     </div>
                 </div>
             </div>
