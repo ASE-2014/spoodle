@@ -1,5 +1,11 @@
 <h1 class="page-header">Login</h1>
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <% flash.each do |name, msg| %>
+        <div class="alert alert-dismissable alert-info">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <%= msg %>
+        </div>
+    <% end %>
     <%= devise_error_messages! %>
     <p>
     <div><%= f.label 'Email or username' %><br />
