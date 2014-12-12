@@ -76,3 +76,9 @@ gem "chartkick"
 
 # Twitter
 gem "twitter"
+
+# omniauth for facebook integration
+gem 'omniauth'
+
+# omniauth-facebook for facebook integration
+gem 'omniauth-facebook'

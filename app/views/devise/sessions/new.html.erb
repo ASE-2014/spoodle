@@ -18,6 +18,9 @@
         <div><%= f.submit "Log in", class: "btn btn-success" %></div>
     </div>
 <% end %>
+<div style="float: left; padding-left: 5px">
+  <%= button_to "Login with Facebook", user_omniauth_authorize_path(:facebook), method: :get, class: "btn btn-info" %>
+</div>
 <div style="float: right; width: auto;">
     <%= button_to 'Discard', unauthenticated_root_path, method: :get, class: "btn btn-warning" %>
 </div>
