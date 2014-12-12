@@ -41,29 +41,47 @@
         </div>
     </p>
     <p>
-        <div><%= f.label :dates %><br />
-            <%= f.nested_fields_for :spoodle_dates do |ff| %>
-                <%= ff.label :from %>
-                <%= ff.datetime_select :from %>
-                <%= ff.label :to %>
-                <%= ff.datetime_select :to %>
-                <%= ff.remove_nested_fields_link fa_icon 'times' %>
-            <% end %>
-            <%= f.add_nested_fields_link :spoodle_dates, 'Add a date' %>
+        <div>
+            <%= f.label :dates %>
+            <ul class="list-group">
+                <%= f.nested_fields_for :spoodle_dates do |ff| %>
+                    <li class="list-group-item">
+                            <div class="container-fluid">
+                                <div style="display: block;">
+                                    <%= ff.label :from %><br>
+                                    <%= ff.datetime_select :from, :order => [:day, :month, :year] %>
+                                </div>
+                                <div style="display: block;">
+                                    <%= ff.label :to %><br>
+                                    <%= ff.datetime_select :to, :order => [:day, :month, :year] %><br>
+                                </div>
+                                <div style="display: block;">
+                                    <%= ff.remove_nested_fields_link fa_icon 'times' %>
+                                </div>
+                        </div>
+                    </li>
+                <% end %>
+            <li class="list-group-item"><%= f.add_nested_fields_link :spoodle_dates, 'Add a date' %></li>
+            </ul>
         </div>
     </p>
     <p>
         <div>
-            <%= f.label :invitations %><br />
-            <%= f.nested_fields_for :invitations do |fff| %>
-                <%= fff.collection_select :user_id, @users, :id, :username %>
-                <%= fff.remove_nested_fields_link fa_icon 'times' %>
-            <% end %>
-            <%= f.add_nested_fields_link :invitations, 'Invite someone' %>
+            <%= f.label :invitations %>
+            <ul>
+                <%= f.nested_fields_for :invitations do |fff| %>
+                    <li>
+                        <%= fff.collection_select :user_id, @users, :id, :username %>
+                        <%= fff.remove_nested_fields_link fa_icon 'times' %>
+                    </li>
+                <% end %>
+                <li>
+                    <%= f.add_nested_fields_link :invitations, 'Invite someone' %>
+                </li>
+            </ul>
         </div>
-    </p>
     <div style="float: left; width: auto;">
-        <div><%= f.submit "Create", class: "btn btn-success" %></div>
+        <div><%= f.submit "Create Event", class: "btn btn-success" %></div>
     </div>
 <% end %>
 <div style="float: right; width: auto;">
