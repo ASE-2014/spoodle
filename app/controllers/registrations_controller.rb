@@ -1,5 +1,10 @@
 class RegistrationsController < Devise::RegistrationsController
 
+  def destroy
+    flash[:error] = 'You cannot delete your account! We keep it forever! Hahahaha'
+    redirect_to authenticated_root_path
+  end
+
   private
 
   def sign_up_params
