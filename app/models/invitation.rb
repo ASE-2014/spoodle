@@ -11,7 +11,7 @@ class Invitation < ActiveRecord::Base
   end
 
   def user_can_be_invited_only_once
-    errors.add(:invitation, "#{self.user} is already invited!") if self.event.is_invited? self.user
+    errors.add(:invitation, "#{self.user} is already invited!") if !self.event.nil? and self.event.is_invited? self.user
   end
 
 end
