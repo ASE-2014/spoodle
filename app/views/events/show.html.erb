@@ -103,7 +103,7 @@
     <hr>
 
     <h3><%= fa_icon 'calendar fw' %> Proposed Dates</h3>
-    <p>You can assign to the proposed dates until <%= @event.deadline.strftime("%A, %d. %B %Y at %R.") %></p>
+    <p>You can assign to the proposed dates until <strong><%= @event.deadline.strftime("%A, %d. %B %Y at %R.") %></strong></p>
     <div class="row">
         <%= render @event.spoodle_dates %>
     </div>
