@@ -11,9 +11,23 @@ class DataCenterController < ApplicationController
     # Prepare chart data here nicely. We want no logic in the view.
 
     sports = Array.new
+    distance_cycling_user = 0
+    distance_running_user = 0
+    distance_other_user = 0
     current_user.passed_events.each do |e|
       sports.push e.sport.name
+      unless e.event_data.distance.nil?
+        if e.sport.name == 'Running'
+          distance_running_user += e.event_data.distance
+        elsif e.sport.name == 'Cycling'
+          distance_cycling_user += e.event_data.distance
+        else
+          distance_other_user += e.event_data.distance
+        end
+
+      end
     end
+
     # Convert array containing the sport.name of each event to a hash
     # Mapping each sport.name to its count
     sports = sports.inject(Hash.new(0)) { |total, e| total[e] += 1 ;total}
@@ -26,6 +40,8 @@ class DataCenterController < ApplicationController
     events = Hash[events.map {|k, v| [mappings[k], v] }]
     # Order keys alphabetically (so each sport is represented by same color in chart)
     @total_event_sport_data = Hash[events.sort_by{|k,v| k}]
+    @user_distance_sport = {'Running' => distance_running_user, 'Cycling' => distance_cycling_user, 'Other' => distance_other_user}
+
   end
 
 end
