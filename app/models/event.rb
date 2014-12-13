@@ -12,7 +12,7 @@ class Event < ActiveRecord::Base
   has_many :invitations
   accepts_nested_attributes_for :invitations, allow_destroy: true
 
-  has_many :users, through: :invitations #TODO :users are not unique! Solution searched! Please help!
+  has_many :users, through: :invitations
 
   validates :title, presence: true
   validates :deadline, presence: true
@@ -108,9 +108,7 @@ class Event < ActiveRecord::Base
     ical_event.location = self.location
     ical_event.created = self.created_at
     ical_event.url = url
-    if self.description?
-      ical_event.description = self.description
-    end
+    ical_event.description = self.description if self.description?
     self.participants.each do |user|
       ical_event.append_attendee "mailto:#{user.email}"
     end

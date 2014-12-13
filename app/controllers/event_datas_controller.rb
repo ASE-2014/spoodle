@@ -1,4 +1,5 @@
 class EventDatasController < ApplicationController
+
   before_filter :authenticate_user!
   before_filter :owns_event!
 
@@ -64,4 +65,5 @@ class EventDatasController < ApplicationController
     end
     params.require(:event_data).permit(attributes, document_attributes: document_attributes)
   end
+
 end

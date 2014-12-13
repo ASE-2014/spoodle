@@ -1,4 +1,5 @@
 class DocumentsController < ApplicationController
+
   before_filter :authenticate_user!, except: :show
   before_action :set_document, only: [:show, :destroy]
   before_filter :owns_event!, except: :show
@@ -23,6 +24,7 @@ class DocumentsController < ApplicationController
   end
 
   private
+
     def set_document
       @document = Document.find(params[:id])
     end
@@ -30,4 +32,5 @@ class DocumentsController < ApplicationController
   def document_params
     params.require(:document).permit(:file)
   end
+
 end

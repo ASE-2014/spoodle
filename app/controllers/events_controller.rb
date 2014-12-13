@@ -6,7 +6,7 @@ class EventsController < ApplicationController
 
   def new
     @event = Event.new
-    @event.spoodle_dates.build # (DEV) Create one empty date to begin with
+    @event.spoodle_dates.build
   end
 
   def create

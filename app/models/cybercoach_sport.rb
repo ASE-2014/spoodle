@@ -1,5 +1,5 @@
-#CyberCoach to object mapping
 class CybercoachSport < CybercoachResource
+
   # Specifies which data attributes make sense for a sport
   def data_attributes
     case self.name
