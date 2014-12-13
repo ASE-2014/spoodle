@@ -125,12 +125,12 @@
         <%= render 'event_datas/number_attribute_show', attribute_name: :rounds, units: 'Rounds'%>
         <%= render 'event_datas/number_attribute_show', attribute_name: :score_1, units: 'Points' %>
         <%= render 'event_datas/number_attribute_show', attribute_name: :score_2, units: 'Points' %>
-        <%= render 'event_datas/number_attribute_show', attribute_name: :party_1_red_cards, units: 'Cards', ff: f %>
-        <%= render 'event_datas/number_attribute_show', attribute_name: :party_2_red_cards, units: 'Cards', ff: f %>
-        <%= render 'event_datas/number_attribute_show', attribute_name: :party_1_yellow_cards, units: 'Cards', ff: f %>
-        <%= render 'event_datas/number_attribute_show', attribute_name: :party_2_yellow_cards, units: 'Cards', ff: f %>
-        <%= render 'event_datas/number_attribute_show', attribute_name: :party_1_penalties, units: 'Penalties', ff: f %>
-        <%= render 'event_datas/number_attribute_show', attribute_name: :party_2_penalties, units: 'Penalties', ff: f %>
+        <%= render 'event_datas/number_attribute_show', attribute_name: :party_1_red_cards, units: 'Cards'%>
+        <%= render 'event_datas/number_attribute_show', attribute_name: :party_2_red_cards, units: 'Cards'%>
+        <%= render 'event_datas/number_attribute_show', attribute_name: :party_1_yellow_cards, units: 'Cards'%>
+        <%= render 'event_datas/number_attribute_show', attribute_name: :party_2_yellow_cards, units: 'Cards'%>
+        <%= render 'event_datas/number_attribute_show', attribute_name: :party_1_penalties, units: 'Penalties'%>
+        <%= render 'event_datas/number_attribute_show', attribute_name: :party_2_penalties, units: 'Penalties'%>
         <% if @event.event_data and @event.event_data.document %>
             <h4>Map</h4>
             <div id="gps" class="map_canvas"></div>
