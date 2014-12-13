@@ -1,7 +1,7 @@
 <% if  @event.event_data.valid_attributes.has_key? attribute_name %>
     <% if not @event.event_data.valid_attributes[attribute_name].nil? %>
         <p>
-            <%= attribute_name.capitalize %>:
+            <%= attribute_label attribute_name %>:
             <%= @event.event_data.valid_attributes[attribute_name] %> <%= units %>
         </p>
     <% end %>

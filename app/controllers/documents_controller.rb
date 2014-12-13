@@ -1,4 +1,5 @@
 class DocumentsController < ApplicationController
+
   before_filter :authenticate_user!, except: :show
   before_action :set_document, only: [:show, :destroy]
   before_filter :owns_event!, except: :show
@@ -15,19 +16,21 @@ class DocumentsController < ApplicationController
     @event = @event_data.event
     @document = Document.find(params[:id])
     if @document.destroy
-      flash[:success] = "Successfully deleted File #{@document.filename}."
+      flash[:success] = "Successfully deleted file #{@document.filename}."
     else
-      flash[:error] = "The File #{@document.filename} could not be deleted!"
+      flash[:error] = "The file #{@document.filename} could not be deleted!"
     end
     redirect_to edit_event_event_data_path(@event, @event_data)
   end
 
   private
-    def set_document
-      @document = Document.find(params[:id])
-    end
+
+  def set_document
+    @document = Document.find(params[:id])
+  end
 
   def document_params
     params.require(:document).permit(:file)
   end
+
 end
