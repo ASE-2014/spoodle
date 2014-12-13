@@ -4,11 +4,20 @@
     <div>
         <%= render 'numberfield_form', attribute_name: :duration, units: 'Minutes', ff: f %>
         <%= render 'numberfield_form', attribute_name: :distance, units: 'Meters', ff: f %>
+        <%= render 'numberfield_form', attribute_name: :elevation_gain, units: 'Meters', ff: f %>
         <%= render 'textfield_form', attribute_name: :party_1_name, ff: f %>
         <%= render 'textfield_form', attribute_name: :party_2_name, ff: f %>
         <%= render 'textfield_form', attribute_name: :winner_name, ff: f %>
+        <%= render 'numberfield_form', attribute_name: :rounds, units: 'Rounds', ff: f %>
         <%= render 'numberfield_form', attribute_name: :score_1, units: 'Points', ff: f %>
         <%= render 'numberfield_form', attribute_name: :score_2, units: 'Points', ff: f %>
+        <%= render 'numberfield_form', attribute_name: :party_1_red_cards, units: '', ff: f %>
+        <%= render 'numberfield_form', attribute_name: :party_2_red_cards, units: '', ff: f %>
+        <%= render 'numberfield_form', attribute_name: :party_1_yellow_cards, units: '', ff: f %>
+        <%= render 'numberfield_form', attribute_name: :party_2_yellow_cards, units: '', ff: f %>
+        <%= render 'numberfield_form', attribute_name: :party_1_penalties, units: '', ff: f %>
+        <%= render 'numberfield_form', attribute_name: :party_2_penalties, units: '', ff: f %>
+
     </div>
     </p>
     <p>
