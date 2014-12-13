@@ -43,15 +43,22 @@ class Event < ActiveRecord::Base
     user.eql? self.owner
   end
 
-  # Returns all users that have assigned a value to the definitive Spoodle date
-  # If the definitive date is not yet set, an empty array is returned
+  # Returns all users that have assigned to the definitive_date, WITHOUT the owner
+  # If the definitive_date is not yet set, an empty array is returned
   def participants
-    #TODO include owner?
     if definitive_date
-      definitive_date.users
+      participants = definitive_date.users
+      participants.delete self.owner if participants.include? self.owner
+      participants
     else
       Array.new
     end
+  end
+
+  # Returns all users that have assigned to the definitive_date WITH the owner
+  # If the definitive_date is not yet set, only the owner is returned
+  def participants_with_owner
+    participants << self.owner
   end
 
   # Checks if the deadline is over yet
@@ -109,7 +116,7 @@ class Event < ActiveRecord::Base
     ical_event.created = self.created_at
     ical_event.url = url
     ical_event.description = self.description if self.description?
-    self.participants.each do |user|
+    self.participants_with_owner.each do |user|
       ical_event.append_attendee "mailto:#{user.email}"
     end
     ical_event
@@ -132,8 +139,7 @@ class Event < ActiveRecord::Base
   end
 
   def create_entries_on_cybercoach
-    # TODO participants are without owner (adding it manually)
-    [*self.participants, self.owner].each do |participant|
+    participants_with_owner.each do |participant|
       participant.create_entry_on_cyber_coach(self.sport.name.downcase,
                                               {publicvisible: '2',
                                                entrylocation: self.location,
