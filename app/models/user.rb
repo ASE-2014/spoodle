@@ -45,17 +45,17 @@ class User < ActiveRecord::Base
                                                                   password: self.cyber_coach_password,
                                                                   publicvisible: '2',
                                                                   realname: self.cyber_coach_username })
-    raise 'RegisterError' unless response.success? #TODO handle error
+    raise 'RegisterError' unless response.success?
   end
 
   def destroy_user_on_cyber_coach
     response = CybercoachUser.destroy(self.cyber_coach_username, self.cyber_coach_username, self.cyber_coach_password)
-    raise 'DestroyError' unless response.success? #TODO handle error
+    raise 'DestroyError' unless response.success?
   end
 
   def login_on_cyber_coach
     response = CybercoachResource.login(self.cyber_coach_username, self.cyber_coach_password)
-    raise 'LoginError' unless response.success? #TODO handle error
+    raise 'LoginError' unless response.success?
   end
 
   def logout_on_cyber_coach

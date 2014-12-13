@@ -1,7 +1,7 @@
 class FriendshipsController < ApplicationController
 
   before_filter :authenticate_user!
-  before_filter :owns_friendship!, only: [:destroy]
+  before_filter :belongs_to_friendship!, only: [:destroy]
 
   def create
     session[:return_to] ||= request.referer
@@ -29,7 +29,8 @@ class FriendshipsController < ApplicationController
 
   protected
 
-  def owns_friendship!
+  # Controls if the current user belongs to the friendship
+  def belongs_to_friendship!
     @friendship = Friendship.find(params[:id])
     unless @friendship.includes? current_user
       flash[:error] = "Thats not your friendship!"

@@ -18,7 +18,7 @@ class SpoodleDatesController < ApplicationController
     redirect_to @event
   end
 
-  # Removes an existing availability between a user and a spoodle_date
+  # Destroys an existing availability between a user and a spoodle_date
   def cancel
     @event = Event.find(params[:event_id])
     @spoodle_date = SpoodleDate.find(params[:id])

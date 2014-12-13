@@ -1,15 +1,17 @@
 class EventDatasController < ApplicationController
+
   before_filter :authenticate_user!
   before_filter :owns_event!
+  before_filter :event_is_passed!
 
   def new
     @event = Event.find(params[:event_id])
-    if not @event.event_data.nil?
-      flash[:error] = "You have already added event data. Please use edit."
-      redirect_to @event
-    else
+    if @event.event_data.nil?
       @event_data = @event.build_event_data
       @document = @event.event_data.build_document
+    else
+      flash[:error] = "You have already added event data. Please use edit."
+      redirect_to @event
     end
   end
 
@@ -20,7 +22,7 @@ class EventDatasController < ApplicationController
       flash[:success] = "Successfully saved event data."
       redirect_to @event
     else
-      flash[:error] = "Could not save event data."
+      flash[:error] = "Could not save event data." #TODO use validations
       redirect_to new_event_event_data_path
     end
   end
@@ -50,10 +52,12 @@ class EventDatasController < ApplicationController
       flash[:success] = "Successfully updated event data."
       redirect_to @event
     else
-      flash[:error] = "Could not update event data."
+      flash[:error] = "Could not update event data." #TODO use validations
       render :edit
     end
   end
+
+  private
 
   def event_data_params
     @event = Event.find(params[:event_id])
@@ -64,4 +68,5 @@ class EventDatasController < ApplicationController
     end
     params.require(:event_data).permit(attributes, document_attributes: document_attributes)
   end
+
 end
