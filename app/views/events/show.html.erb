@@ -83,17 +83,17 @@
     <% if @event.participants.empty? %>
         <p>Nobody wants to participate <%= fa_icon 'frown-o' %></p>
     <% else %>
-        <% @event.participants.each do |user| %>
-            <%= link_to user_path(user) do %>
-                <%= image_tag("profile.png") %>
-            <% end %>
-        <% end %>
+        <div class="row">
+            <%= render @event.participants %>
+        </div>
     <% end %>
 
 <% else %>
 
     <h3><%= fa_icon 'users fw' %> Invited Users</h3>
-    <%= render @event.invitations %>
+    <div class="row">
+        <%= render @event.invitations %>
+    </div>
     <% if @event.belongs_to?(current_user) %>
         <%= link_to new_event_invitation_path(@event) do %>
             <%= image_tag("plus.png") %>
