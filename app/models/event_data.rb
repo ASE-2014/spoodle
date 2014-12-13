@@ -5,9 +5,9 @@ class EventData < ActiveRecord::Base
   has_one :document
   accepts_nested_attributes_for :document, allow_destroy: true, update_only: true
 
-  validates_numericality_of :distance, greater_than_or_equal_to: 0, allow_nil: true #TODO use validate
-  validates_numericality_of :score_1, greater_than_or_equal_to: 0, allow_nil: true #TODO use validate
-  validates_numericality_of :score_2, greater_than_or_equal_to: 0, allow_nil: true #TODO use validate
+  validates :distance, :numericality => {greater_than_or_equal_to: 0}, allow_nil: true
+  validates :score_1, :numericality => {greater_than_or_equal_to: 0}, allow_nil: true
+  validates :score_2, :numericality => {greater_than_or_equal_to: 0}, allow_nil: true
 
   # Specifies which attributes are actually filled in this case (depends on sport)
   def attributes
