@@ -5,9 +5,8 @@ module EventDataHelper
   end
 
   def units_label(units)
-    unless units.empty?
-      return "(#{units})"
-    end
-    ''
+    return "(#{units})" unless units.empty?
+    return ''
   end
+
 end
