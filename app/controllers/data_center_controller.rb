@@ -52,8 +52,15 @@ class DataCenterController < ApplicationController
 
     # Total distances by means of transport
     @total_distance_sport = {'Cycling' => 0, 'Running' => 0}
-    @total_distance_sport['Running'] = Event.includes(:event_data).sum(:distance, :conditions => {:sports_name => 'Running' })
-    @total_distance_sport['Cycling'] = Event.includes(:event_data).sum(:distance, :conditions => {:sports_name => 'Cycling'})
+    @total_distance_sport['Running'] = Event.includes(:event_data).where(:sports_name => 'Running').sum(:distance)
+    @total_distance_sport['Cycling'] = Event.includes(:event_data).where(:sports_name => 'Cycling').sum(:distance)
+
+    # Total distances by means of transport
+    @total_elevation_gain_sport = {'Cycling' => 0, 'Running' => 0}
+    @total_elevation_gain_sport['Running'] = Event.includes(:event_data).where(:sports_name => 'Running').sum(:elevation_gain)
+    @total_elevation_gain_sport['Cycling'] = Event.includes(:event_data).where(:sports_name => 'Cycling').sum(:elevation_gain)
+
+
 
   end
 
