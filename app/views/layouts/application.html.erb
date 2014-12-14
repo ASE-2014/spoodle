@@ -63,22 +63,22 @@
             </li>
             <li>
                 <%= link_to upcoming_events_path do %>
-                    <%= fa_icon 'calendar fw' %> Upcoming Events <span class="badge"><%= amount_upcoming %></span>
+                    <%= fa_icon 'calendar fw' %> Upcoming Events <span class="badge pull-right"><%= amount_upcoming %></span>
                 <% end %>
             </li>
             <li>
                 <%= link_to pending_events_path do %>
-                    <%= fa_icon 'spinner fw' %> Pending Events <span class="badge"><%= amount_pending %></span>
+                    <%= fa_icon 'spinner fw' %> Pending Events <span class="badge pull-right"><%= amount_pending %></span>
                 <% end %>
             </li>
             <li>
                 <%= link_to passed_events_path do %>
-                    <%= fa_icon 'folder fw' %> Passed Events <span class="badge"><%= amount_passed %></span>
+                    <%= fa_icon 'folder fw' %> Passed Events <span class="badge pull-right"><%= amount_passed %></span>
                 <% end %>
             </li>
             <li>
                 <%= link_to events_path do %>
-                    <%= fa_icon 'user fw' %> My Events <span class="badge"><%= amount_own %></span>
+                    <%= fa_icon 'user fw' %> My Events <span class="badge pull-right"><%= amount_own %></span>
                 <% end %>
             </li>
             <li>
