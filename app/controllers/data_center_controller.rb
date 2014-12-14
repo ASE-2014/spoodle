@@ -3,7 +3,7 @@ class DataCenterController < ApplicationController
   before_filter :authenticate_user!
 
   def show
-    # Mapping that maps each sports_id to the sports.name #TODO: fetch this from Cybercoach
+    # Mapping that maps each sports_id to the sports.name
     # We need this because we can only group objects of a class by
     # attribute but not by attribute of a referenced object
     mappings = {1 => "Running", 2 => "Cycling", 3 => "Soccer", 4 => "Boxing"}
@@ -11,7 +11,7 @@ class DataCenterController < ApplicationController
     # Prepare chart data here nicely. We want no logic in the view.
 
     sports = Array.new
-    @user_distance_sport = {'Running' => 0, 'Cycling' => 0, 'Other' => 0}
+    @user_distance_sport = {'Cycling' => 0, 'Running' => 0, 'Other' => 0}
     current_user.passed_events.each do |e|
       sports.push e.sport.name
 
@@ -39,6 +39,9 @@ class DataCenterController < ApplicationController
     # Order keys alphabetically (so each sport is represented by same color in chart)
     @total_event_sport_data = Hash[events.sort_by{|k,v| k}]
 
+    @total_distance_sport = {'Cycling' => 0, 'Running' => 0}
+    @total_distance_sport['Running'] = Event.includes(:event_data).sum(:distance, :conditions => {:sports_name => 'Running' })
+    @total_distance_sport['Cycling'] = Event.includes(:event_data).sum(:distance, :conditions => {:sports_name => 'Cycling'})
 
   end
 

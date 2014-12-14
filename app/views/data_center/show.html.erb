@@ -40,13 +40,23 @@
         </div>
     </div>
 </div>
-    <div class="col-lg-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                Your personal distribution of distances by mode of transport
-            </div>
-            <div class="panel-body">
-                <%= pie_chart @user_distance_sport %>
-            </div>
+<div class="col-lg-6">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Your personal distribution of distances by sport
+        </div>
+        <div class="panel-body">
+            <%= pie_chart @user_distance_sport %>
         </div>
     </div>
+</div>
+<div class="col-lg-6">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Total distribution of distances by sport
+        </div>
+        <div class="panel-body">
+            <%= pie_chart @total_distance_sport %>
+        </div>
+    </div>
+</div>
