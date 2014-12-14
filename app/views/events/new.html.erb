@@ -15,7 +15,7 @@
     </p>
     <p>
         <div><%= f.label :activity %>
-            <%= f.collection_select(:sport_id, all_sports, :id, :name, class: "form-control") %>
+            <%= f.collection_select(:sport_id, all_sports, :id, :name, {selected: all_sports.first}, class: "form-control") %>
         </div>
     </p>
     <p>
@@ -47,18 +47,20 @@
             <ul class="list-group">
                 <%= f.nested_fields_for :spoodle_dates do |ff| %>
                     <li class="list-group-item">
-                            <div class="container-fluid">
-                                <div style="display: block;">
-                                    <%= ff.label :from %><br>
-                                    <%= ff.datetime_select :from, :order => [:day, :month, :year], default: 2.week.from_now, class: "form-control" %>
-                                </div>
-                                <div style="display: block;">
-                                    <%= ff.label :to %><br>
-                                    <%= ff.datetime_select :to, :order => [:day, :month, :year], default: 2.week.from_now + 2.hours, class: "form-control" %><br>
-                                </div>
-                                <div style="display: block;">
-                                    <%= ff.remove_nested_fields_link fa_icon 'times' %>
-                                </div>
+                        <div class="container-fluid">
+                            <table>
+                                <tr>
+                                    <td><%= ff.label :from %>: &nbsp;</td>
+                                    <td><%= ff.datetime_select :from, :order => [:day, :month, :year], default: 2.week.from_now, class: "form-control" %></td>
+                                </tr>
+                                <tr>
+                                    <td><%= ff.label :to %>: </td>
+                                    <td><%= ff.datetime_select :to, :order => [:day, :month, :year], default: 2.week.from_now + 2.hours, class: "form-control" %></td>
+                                </tr>
+                            </table>
+                            <div style="display: block;">
+                                <%= ff.remove_nested_fields_link "remove" %>
+                            </div>
                         </div>
                     </li>
                 <% end %>

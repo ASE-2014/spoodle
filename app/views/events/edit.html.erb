@@ -9,21 +9,21 @@
         <% end %>
     <% end %>
     <p>
-        <div><%= f.label :title %>
-            <%= f.text_field :title, class: "form-control", autofocus: true %>
-        </div>
+    <div><%= f.label :title %>
+        <%= f.text_field :title, class: "form-control", autofocus: true %>
+    </div>
     </p>
     <% unless @event.is_deadline_over? %>
         <p>
-            <div><%= f.label :deadline %><br />
-                <%= f.datetime_select :deadline, class: "form-control" %>
-            </div>
+        <div><%= f.label :deadline %><br />
+            <%= f.datetime_select :deadline, :order => [:day, :month, :year], class: "form-control" %>
+        </div>
         </p>
     <% end %>
     <p>
-        <div><%= f.label :description %>
-            <%= f.text_area :description, size: '60x5', class: "form-control" %>
-        </div>
+    <div><%= f.label :description %>
+        <%= f.text_area :description, size: '60x5', class: "form-control" %>
+    </div>
     </p>
     <p>
     <div><%= f.label :location %><br />
@@ -40,16 +40,31 @@
     <div class="map_canvas location"></div>
     <% unless @event.is_deadline_over? %>
         <p>
-            <div><%= f.label :dates %><br />
+        <div>
+            <%= f.label :dates %>
+            <ul class="list-group">
                 <%= f.nested_fields_for :spoodle_dates do |ff| %>
-                    <%= ff.label :from %>
-                    <%= ff.datetime_select :from %>
-                    <%= ff.label :to %>
-                    <%= ff.datetime_select :to %>
-                    <%= ff.remove_nested_fields_link fa_icon 'times' %>
+                    <li class="list-group-item">
+                        <div class="container-fluid">
+                            <table>
+                                <tr>
+                                    <td><%= ff.label :from %>: &nbsp;</td>
+                                    <td><%= ff.datetime_select :from, :order => [:day, :month, :year], class: "form-control" %></td>
+                                </tr>
+                                <tr>
+                                    <td><%= ff.label :to %>: </td>
+                                    <td><%= ff.datetime_select :to, :order => [:day, :month, :year], class: "form-control" %></td>
+                                </tr>
+                            </table>
+                            <div style="display: block;">
+                                <%= ff.remove_nested_fields_link "remove" %>
+                            </div>
+                        </div>
+                    </li>
                 <% end %>
-                <%= f.add_nested_fields_link :spoodle_dates, 'Add a date' %>
-            </div>
+                <li class="list-group-item"><%= f.add_nested_fields_link :spoodle_dates, 'Add a date' %></li>
+            </ul>
+        </div>
         </p>
     <% end %>
 
