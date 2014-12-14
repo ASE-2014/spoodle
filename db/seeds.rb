@@ -270,7 +270,7 @@ event5_date1.availabilities.new(user: sandra, weight: 0.9)
 event5_date1.availabilities.new(user: didier, weight: 0.9)
 
 # EventData
-event5.event_data = EventData.new(distance:300)
+event5.event_data = EventData.new(duration: 240, distance: 6500, elevation_gain: 1200)
 
 event5.save!
 
