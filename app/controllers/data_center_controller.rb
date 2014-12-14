@@ -16,6 +16,7 @@ class DataCenterController < ApplicationController
     current_user.passed_events.each do |e|
       sports.push e.sport.name
 
+      # Aggregate distances by sport for current user
       unless e.event_data.distance.nil?
         if e.sport.name == 'Running'
           @user_distance_sport['Running'] += e.event_data.distance
@@ -26,6 +27,7 @@ class DataCenterController < ApplicationController
         end
       end
 
+      # Aggregate elevation gains by sport for current user
       unless e.event_data.elevation_gain.nil?
         if e.sport.name == 'Running'
           @user_elevation_gain_sport['Running'] += e.event_data.elevation_gain
@@ -50,17 +52,15 @@ class DataCenterController < ApplicationController
     # Order keys alphabetically (so each sport is represented by same color in chart)
     @total_event_sport_data = Hash[events.sort_by{|k,v| k}]
 
-    # Total distances by means of transport
+    # Aggregate total distances by sport
     @total_distance_sport = {'Cycling' => 0, 'Running' => 0}
     @total_distance_sport['Running'] = Event.includes(:event_data).where(:sports_name => 'Running').sum(:distance)
     @total_distance_sport['Cycling'] = Event.includes(:event_data).where(:sports_name => 'Cycling').sum(:distance)
 
-    # Total distances by means of transport
+    # Aggregate total elevation gains by sport
     @total_elevation_gain_sport = {'Cycling' => 0, 'Running' => 0}
     @total_elevation_gain_sport['Running'] = Event.includes(:event_data).where(:sports_name => 'Running').sum(:elevation_gain)
     @total_elevation_gain_sport['Cycling'] = Event.includes(:event_data).where(:sports_name => 'Cycling').sum(:elevation_gain)
-
-
 
   end
 
