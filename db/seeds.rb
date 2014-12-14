@@ -280,7 +280,7 @@ event5.save!
 event6 = Event.new(title: 'Cycling from Fribourg to Bern',
                    description: "It will be fun! Join us now.",
                    owner: arun,
-                   sport_id: 4,
+                   sport_id: 2,
                    location: 'Fribourg, Gare',
                    deadline: 1.days.ago )
 
@@ -356,7 +356,7 @@ event7.save!
 event8 = Event.new(title: 'Bike tour around the lake of Murten',
                    description: "bla",
                    owner: urs,
-                   sport_id: 4,
+                   sport_id: 2,
                    location: 'Murten, Altstadt',
                    deadline: 33.days.ago )
 
