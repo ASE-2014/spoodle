@@ -1,8 +1,10 @@
 <% if  @event.event_data.valid_attributes.has_key? attribute_name %>
     <% if not @event.event_data.valid_attributes[attribute_name].nil? %>
         <p>
+        <div>
             <%= attribute_label attribute_name %>:
             <%= @event.event_data.valid_attributes[attribute_name] %>
+        </div>
         </p>
     <% end %>
 <% end %>
