@@ -262,12 +262,12 @@ event5.invitations.new(user: sandra)
 event5.invitations.new(user: karl)
 
 # Availabilities
-event5_date1.availabilities.new(user: oliver, weight: 0.9)
-event5_date1.availabilities.new(user: anna, weight: 0.9)
-event5_date1.availabilities.new(user: urs, weight: 0.9)
-event5_date1.availabilities.new(user: karl, weight: 0.9)
-event5_date1.availabilities.new(user: sandra, weight: 0.9)
-event5_date1.availabilities.new(user: didier, weight: 0.9)
+event5_date1.availabilities.new(user: oliver, weight: 1)
+event5_date1.availabilities.new(user: anna, weight: 1)
+event5_date1.availabilities.new(user: urs, weight: 1)
+event5_date1.availabilities.new(user: karl, weight: 1)
+event5_date1.availabilities.new(user: sandra, weight: 1)
+event5_date1.availabilities.new(user: didier, weight: 1)
 
 # EventData
 event5.event_data = EventData.new(duration: 240, distance: 6500, elevation_gain: 1200)
@@ -275,22 +275,127 @@ event5.event_data = EventData.new(duration: 240, distance: 6500, elevation_gain:
 event5.save!
 
 ########################################################################################################################
+# Event 6, passed
 
-# event6 = Event.new(title: 'Quick dummy passed boxing event', description: "bla", owner: peter, sport_id: 4, location: 'Bern', deadline: 1.days.ago )
-# event6_date1 = event6.spoodle_dates.new(from: 11.hours.ago, to: 1.hours.ago)
-# event6_date1.availabilities.new(user: peter, weight: 1)
-# event6.save!
-#
-# event7 = Event.new(title: 'Quick dummy passed soccer event', description: "bla", owner: peter, sport_id: 3, location: 'Bern', deadline: 1.days.ago )
-# event7_date1 = event7.spoodle_dates.new(from: 11.hours.ago, to: 1.hours.ago)
-# event7_date1.availabilities.new(user: peter, weight: 1)
-# event7.save!
-#
-# event8 = Event.new(title: 'Quick dummy passed cycling event', description: "bla", owner: peter, sport_id: 2, location: 'Bern', deadline: 1.days.ago )
-# event8_date1 = event8.spoodle_dates.new(from: 11.hours.ago, to: 1.hours.ago)
-# event8_date1.availabilities.new(user: peter, weight: 1)
-# event8.save!
-#
+event6 = Event.new(title: 'Cycling from Fribourg to Bern',
+                   description: "It will be fun! Join us now.",
+                   owner: arun,
+                   sport_id: 4,
+                   location: 'Fribourg, Gare',
+                   deadline: 1.days.ago )
+
+# SpoodleDates
+event6_date1 = event6.spoodle_dates.new(from: 11.hours.ago, to: 8.hours.ago)
+
+# Invitations
+event6.invitations.new(user: oliver)
+event6.invitations.new(user: didier)
+event6.invitations.new(user: urs)
+event6.invitations.new(user: peter)
+event6.invitations.new(user: anna)
+event6.invitations.new(user: sandra)
+event6.invitations.new(user: karl)
+event6.invitations.new(user: henry)
+
+# Availabilities
+event6_date1.availabilities.new(user: oliver, weight: 1)
+event6_date1.availabilities.new(user: didier, weight: 1)
+event6_date1.availabilities.new(user: urs, weight: 1)
+event6_date1.availabilities.new(user: peter, weight: 1)
+event6_date1.availabilities.new(user: anna, weight: 1)
+event6_date1.availabilities.new(user: sandra, weight: 1)
+event6_date1.availabilities.new(user: karl, weight: 1)
+event6_date1.availabilities.new(user: henry, weight: 1)
+
+# EventData
+event6.event_data = EventData.new(duration: 180, distance: 18230, elevation_gain: 523)
+
+event6.save!
+
+########################################################################################################################
+# Event 7, passed
+
+event7 = Event.new(title: 'City run Berne',
+                   description: "City run through Berne.",
+                   owner: oliver,
+                   sport_id: 1,
+                   location: 'Bern, Bundeshausplatz',
+                   deadline: 20.days.ago )
+
+# SpoodleDates
+event7_date1 = event7.spoodle_dates.new(from: 15.days.ago, to: 14.days.ago)
+
+# Invitations
+event7.invitations.new(user: arun)
+event7.invitations.new(user: stefanie)
+event7.invitations.new(user: urs)
+event7.invitations.new(user: peter)
+event7.invitations.new(user: anna)
+event7.invitations.new(user: sandra)
+event7.invitations.new(user: karl)
+event7.invitations.new(user: henry)
+
+# Availabilities
+event7_date1.availabilities.new(user: arun, weight: 1)
+event7_date1.availabilities.new(user: stefanie, weight: 1)
+event7_date1.availabilities.new(user: urs, weight: 1)
+event7_date1.availabilities.new(user: peter, weight: 1)
+event7_date1.availabilities.new(user: anna, weight: 1)
+event7_date1.availabilities.new(user: sandra, weight: 1)
+event7_date1.availabilities.new(user: karl, weight: 1)
+event7_date1.availabilities.new(user: henry, weight: 1)
+
+# EventData
+event7.event_data = EventData.new(duration: 120, distance: 4563, elevation_gain: 82)
+
+event7.save!
+
+########################################################################################################################
+# Event 8, passed
+
+event8 = Event.new(title: 'Bike tour around the lake of Murten',
+                   description: "bla",
+                   owner: urs,
+                   sport_id: 4,
+                   location: 'Murten, Altstadt',
+                   deadline: 33.days.ago )
+
+# SpoodleDates
+event8_date1 = event8.spoodle_dates.new(from: 15.days.ago, to: 14.days.ago)
+
+# Invitations
+event8.invitations.new(user: arun)
+event8.invitations.new(user: oliver)
+event8.invitations.new(user: didier)
+event8.invitations.new(user: pascal)
+event8.invitations.new(user: peter)
+event8.invitations.new(user: karl)
+event8.invitations.new(user: henry)
+event8.invitations.new(user: anna)
+event8.invitations.new(user: sandra)
+event8.invitations.new(user: stefanie)
+
+# Availabilities
+event8_date1.availabilities.new(user: peter, weight: 1)
+event8_date1.availabilities.new(user: urs, weight: 1)
+event8_date1.availabilities.new(user: arun, weight: 1)
+event8_date1.availabilities.new(user: oliver, weight: 1)
+event8_date1.availabilities.new(user: pascal, weight: 1)
+event8_date1.availabilities.new(user: didier, weight: 1)
+event8_date1.availabilities.new(user: karl, weight: 1)
+event8_date1.availabilities.new(user: henry, weight: 1)
+event8_date1.availabilities.new(user: anna, weight: 1)
+event8_date1.availabilities.new(user: sandra, weight: 1)
+event8_date1.availabilities.new(user: stefanie, weight: 1)
+
+# EventData
+event8.event_data = EventData.new(duration: 312, distance: 32455, elevation_gain: 354)
+
+event8.save!
+
+########################################################################################################################
+# Event 9, passed
+
 # event9 = Event.new(title: 'Quick dummy passed running event', description: "bla", owner: peter, sport_id: 1, location: 'Bern', deadline: 1.days.ago )
 # event9_date1 = event9.spoodle_dates.new(from: 11.hours.ago, to: 1.hours.ago)
 # event9_date1.availabilities.new(user: peter, weight: 1)
