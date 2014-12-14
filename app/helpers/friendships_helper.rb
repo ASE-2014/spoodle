@@ -5,7 +5,7 @@ module FriendshipsHelper
   end
 
   def add_unfriend_button?(user)
-    current_user.friends_with user
+    current_user.friends_with user and not current_user.eql? user
   end
 
   def friendship_of(user1, user2)
