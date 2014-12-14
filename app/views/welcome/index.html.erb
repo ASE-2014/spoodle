@@ -24,7 +24,7 @@
             <!-- Set the first background image using inline CSS below. -->
             <div class="fill carousel1"></div>
             <div class="carousel-caption">
-                <h2>Introducing SPOODLE!</h2>
+                <h2>Welcome to SPOODLE!</h2>
             </div>
         </div>
         <div class="item">
@@ -38,14 +38,14 @@
             <!-- Set the third background image using inline CSS below. -->
             <div class="fill carousel3"></div>
             <div class="carousel-caption">
-                <h2>Create events to exercise with friends.</h2>
+                <h2>Organize events and exercise with friends.</h2>
             </div>
         </div>
         <div class="item">
             <!-- Set the third background image using inline CSS below. -->
             <div class="fill carousel4"></div>
             <div class="carousel-caption">
-                <h2>Automatically find the most convenient date for everyone.</h2>
+                <h2>Have fun!</h2>
             </div>
         </div>
     </div>
@@ -64,15 +64,44 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header"><%= fa_icon "trophy" %> <b>SPOODLE</b></h1>
             <% flash.each do |name, msg| %>
                 <div class="alert alert-dismissable alert-info">
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     <%= msg %>
                 </div>
             <% end %>
-            <h2>Latest tweets</h2>
-            <div class="tweets">
-                <%= render partial: "tweet", collection: @tweets %>
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <h3>Features</h3>
+                    <ul>
+                        <li>Register an account or sign up with facebook.</li>
+                        <li>Create events to exercise with friends.</li>
+                        <li>Share the events on social networks.</li>
+                        <li>Suggest multiple possible dates for an event.</li>
+                        <li>Let invited users assign a value based on their availability per suggested date.</li>
+                        <li>Automatically find the most convenient date for everyone.</li>
+                        <li>Add data like duration or distance to passed events.</li>
+                        <li>View aggregated statistics about the events you took part at.</li>
+                    </ul>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <h3>Share</h3>
+                    <p>Make SPOODLE even more interesting by spreading the word on social media platforms of your choice! More users means more trips to explore! <%= fa_icon 'smile-o' %></p>
+                    <div class="social-likes">
+                        <div class="facebook" title="Share link on Facebook">Facebook</div>
+                        <div class="twitter" title="Share link on Twitter">Twitter</div>
+                        <div class="plusone" title="Share link on Google+">Google+</div>
+                    </div>
+                </div>
             </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3>Getting started</h3>
+                    <p><a href="<%= new_user_registration_path %>">Sign up</a> right now to immediately start creating your own events and get invited to other user's events!</p>
+                    <h3>About</h3>
+                    <p>This web application was developed as a project for the <a href="http://mcs.unibnf.ch/program/courses-timetable/courses/advanced-software-engineering">Advanced Software Engineering course</a> at the University of Fribourg.<br>
+                        The lecture is part of the Swiss Joint Master of Science in Computer Science <a href="http://mcs.unibnf.ch/">(SJMCS)</a> program.</p>
+                </div>
+            </div>
+
 
