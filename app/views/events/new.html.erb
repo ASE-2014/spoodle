@@ -20,7 +20,7 @@
     </p>
     <p>
         <div><%= f.label :deadline %><br />
-            <%= f.datetime_select :deadline, :order => [:day, :month, :year], class: "form-control" %>
+            <%= f.datetime_select :deadline, :order => [:day, :month, :year], default: 1.week.from_now, class: "form-control" %>
         </div>
     </p>
     <p>
@@ -50,11 +50,11 @@
                             <div class="container-fluid">
                                 <div style="display: block;">
                                     <%= ff.label :from %><br>
-                                    <%= ff.datetime_select :from, :order => [:day, :month, :year], class: "form-control" %>
+                                    <%= ff.datetime_select :from, :order => [:day, :month, :year], default: 2.week.from_now, class: "form-control" %>
                                 </div>
                                 <div style="display: block;">
                                     <%= ff.label :to %><br>
-                                    <%= ff.datetime_select :to, :order => [:day, :month, :year], class: "form-control" %><br>
+                                    <%= ff.datetime_select :to, :order => [:day, :month, :year], default: 2.week.from_now + 2.hours, class: "form-control" %><br>
                                 </div>
                                 <div style="display: block;">
                                     <%= ff.remove_nested_fields_link fa_icon 'times' %>
