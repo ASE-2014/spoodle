@@ -12,10 +12,8 @@ class Friendship < ActiveRecord::Base
   validate :not_forever_alone
 
   def add_to_users
-    p "Added friendship to #{self.friend_one} and #{self.friend_two}"
     self.friend_one.friendships << self
     self.friend_two.friendships << self
-    p "Added friendship to #{self.friend_one} and #{self.friend_two}"
   end
 
   def not_already_friends

@@ -6,9 +6,7 @@ class EventsController < ApplicationController
 
   def new
     @event = Event.new
-    @event.spoodle_dates.build # (DEV) Create one empty date to begin with
-    @sports = CybercoachSport.get_all
-    @users = User.all_except current_user
+    @event.spoodle_dates.build
   end
 
   def create
@@ -19,9 +17,6 @@ class EventsController < ApplicationController
       flash[:success] = "Successfully created Event '#{@event.title}'."
       redirect_to events_path
     else
-      # Recreate all variables, since render will not call events#new
-      @users = User.all_except current_user
-      @sports = CybercoachSport.get_all
       render :new
     end
   end
@@ -81,13 +76,11 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
-
-    # Offer the possibility to export event
-    # in ical format for pending and passed events
+    # Offer the possibility to export event to ical format for pending and passed events
     if @event.is_deadline_over?
-      respond_to do |wants|
-        wants.html
-        wants.ics do
+      respond_to do |format|
+        format.html
+        format.ics do
           calendar = Icalendar::Calendar.new
           calendar.add_event(@event.to_ical(request.env["HTTP_HOST"] + event_path(@event)))
           calendar.publish
@@ -100,14 +93,15 @@ class EventsController < ApplicationController
 
   private
 
+  # Don't allow invitations_attributes, invitations are added through the invitations controller.
   def event_params
-    params.require(:event).permit(:title, :description, :deadline, :location, :sport_id, spoodle_dates_attributes: [:id, :from, :to, :_destroy], invitations_attributes: [:id, :user_id, :_destroy])
+    params.require(:event).permit(:title, :description, :deadline, :location, :sport_id, spoodle_dates_attributes: [:id, :from, :to, :_destroy])
   end
 
   # Don't allow invitations_attributes, since the invitations can't be deleted.
   # Invitations are added through the invitations controller.
   def event_update_params
-    params.require(:event).permit(:title, :description, :location, spoodle_dates_attributes: [:id, :from, :to, :_destroy], event_data_attributes: @event.event_data.attributes)
+    params.require(:event).permit(:title, :description, :location, spoodle_dates_attributes: [:id, :from, :to, :_destroy])
   end
 
   # Performs a search query on each event of an array, returns an array of all events matching the query (ignore case)

@@ -2,12 +2,9 @@ class Event < ActiveRecord::Base
 
   belongs_to :owner, foreign_key: 'owner_id', class_name: 'User'
 
-  has_one :definitive_date, foreign_key: 'definitive_date_id', class_name: 'SpoodleDate'
+  belongs_to :definitive_date, foreign_key: 'definitive_date_id', class_name: 'SpoodleDate'
+
   has_one :event_data
-  accepts_nested_attributes_for :event_data, allow_destroy: true
-
-  has_one :document
-
 
   has_many :spoodle_dates
   accepts_nested_attributes_for :spoodle_dates, allow_destroy: true
@@ -15,7 +12,7 @@ class Event < ActiveRecord::Base
   has_many :invitations
   accepts_nested_attributes_for :invitations, allow_destroy: true
 
-  has_many :users, through: :invitations #TODO :users are not unique! Solution searched! Please help!
+  has_many :users, through: :invitations
 
   validates :title, presence: true
   validates :deadline, presence: true
@@ -46,14 +43,22 @@ class Event < ActiveRecord::Base
     user.eql? self.owner
   end
 
-  # Returns all users that have assigned a value to the definitive Spoodle date
-  # If the definitive date is not yet set, an empty array is returned
+  # Returns all users that have assigned to the definitive_date, WITHOUT the owner
+  # If the definitive_date is not yet set, an empty array is returned
   def participants
     if definitive_date
-      definitive_date.users
+      participants = definitive_date.users
+      participants.delete self.owner if participants.include? self.owner
+      participants
     else
       Array.new
     end
+  end
+
+  # Returns all users that have assigned to the definitive_date WITH the owner
+  # If the definitive_date is not yet set, only the owner is returned
+  def participants_with_owner
+    participants << self.owner
   end
 
   # Checks if the deadline is over yet
@@ -78,15 +83,26 @@ class Event < ActiveRecord::Base
 
   # Overwrites getter
   # Updates the definitive date if the deadline is over and it hasn't been selected yet
+  alias_method :original_definitive_date, :definitive_date
   def definitive_date
     if is_deadline_over?
-      select_definitive_date if @definitive_date.nil?
+      select_definitive_date if self.original_definitive_date.nil?
     end
-    @definitive_date
+    super
   end
 
   def sport
-    CybercoachSport.find_by(:id, self.sport_id)[0]
+    # Stores sports_name in db because of performance issues (Cybercoach queries take time). "Hacky".
+    # Memcached alternative didn't work well in dev environment.
+    if self.sports_name.nil?
+      sport = CybercoachSport.find_by(:id, self.sport_id)[0]
+      self.sports_name = sport.name
+      self.save!
+      return sport
+    else
+      sport = CybercoachSport.new({name: self.sports_name})
+      return sport
+    end
   end
 
 
@@ -99,10 +115,8 @@ class Event < ActiveRecord::Base
     ical_event.location = self.location
     ical_event.created = self.created_at
     ical_event.url = url
-    if self.description?
-      ical_event.description = self.description
-    end
-    self.participants.each do |user|
+    ical_event.description = self.description if self.description?
+    self.participants_with_owner.each do |user|
       ical_event.append_attendee "mailto:#{user.email}"
     end
     ical_event
@@ -111,12 +125,25 @@ class Event < ActiveRecord::Base
   private
 
   # Selects the spoodle_date with the most and strongest votes
-  # Sets definitive_date to nil if nobody assigned to any date
+  # Sets definitive_date to the first date if nobody assigned to any date
   def select_definitive_date
     self.spoodle_dates.each do |spoodle_date|
       if @definitive_date.nil? or spoodle_date.votes > @definitive_date.votes
         @definitive_date = spoodle_date
       end
+    end
+
+    self.definitive_date = @definitive_date
+    self.save!
+    create_entries_on_cybercoach
+  end
+
+  def create_entries_on_cybercoach
+    participants_with_owner.each do |participant|
+      participant.create_entry_on_cyber_coach(self.sport.name.downcase,
+                                              {publicvisible: '2',
+                                               entrylocation: self.location,
+                                               comment: "Spoodle "+self.title})
     end
   end
 

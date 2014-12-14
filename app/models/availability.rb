@@ -6,4 +6,5 @@ class Availability < ActiveRecord::Base
   belongs_to :user
 
   validates :weight, :numericality => {:greater_than_or_equal_to => 0.1, :less_than_or_equal_to => 1}
+
 end

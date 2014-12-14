@@ -1,0 +1,18 @@
+<div class="col-lg-6 col-md-6">
+    <div class="panel panel-default">
+        <div class="panel-heading media">
+            <a class="media-left" href="<%= user_path(user) %>">
+                <img class="profile"/>
+            </a>
+            <div class="media-body  panel-user">
+                <h4><%= link_to user.username, user_path(user) %></h4>
+                <% if add_friend_button? user %>
+                    <%= button_to "Add friend", friendships_path(friend_id: user), method: :post, class: "btn btn-sm btn-success" %>
+                <% end %>
+                <% if add_unfriend_button? user %>
+                    <%= button_to "Unfriend", friendship_of(current_user, user), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-sm btn-primary" %>
+                <% end %>
+            </div>
+        </div>
+    </div>
+</div>

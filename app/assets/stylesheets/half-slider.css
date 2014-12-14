@@ -14,6 +14,7 @@ body {
 .carousel {
     height: 50%;
     margin-top: -2px;
+    margin-bottom: 20px;
 }
 
 .item,
@@ -21,8 +22,6 @@ body {
 .carousel-inner {
     height: 100%;
 }
-
-/* Background images are set within the HTML using inline CSS, not here */
 
 .fill {
     width: 100%;
@@ -34,6 +33,22 @@ body {
     -o-background-size: cover;
 }
 
-footer {
-    margin: 50px 0;
+.carousel1 {
+    background-image:url("cycling_slide.jpg");
+}
+
+.carousel2 {
+    background-image:url("running_slide.jpg");
+}
+
+.carousel3 {
+    background-image:url("soccer_slide.jpg");
+}
+
+.carousel4 {
+    background-image:url("boxing_slide.jpg");
+}
+
+.carousel-caption h2{
+    color: #fff;
 }

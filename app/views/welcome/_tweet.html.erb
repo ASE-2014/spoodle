@@ -1,0 +1,6 @@
+<div class=tweet">
+  <p>
+      <%= tweet.text %> <br>
+      <small><%=  fa_icon "twitter" %> <%= time_ago_in_words(tweet.created_at) %> ago by <%= link_to "@"+tweet.user.username,"http://twitter.com/"+ tweet.user.username %></small>
+  </p>
+</div>

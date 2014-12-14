@@ -7,11 +7,14 @@ class CybercoachResource
   def self.inherited(base)
     base.extend(ClassMethods)
     base.instance_variable_set(:@resources_base, 'http://diufvm31.unifr.ch:8090/CyberCoachServer/resources')
-    if not defined?(@resource_name)
+    if not defined?(@fixed_path)
       splitted_name = base.name.split(/(?=[A-Z])/)
       splitted_name.shift
       resource_name = splitted_name.join
-      base.instance_variable_set(:@resource_name, resource_name)
+      base.instance_variable_set(:@fixed_path, resource_name)
+    end
+    if not defined?(@payload_root_name)
+      base.instance_variable_set(:@payload_root_name, base.instance_variable_get(:@fixed_path))
     end
   end
 
@@ -36,28 +39,32 @@ class CybercoachResource
       all_instances.select { |elem| elem.send(key) == val}
     end
 
-    # Creates a resource with given id and the attribute value pairs given in the hash
-    def create(id, hash)
-      uri = "#{@resources_base}/#{@resource_name.downcase.pluralize}/#{id}"
+    # Creates a resource with given variable path (id's etc. depending on resource) and the attribute value pairs given in the hash
+    # Username and password are optional and are necessary to create some objects
+    def create(variable_path, hash, username=nil, password=nil, action=:put, payload_root_name=@payload_root_name)
+      uri = "#{@resources_base}/#{@fixed_path.downcase.pluralize}/#{variable_path}"
       headers = {'Accept' => 'application/json','Content-Type' => 'application/xml'}
-      payload = CybercoachResource.generate_payload(@resource_name.downcase, hash)
+      if not username.nil? and not password.nil?
+        headers["Authorization"] = 'Basic ' + Base64.encode64(username + ":" + password)
+      end
+      payload = CybercoachResource.generate_payload(payload_root_name.downcase, hash)
 
-      HTTParty.put(uri, headers: headers, body: payload )
+      HTTParty.send(action, uri, headers: headers, body: payload )
     end
 
     # Destroys the resource which corresponds to the given id if the username password combination is accepted
     def destroy(id, username, password)
       headers = { "Authorization" => 'Basic ' + Base64.encode64(username + ":" + password),
                   "Accept" => "text/html" }
-      uri = "#{@resources_base}/#{@resource_name.downcase.pluralize}/#{id}"
+      uri = "#{@resources_base}/#{@fixed_path.downcase.pluralize}/#{id}"
       HTTParty.delete(uri, headers: headers)
     end
 
     private
 
     def get_rest_response
-      response = HTTParty.get("#{@resources_base}/#{@resource_name.downcase.pluralize}/",:headers => {'Accept' => 'application/json'})
-      response[@resource_name.downcase.pluralize]
+      response = HTTParty.get("#{@resources_base}/#{@fixed_path.downcase.pluralize}/",:headers => {'Accept' => 'application/json'})
+      response[@fixed_path.downcase.pluralize]
     end
 
   end

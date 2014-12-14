@@ -4,7 +4,7 @@ class CreateDocuments < ActiveRecord::Migration
       t.string :filename
       t.string :content_type
       t.binary :file_contents
-      t.belongs_to :event, index: true
+      t.belongs_to :event_data, index: true
 
       t.timestamps
     end

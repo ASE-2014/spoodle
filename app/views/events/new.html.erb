@@ -12,20 +12,21 @@
         <div><%= f.label :title %>
             <%= f.text_field :title, class: "form-control", autofocus: true %>
         </div>
+    </p>
     <p>
         <div><%= f.label :activity %>
-            <%= f.collection_select(:sport_id, @sports, :id, :name, class: "form-control") %>
+            <%= f.collection_select(:sport_id, all_sports, :id, :name, {selected: all_sports.first}, class: "form-control") %>
         </div>
     </p>
     <p>
         <div><%= f.label :deadline %><br />
-            <%= f.datetime_select :deadline, class: "form-control" %>
+            <%= f.datetime_select :deadline, :order => [:day, :month, :year], default: 1.week.from_now, class: "form-control" %>
         </div>
     </p>
     <p>
-    <div><%= f.label :location %><br />
-        <%= f.text_field :location, id: "geocomplete", placeholder: "Enter a Location", class: "form-control" %>
-    </div>
+        <div><%= f.label :location %><br />
+            <%= f.text_field :location, id: "geocomplete", placeholder: "Enter a Location", class: "form-control" %>
+        </div>
     </p>
 
     <div id="examples">
@@ -41,37 +42,42 @@
         </div>
     </p>
     <p>
-        <div><%= f.label :dates %><br />
-            <%= f.nested_fields_for :spoodle_dates do |ff| %>
-                <%= ff.label :from %>
-                <%= ff.datetime_select :from %>
-                <%= ff.label :to %>
-                <%= ff.datetime_select :to %>
-                <%= ff.remove_nested_fields_link fa_icon 'times' %>
-            <% end %>
-            <%= f.add_nested_fields_link :spoodle_dates, 'Add a date' %>
-        </div>
-    </p>
-    <p>
         <div>
-            <%= f.label :invitations %><br />
-            <%= f.nested_fields_for :invitations do |fff| %>
-                <%= fff.collection_select :user_id, @users, :id, :username %>
-                <%= fff.remove_nested_fields_link fa_icon 'times' %>
-            <% end %>
-            <%= f.add_nested_fields_link :invitations, 'Invite someone' %>
+            <%= f.label :dates %>
+            <ul class="list-group">
+                <%= f.nested_fields_for :spoodle_dates do |ff| %>
+                    <li class="list-group-item">
+                        <div class="container-fluid">
+                            <table>
+                                <tr>
+                                    <td><%= ff.label :from %>: &nbsp;</td>
+                                    <td><%= ff.datetime_select :from, :order => [:day, :month, :year], default: 2.week.from_now, class: "form-control" %></td>
+                                </tr>
+                                <tr>
+                                    <td><%= ff.label :to %>: </td>
+                                    <td><%= ff.datetime_select :to, :order => [:day, :month, :year], default: 2.week.from_now + 2.hours, class: "form-control" %></td>
+                                </tr>
+                            </table>
+                            <div style="display: block;">
+                                <%= ff.remove_nested_fields_link "remove" %>
+                            </div>
+                        </div>
+                    </li>
+                <% end %>
+            <li class="list-group-item"><%= f.add_nested_fields_link :spoodle_dates, 'Add a date' %></li>
+            </ul>
         </div>
     </p>
     <div style="float: left; width: auto;">
-        <div><%= f.submit "Create", class: "btn btn-success" %></div>
+        <div><%= f.submit "Create Event", class: "btn btn-success" %></div>
     </div>
 <% end %>
 <div style="float: right; width: auto;">
     <%= button_to 'Discard', unauthenticated_root_path, method: :get, class: "btn btn-warning" %>
 </div>
-<br/>
-<br/>
-<br/>
+<br>
+<br>
+<br>
 <script>
     $(function(){
         $("#geocomplete").geocomplete({

@@ -1,9 +1,10 @@
 class FriendshipsController < ApplicationController
 
   before_filter :authenticate_user!
-  before_filter :owns_friendship!, only: [:destroy]
+  before_filter :belongs_to_friendship!, only: [:destroy]
 
   def create
+    session[:return_to] ||= request.referer
     friend = User.find(params[:friend_id])
     @friendship = Friendship.new(friend_one: current_user, friend_two: friend)
     if @friendship.save
@@ -11,10 +12,11 @@ class FriendshipsController < ApplicationController
     else
       flash[:error] = "#{friend.username} could not be added as new friend!"
     end
-    redirect_to users_path
+    redirect_to session.delete(:return_to)
   end
 
   def destroy
+    session[:return_to] ||= request.referer
     @friendship = Friendship.find(params[:id])
     friend = @friendship.friend_of current_user
     if @friendship.destroy
@@ -22,12 +24,13 @@ class FriendshipsController < ApplicationController
     else
       flash[:error] = "Friend #{friend.username} could not be removed!"
     end
-    redirect_to user_path(current_user)
+    redirect_to session.delete(:return_to)
   end
 
   protected
 
-  def owns_friendship!
+  # Controls if the current user belongs to the friendship
+  def belongs_to_friendship!
     @friendship = Friendship.find(params[:id])
     unless @friendship.includes? current_user
       flash[:error] = "Thats not your friendship!"

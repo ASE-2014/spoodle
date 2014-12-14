@@ -1,23 +1,27 @@
 Rails.application.routes.draw do
 
-
   resources :events do
+
     resources :spoodle_dates do
       put :assign, on: :member
       put :cancel, on: :member
     end
+
     resources :invitations
-    resources :documents
+
+    resources :event_datas do
+      resources :documents
+    end
+
   end
 
   devise_for :users,
              :controllers => { registrations: 'registrations',
-                               sessions: 'sessions' }
+                               sessions: 'sessions',
+                               omniauth_callbacks: "omniauth_callbacks"}
 
   resources :users do
-    member do #TODO maybe simply 'get :friends, on: :member'?
-      get :friends
-    end
+    get :friends, on: :member
   end
 
   resources :friendships
@@ -34,12 +38,10 @@ Rails.application.routes.draw do
 
   end
 
+  get :data_center, to: 'data_center#show'
 
-  get     'data_center'      => 'data_center#show'
-
-  # Event routes #TODO put into resources :events
-  get     'upcoming'         => 'events#upcoming', as: 'upcoming_events'
-  get     'pending'          => 'events#pending',  as: 'pending_events'
-  get     'passed'           => 'events#passed',   as: 'passed_events'
+  get :upcoming,  to: 'events#upcoming', as: 'upcoming_events'
+  get :pending,   to: 'events#pending',  as: 'pending_events'
+  get :passed,    to: 'events#passed',   as: 'passed_events'
 
 end

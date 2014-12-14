@@ -1,5 +1,6 @@
 class Document < ActiveRecord::Base
-  belongs_to :event
+
+  belongs_to :event_data
 
   def initialize(params = {})
     file = params.delete(:file)
@@ -17,4 +18,5 @@ class Document < ActiveRecord::Base
     # Thanks to this article I just found for the tip: http://mattberther.com/2007/10/19/uploading-files-to-a-database-using-rails
     return File.basename(filename)
   end
+
 end

@@ -1,25 +1,52 @@
 <h1 class="page-header"><%= fa_icon 'user fw' %><%= @user.username %></h1>
-<% if add_friend_button? @user %>
-    <%= button_to "Add friend", friendships_path(friend_id: @user), method: :post, class: "btn btn-success pull" %>
-<% end %>
 <% flash.each do |name, msg| %>
     <div class="alert alert-dismissable alert-info">
         <button type="button" class="close" data-dismiss="alert">×</button>
         <%= msg %>
     </div>
 <% end %>
+<% if add_friend_button? @user %>
+    <%= button_to "Add friend", friendships_path(friend_id: @user), method: :post, class: "btn btn-sm btn-success pull-right" %>
+<% end %>
+<% if add_unfriend_button? @user %>
+    <%= button_to "Unfriend", friendship_of(current_user, @user), method: :delete, class: "btn btn-sm btn-primary pull-right" %>
+<% end %>
 <h2>About</h2>
-<ul>
-    <li>Username : <%= @user.username %></li>
-    <li>Email : <%= @user.email %></li>
-    <li>Events created : <%= @user.created_events.count %></li>
-</ul>
+<table>
+    <tr>
+        <td>Email:</td>
+        <td class="text-right"><%= mail_to @user.email %></td>
+    </tr>
+    <tr>
+        <td>Member since:</td>
+        <td class="text-right"><%= @user.created_at.strftime ("%d. %b %Y") %></td>
+    </tr>
+    <tr>
+        <td>Events created:</td>
+        <td class="text-right"><%= @user.created_events.count %></td>
+    </tr>
+    <tr>
+        <td>Events taken part at:</td>
+        <td class="text-right"><%= @user.passed_events.count %></td>
+    </tr>
+</table>
 <h2>Friends</h2>
-<ul>
+<div class="row">
     <% @user.friendships.each do |f| %>
-        <li>
-            <%= link_to (f.friend_of @user), user_path(f.friend_of @user) %>
-            <%= (@user.eql? current_user) ? (link_to "Unfriend", f, :method => "delete") : "" %>
-        </li>
+        <div class="col-lg-6 col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading media">
+                    <a class="media-left" href="<%= user_path(f.friend_of @user) %>">
+                        <img class="profile"/>
+                    </a>
+                    <div class="media-body  panel-user">
+                        <h4><%= link_to (f.friend_of @user), user_path(f.friend_of @user) %></h4>
+                        <% if @user.eql? current_user %>
+                            <%= button_to "Unfriend", f, :method => "delete", data: { confirm: 'Are you sure?' }, class: "btn btn-sm btn-primary" %>
+                        <% end %>
+                    </div>
+                </div>
+            </div>
+        </div>
     <% end %>
-</ul>
+</div>

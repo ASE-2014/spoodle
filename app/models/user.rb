@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
   # Virtual attribute for authenticating by either username or email
   # This is in addition to a real persisted field like 'username'
@@ -45,21 +45,41 @@ class User < ActiveRecord::Base
                                                                   password: self.cyber_coach_password,
                                                                   publicvisible: '2',
                                                                   realname: self.cyber_coach_username })
-    raise 'RegisterError' unless response.success? #TODO handle error
+    raise 'RegisterError' unless response.success?
   end
 
   def destroy_user_on_cyber_coach
     response = CybercoachUser.destroy(self.cyber_coach_username, self.cyber_coach_username, self.cyber_coach_password)
-    raise 'DestroyError' unless response.success? #TODO handle error
+    raise 'DestroyError' unless response.success?
   end
 
   def login_on_cyber_coach
     response = CybercoachResource.login(self.cyber_coach_username, self.cyber_coach_password)
-    raise 'LoginError' unless response.success? #TODO handle error
+    raise 'LoginError' unless response.success?
   end
 
   def logout_on_cyber_coach
     # Nothing to do here
+  end
+
+  # Creates an entry on cybercoach
+  def create_entry_on_cyber_coach(sport, content)
+    # Creates subscription on cybercoach (if one exists an update is sent but nothing should actually change)
+    self.create_subscription_on_cyber_coach(sport)
+    CybercoachEntry.create("#{self.cyber_coach_username}/#{sport}",
+                           content,
+                           self.cyber_coach_username,
+                           self.cyber_coach_password,
+                           :post,
+                           "entry#{sport}")
+  end
+
+  # Creates, or updates if it already exists, a sport subscription on cybercoach
+  def create_subscription_on_cyber_coach(sport)
+    CybercoachSubscription.create("#{self.cyber_coach_username}/#{sport}",
+                                  {publicvisible: '2'},
+                                  self.cyber_coach_username,
+                                  self.cyber_coach_password)
   end
 
   def to_s
@@ -108,6 +128,26 @@ class User < ActiveRecord::Base
       friends << (f.friend_of self)
     end
     friends
+  end
+
+  # Returns a user connected via facebook, or creates a new one
+  def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
+    user = User.where(:provider => auth.provider, :uid => auth.uid).first
+    if user
+      return user
+    else
+      registered_user = User.where(:email => auth.info.email).first
+      if registered_user
+        return registered_user
+      else
+        user = User.create(username:auth.extra.raw_info.name.gsub(/[^0-9A-Za-z]/, ''),
+                           provider:auth.provider,
+                           uid:auth.uid,
+                           email:auth.info.email,
+                           password:Devise.friendly_token[0,20],
+        )
+      end
+    end
   end
 
 end
