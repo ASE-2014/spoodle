@@ -3,7 +3,7 @@
         <div class="panel-heading">
             <p class="no-margin"><%= fa_icon 'calendar' %> <%= spoodle_date.from.strftime("%A, %d. %B %Y") %>
             <small><% if @event.belongs_to?(current_user) %>
-                    <%= link_to "Delete", event_spoodle_date_path(@event, spoodle_date), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary btn-xs no-margin" %>
+                    <%= link_to "Delete", event_spoodle_date_path(@event, spoodle_date), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary btn-xs no-margin pull-right" %>
                 <% end %></small></p>
         </div>
         <div class="panel-body">
@@ -36,7 +36,8 @@
                         </div>
                     <% end %>
                 <% else %>
-                <p class="no-margin">You assigned <b><%= spoodle_date.availability(current_user).weight %></b> <%= link_to 'Cancel', cancel_event_spoodle_date_path(@event, spoodle_date), method: :put, class: "btn btn-warning btn-xs no-margin" %></p>
+                    <p class="no-margin">You assigned <b><%= spoodle_date.availability(current_user).weight %></b><br>
+                        <%= link_to 'Cancel', cancel_event_spoodle_date_path(@event, spoodle_date), method: :put, class: "btn btn-warning btn-xs no-margin" %></p>
                 <% end %>
             </p>
         </div>

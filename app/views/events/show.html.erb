@@ -45,8 +45,8 @@
     <p>
         <%= fa_icon 'tags fw' %> <%= @event.sport.name %> |
         <% if @event.is_passed? %>
-            <%= fa_icon 'folder fw' %> Passed
-        <% elsif @event.is_deadline_over? %>
+            <%= fa_icon 'folder fw' %> Passed | <%= fa_icon 'calendar fw'%> <%= @event.definitive_date.from.strftime(" %a, %d. %b %Y") %>
+    <% elsif @event.is_deadline_over? %>
             <%= fa_icon 'calendar fw' %> Upcoming
         <% else %>
             <%= fa_icon 'folder fw' %> Pending
