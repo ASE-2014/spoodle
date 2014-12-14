@@ -1,8 +1,28 @@
-spoodle
-=======
+#spoodle
 
-Doodle meets sports
+##Installation
+1. Ruby 1.9.3 or higher is assumed to be installed
+2. Clone this repo and 'cd' into it
+3. Install gems:
 
+   ```ruby
+   bundle install
+   ```
+
+4. Setup database and fill it with seeds
+
+  ```ruby
+   rake db:migrate
+   rake db:seed
+   ```
+
+5. Start rails server
+
+   ```ruby
+   rails s
+   ```
+
+6. Enjoy!
 
 # For devs
 
