@@ -281,7 +281,7 @@ event6 = Event.new(title: 'Cycling from Fribourg to Bern',
                    description: "It will be fun! Join us now.",
                    owner: arun,
                    sport_id: 2,
-                   location: 'Fribourg, gare CFF',
+                   location: 'Fribourg/Freiburg, Freiburg, Schweiz',
                    deadline: 1.days.ago )
 
 # SpoodleDates
@@ -354,7 +354,7 @@ event7.save!
 # Event 8, passed
 
 event8 = Event.new(title: 'Bike tour around the lake of Murten',
-                   description: "bla",
+                   description: "Have fun",
                    owner: urs,
                    sport_id: 2,
                    location: 'Freiburg, Murten, Berntor',
