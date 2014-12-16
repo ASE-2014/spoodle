@@ -10,37 +10,41 @@
 * [Screencast of SPOODLE demo](https://www.dropbox.com/s/koop915sjd4vc19/SPOODLE_SCREENCAST.mov?dl=0)
 
 ##Installation
-1. [Install Ruby 1.9.3 or higher](https://www.ruby-lang.org/en/documentation/installation/) if not already installed
-2. Install Bundler
+1. [Install Ruby 1.9.3 or higher](https://www.ruby-lang.org/en/documentation/installation/) if not already installed.
+2. Install Bundler:
 
    ```ruby
    gem install bundler
    ```
 
-3. Clone this repo
+3. Clone this repository.
 
-4. Ask a [contributor](https://github.com/ASE-2014/spoodle/graphs/contributors) for the ```secrets.yml```file (if you haven't already received it) and copy it to the directory  ```/config```
+4. Ask a [contributor](https://github.com/ASE-2014/spoodle/graphs/contributors) for the ```secrets.yml```file (if you haven't already received it) and copy it to the ```/config``` directory.
 
-4. Install gems:
+5. Navigate to the root directory of the repository in terminal or a command line tool.
+
+6. Install gems:
 
    ```ruby
    bundle install
    ```
 
-5. Setup database and fill it with seeds
+7. Setup database and fill it with seeds:
 
   ```ruby
    rake db:migrate
    rake db:seed
    ```
 
-6. Start rails server
+8. Start rails server:
 
    ```ruby
    rails s
    ```
+   
+9. Navigate to ```http://localhost:3000/```with a browser.
 
-7. Enjoy!
+10. Enjoy!
 
 # For devs
 
