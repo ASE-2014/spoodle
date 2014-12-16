@@ -14,7 +14,7 @@
 2. Install Bundler
 
    ```ruby
-   gem install 
+   gem install bundler
    ```
 
 3. Clone this repo and 'cd' into it
