@@ -17,7 +17,10 @@
    gem install bundler
    ```
 
-3. Clone this repo and 'cd' into it
+3. Clone this repo
+
+4. Ask a [contributor](https://github.com/ASE-2014/spoodle/graphs/contributors) for the ```secrets.yml```file (if you haven't already received it) and copy it to the directory  ```/config```
+
 4. Install gems:
 
    ```ruby
