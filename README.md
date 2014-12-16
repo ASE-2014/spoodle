@@ -1,28 +1,43 @@
-#spoodle
+#SPOODLE
+
+[spoodle.herokuapp.com](http://spoodle.herokuapp.com)
+
+##Documentation
+* Installation manual: see below
+* [Slides 1. Presentation (idea)](/doc/idea_spoodle_presentation.ppt)
+* [Slides 2. Presentation (final)](/doc/final_spoodle_presentation.ppt)
+* [SCRUM: Product backlog & Sprint burndown charts](/doc/SCRUM.xls)
+* [Screencast of SPOODLE demo](https://www.dropbox.com/s/koop915sjd4vc19/SPOODLE_SCREENCAST.mov?dl=0)
 
 ##Installation
-1. Ruby 1.9.3 or higher is assumed to be installed
-2. Clone this repo and 'cd' into it
-3. Install gems:
+1. [Install Ruby 1.9.3 or higher](https://www.ruby-lang.org/en/documentation/installation/) if not already installed
+2. Install Bundler
+
+   ```ruby
+   gem install 
+   ```
+
+3. Clone this repo and 'cd' into it
+4. Install gems:
 
    ```ruby
    bundle install
    ```
 
-4. Setup database and fill it with seeds
+5. Setup database and fill it with seeds
 
   ```ruby
    rake db:migrate
    rake db:seed
    ```
 
-5. Start rails server
+6. Start rails server
 
    ```ruby
    rails s
    ```
 
-6. Enjoy!
+7. Enjoy!
 
 # For devs
 
